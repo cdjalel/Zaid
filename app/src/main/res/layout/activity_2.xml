@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2019 Djalel Chefrour
+  ~ This file is part of Zaid.
+  ~
+  ~ Zaid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Zaid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"  tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/zawjatNumberPicker"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="@string/wives"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/zawjatTextView"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"/>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioGroupZawj"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no"
+                android:id="@+id/radioButtonZawjNo"
+                android:checked="true"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:onClick="onZawjButtonClicked" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                android:id="@+id/radioButtonZawjYes"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:onClick="onZawjButtonClicked"
+                android:checked="false" />
+
+        </RadioGroup>
+
+        <TextView
+            android:text="@string/husband"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/zawjTextView" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/daughtersNumberPicker"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="@string/daughters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/daughtersTextView"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sonsNumberPicker"
+            android:layout_marginRight="5dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="@string/sons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sonsTextView"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:id="@+id/buttonNext1"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:onClick="onNextClicked"
+        android:layout_marginLeft="91dp"
+        android:layout_marginStart="91dp"
+        android:background="#cc98ff8d" />
+
+</LinearLayout>
