@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2019 Djalel Chefrour
+  ~ This file is part of Zaid.
+  ~
+  ~ Zaid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Zaid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"  tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paternalBrothersNumberPicker"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="إخوة لأب:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paternalBrothersTextView"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"/>
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fullBrothersNumberPicker"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="إخوة أشقاء:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fullBrothersTextView"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="20dp">
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paternalSistersNumberPicker"
+            android:layout_marginRight="2dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="أخوات لأب:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paternalSistersTextView"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"/>
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fullSistersNumberPicker"
+            android:layout_marginRight="2dp" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Large"
+            android:text="الأخوات الشقيقات:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fullSistersTextView"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:id="@+id/buttonNext1"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:onClick="onNextClicked"
+        android:layout_marginLeft="91dp"
+        android:layout_marginStart="91dp"
+        android:background="#cc98ff8d" />
+
+</LinearLayout>
