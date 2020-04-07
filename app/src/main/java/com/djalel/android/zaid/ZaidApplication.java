@@ -1,5 +1,6 @@
 /*
  * Copyright © 2019 Djalel Chefrour
+ * Copyright © 2020 Haihtem Guefassa
  * This file is part of Zaid.
  *
  * Zaid is free software: you can redistribute it and/or modify
@@ -19,6 +20,8 @@
 package com.djalel.android.zaid;
 
 import android.app.Application;
+
+import java.util.EnumMap;
 
 public class ZaidApplication extends Application {
 
@@ -49,29 +52,12 @@ public class ZaidApplication extends Application {
     private int abna_ala3mam_alashika;
     private int abna_ala3mam_li_ab;
 
-    private String mirath_alab;
-    private String mirath_alom;
-    private String mirath_aljad;
-    private String mirath_aljadah_li_ab;
-    private String mirath_aljadah_li_om;
-    private String mirath_azawj;
-    private String mirath_azawjat;
-    private String mirath_alabna;
-    private String mirath_albanat;
-    private String mirath_abna_alabna;
-    private String mirath_banat_alabna;
-    private String mirath_alikhwa_li_om;
-    private String mirath_alakhawat_li_om;
-    private String mirath_alikhwa_alashika;
-    private String mirath_alakhawat_ashakikat;
-    private String mirath_alikhwa_li_ab;
-    private String mirath_alakhawat_li_ab;
-    private String mirath_abna_alikhwa_alashika;
-    private String mirath_abna_alikhwa_li_ab;
-    private String mirath_ala3mam_alashika;
-    private String mirath_ala3mam_li_ab;
-    private String mirath_abna_ala3mam_alashika;
-    private String mirath_abna_ala3mam_li_ab;
+    EnumMap<Warith, Mirath> warathah;
+    // maintained in the natural order of their keys (the order in which the enum constants are declared)
+    private int adad_3assabat;
+    private int asl_mas2ala;
+
+    private String special_case;
 
     public void set_madhab(Madhab m) {
         madhab = m;
@@ -275,546 +261,866 @@ public class ZaidApplication extends Application {
 
     private void resetMawarith()
     {
-        mirath_alab = null;
-        mirath_alom = null;
-        mirath_aljad = null;
-        mirath_aljadah_li_ab = null;
-        mirath_aljadah_li_om = null;
-        mirath_azawj = null;
-        mirath_azawjat = null;
-        mirath_alabna = null;
-        mirath_albanat = null;
-        mirath_abna_alabna = null;
-        mirath_banat_alabna = null;
-        mirath_alikhwa_li_om = null;
-        mirath_alakhawat_li_om = null;
-        mirath_alikhwa_alashika = null;
-        mirath_alakhawat_ashakikat = null;
-        mirath_alikhwa_li_ab = null;
-        mirath_alakhawat_li_ab = null;
-        mirath_abna_alikhwa_alashika = null;
-        mirath_abna_alikhwa_li_ab = null;
-        mirath_ala3mam_alashika = null;
-        mirath_ala3mam_li_ab = null;
-        mirath_abna_ala3mam_alashika = null;
-        mirath_abna_ala3mam_li_ab = null;
+        warathah = new EnumMap<Warith, Mirath>(Warith.class);
+        special_case = null;
+        adad_3assabat = 0;
+        asl_mas2ala = 1;
+
     }
 
-    private String hajb(String warith, String dhamir, String hajib)
+    private void hajb(Warith warith, String ism, String dhamir, String hajib)
     {
-        return warith + " حجب" + dhamir + " " + hajib;
-    }
-
-    private String hajb(String warith, String dhamir, String hajib, String old)
-    {
-        if (old == null) {
-            return hajb(warith, dhamir, hajib);
-        }
-        else {
-            return old + " و " + hajib;
+        if (warathah != null) {
+            Mirath m = warathah.get(warith);
+            if (m == null) {
+                warathah.put(warith, new Mirath(ism + " حجب" + dhamir + " " + hajib));
+            } else {
+                m.addHajib(hajib);
+            }
         }
     }
 
-    public String calculate_furudh() 
-    {
-        //boolean assl = alab || aljad;
-        boolean far3_wareth_dhakar = (alabna > 0) || (abna_alabna > 0);
-        boolean far3_wareth_ontha = (albanat > 0) || (banat_alabna > 0);
-        boolean far3_wareth = far3_wareth_dhakar || far3_wareth_ontha;
-        boolean jam3_alikhwa = (alikhwa_alashika + alikhwa_li_ab + alikhwa_li_om + 
-                                alakhawat_ashakikat + alakhawat_li_ab + alakhawat_li_om) > 1;
-        boolean ikhwa_ma3a_aljad = (alikhwa_alashika + alikhwa_li_ab) >= 1;
-        int walad_alom = alikhwa_li_om + alakhawat_li_om;
+    public String calculate_furudh() {
+        boolean far3_warith_dhakar = (alabna + abna_alabna) > 0;
+        boolean far3_warith_ontha = (albanat + banat_alabna) > 0;
+        boolean far3_warith = far3_warith_dhakar || far3_warith_ontha;
+        boolean jam3_alikhwa = (alikhwa_alashika + alikhwa_li_ab + alikhwa_li_om +
+                alakhawat_ashakikat + alakhawat_li_ab + alakhawat_li_om) > 1;
+        boolean asl_warith_dhaker = alab || aljad;
+        boolean far3_wa_asl_warith_dhaker = far3_warith_dhakar || asl_warith_dhaker;
+        boolean alikhwa_alashika_wa_li_ab = (alikhwa_alashika + alikhwa_li_ab) > 0;
+        boolean alikhwa_wa_abna_alikhwa = (alikhwa_alashika + alikhwa_li_ab + abna_alikhwa_alashika + abna_alikhwa_li_ab) > 0;
+        boolean ala3mam = (ala3mam_alashika + ala3mam_li_ab) > 0;
+        boolean ikhwa_ma3a_aljad = (alikhwa_alashika + alikhwa_li_ab) > 0;
+        int awlad_alom = alikhwa_li_om + alakhawat_li_om;
+
+        String tafsir, ism, hajib, dhamir;  // keep un-intialized so Studio warns us if they're not set in the code
+        int bast, maqam, ro2os;
+        boolean baqi;
 
         resetMawarith();
 
         // mirath azzawj
-        if (zawj)
-        {
-            mirath_azawj = "الزوج يرث  " + 
-                           (far3_wareth ? "الربع 1/4" : "النصف 1/2") +
-                           " فرضا";
+        if (zawj) {
+            if (far3_warith) {
+                warathah.put(Warith.AZAWJ, new Mirath("الزوج يرث الربع 1\\4 فرضا", 1, 4));
+            } else {
+                warathah.put(Warith.AZAWJ, new Mirath("الزوج يرث النصف 1\\2 فرضا", 1, 2));
+            }
         }
 
         // mirath azzawjat
-        if (azawjat >= 1)
-        {
-            switch(azawjat) {
+        if (azawjat >= 1) {
+            switch (azawjat) {
                 case 1:
-                    mirath_azawjat = "الزوجة ترث ";
+                    tafsir = "الزوجة ترث ";
                     break;
                 case 2:
-                    mirath_azawjat = "الزوجتان تشتركان بالتساوي في ";
+                    tafsir = "الزوجتان تشتركان بالتساوي في ";
                     break;
                 default:
-                    mirath_azawjat = "الزوجات تشتركن بالتساوي في ";
+                    tafsir = "الزوجات تشتركن بالتساوي في ";
                     break;
             }
-            mirath_azawjat += (far3_wareth ? "الثمن 1/8" : "الربع 1/4") + " فرضا";
+            tafsir += (far3_warith ? "الثمن 1\\8" : "الربع 1\\4") + " فرضا";
+            warathah.put(Warith.AZAWJAT, new Mirath(tafsir, 1, (far3_warith ? 8 : 4), false, azawjat));
         }
 
         // mirath alab
-        if (alab)
-        {
-            mirath_alab = "الأب يرث ";
-            if (far3_wareth_dhakar)
-            {
-                mirath_alab += "السدس 1/6 فرضا فقط";
+        if (alab) {
+            tafsir = "الأب يرث ";
+            if (far3_warith_dhakar) {
+                tafsir += "السدس 1\\6 فرضا فقط";
+                bast = 1;
+                maqam = 6;
+                baqi = false;
+            } else if (far3_warith_ontha) {
+                tafsir += "السدس 1\\6 فرضا + الباقي تعصيبا بالنفس";
+                bast = 1;
+                maqam = 6;
+                baqi = true;
+            } else {
+                tafsir += "الباقي تعصيبا بالنفس";
+                bast = 0;
+                maqam = 1;
+                baqi = true;
             }
-            else if (far3_wareth_ontha)
-            {
-                mirath_alab += "السدس 1/6 فرضا + الباقي تعصيبا";
-            }
-            else
-            {
-                mirath_alab += "الباقي تعصيبا";
-            }
+            warathah.put(Warith.ALAB, new Mirath(tafsir, bast, maqam, baqi));
 
-            // alhajb
-            if (aljad)
-            {
-                mirath_aljad = hajb("الجد", "ه", "الأب");
+            // alhajb bi alab
+            if (aljad) {
+                hajb(Warith.ALJAD, "الجد", "ه", "الأب");
             }
-
-            if (madhab != Madhab.HAMBALI)
-            {
-                if (aljadah_li_ab)
-                {
-                    mirath_aljadah_li_ab = hajb("الجدة لأب", "ها", "الأب المدلية به");
+            if (madhab != Madhab.HAMBALI) {
+                // تسقط الجدة من جهة الأب بالأب، ولا تسقط الجدة من جهة الأم بالأب
+                if (aljadah_li_ab) {
+                    hajb(Warith.ALJADAH_LI_AB, "الجدة لأب", "ها", "الأب المدلية به");
                 }
             }
-
-            if (alikhwa_alashika >= 1)
-            {
-                mirath_alikhwa_alashika = hajb("الأخوة الأشقاء", "هم", "الأب");
+            if (alikhwa_alashika >= 1) {
+                hajb(Warith.ALIKHWA_ALASHIKA, "الإخوة الأشقاء", "هم", "الأب");
             }
-
-            if (alakhawat_ashakikat >= 1)
-            {
-                mirath_alakhawat_ashakikat = hajb("الأخوات ااشقيقات", "هن", "الأب");
+            if (alakhawat_ashakikat >= 1) {
+                hajb(Warith.ALAKHAWAT_ASHAKIKAT, "الأخوات الشقيقات", "هن", "الأب");
             }
-
-            if (alikhwa_li_om >= 1)
-            {
-                mirath_alikhwa_li_om = hajb("الأخوة لأم", "هم", "الأب");
+            if (alikhwa_li_om >= 1) {
+                hajb(Warith.ALIKHWA_LI_OM, "الإخوة لأم", "هم", "الأب");
             }
-
-            if (alakhawat_li_om >= 1)
-            {
-                mirath_alakhawat_li_om = hajb("الأخوات لأم", "هن", "الأب");
+            if (alakhawat_li_om >= 1) {
+                hajb(Warith.ALAKHAWAT_LI_OM, "الأخوات لأم", "هن", "الأب");
             }
-
-            if (alikhwa_li_ab >= 1)
-            {
-                mirath_alikhwa_li_ab = hajb("الأخوة لأب", "هم", "الأب");
+            if (alikhwa_li_ab >= 1) {
+                hajb(Warith.ALIKHWA_LI_AB, "الإخوة لأب", "هم", "الأب");
             }
-
-            if (alakhawat_li_ab >= 1)
-            {
-                mirath_alakhawat_li_ab = hajb("الأخوات لأب", "هن", "الأب");
+            if (alakhawat_li_ab >= 1) {
+                hajb(Warith.ALAKHAWAT_LI_AB, "الأخوات لأب", "هن", "الأب");
             }
-
-            if (abna_alikhwa_alashika >= 1)
-            {
-                mirath_abna_alikhwa_alashika = hajb("أبناء الإخوة الأشقاء", "هم", "الأب");
+            if (abna_alikhwa_alashika >= 1) {
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, "أبناء الإخوة الأشقاء", "هم", "الأب");
             }
-
-            if (abna_alikhwa_li_ab >= 1)
-            {
-                mirath_abna_alikhwa_li_ab = hajb("أبناء الإخوة لأب", "هم", "الأب");
+            if (abna_alikhwa_li_ab >= 1) {
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, "أبناء الإخوة لأب", "هم", "الأب");
             }
-
-            if (ala3mam_alashika >= 1)
-            {
-                mirath_ala3mam_alashika = hajb("الأعمام الأشقاء", "هم", "الأب");
+            if (ala3mam_alashika >= 1) {
+                hajb(Warith.ALA3MAM_ALASHIKA, "الأعمام الأشقاء", "هم", "الأب");
             }
-
-            if (ala3mam_li_ab >= 1)
-            {
-                mirath_ala3mam_li_ab = hajb("الأعمام لأب", "هم", "الأب");
+            if (ala3mam_li_ab >= 1) {
+                hajb(Warith.ALA3MAM_LI_AB, "الأعمام لأب", "هم", "الأب");
             }
-
-            if (abna_ala3mam_alashika >= 1)
-            {
-                mirath_abna_ala3mam_alashika = hajb("أبناء الأعمام الأشقاء", "هم", "الأب");
+            if (abna_ala3mam_alashika >= 1) {
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, "أبناء الأعمام الأشقاء", "هم", "الأب");
             }
-
-            if (abna_ala3mam_li_ab >= 1)
-            {
-                mirath_abna_ala3mam_li_ab = hajb("أبناء الأعمام لأب", "هم", "الأب");
+            if (abna_ala3mam_li_ab >= 1) {
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, "أبناء الأعمام لأب", "هم", "الأب");
             }
         }
 
         // mirath aljad
-        if (aljad)
-        {
-            if (mirath_aljad == null) // no hajb by ab
+        if (aljad) {
+            if (!alab) // no hajb by ab
             {
-                mirath_aljad = "الجد يرث ";
-                if (far3_wareth_dhakar)
-                {
-                    mirath_aljad = "السدس 1/6 فرضا فقط"; 
+                tafsir = "الجد يرث ";
+                ro2os = 1;
+                if (far3_warith_dhakar) {
+                    tafsir += "السدس 1\\6 فرضا فقط";
+                    bast = 1;
+                    maqam = 6;
+                    baqi = false;
+                } else {
+                    if (far3_warith_ontha) {
+                        tafsir += "السدس 1\\6 فرضا + الباقي تعصيبا بالنفس";
+                        bast = 1;
+                        maqam = 6;
+                    } else {
+                        tafsir += "الباقي تعصيبا بالنفس";
+                        bast = 0;
+                        maqam = 1;
+                    }
+                    baqi = true;
+                    if (alikhwa_alashika_wa_li_ab) {
+                        String muqasim;
+                        if (alikhwa_alashika > 0) {
+                            muqasim = (alikhwa_alashika == 1) ? "الأخ الشقيق" : "الإخوة الأشقاء";
+                            ro2os +=  (alakhawat_ashakikat > 0) ?
+                                    (2 * alikhwa_alashika + alakhawat_ashakikat) : alikhwa_alashika;
+                        } else {  // alikhwa_li_ab > 0
+                            muqasim = (alikhwa_li_ab == 1) ? "الأخ لأب" : "الإخوة لأب";
+                            ro2os +=  (alakhawat_li_ab > 0) ?
+                                    (2 * alikhwa_li_ab + alakhawat_li_ab) : alikhwa_li_ab;                        }
+                        tafsir += " ومقاسمة مع " + muqasim;
+                    }
                 }
-                else if (far3_wareth_ontha)
-                {
-                    mirath_aljad = "السدس 1/6 فرضا + الباقي تعصيبا";
-                }
-                else if (!ikhwa_ma3a_aljad)
-                {
-                    mirath_aljad = "الباقي تعصيبا";
-                }
-                else
-                {
-                    mirath_aljad = "مقاسمة مع الإخوة تعصيبا"; // TODO? التساوي
-                }
+                warathah.put(Warith.ALJAD, new Mirath(tafsir, bast, maqam, baqi, 1, ro2os));
             }
 
-            // alhajb
-            if (alikhwa_li_om >= 1)
-            {
-                mirath_alikhwa_li_om = hajb("الأخوة لأم", "هم", "الجد", mirath_alikhwa_li_om);
+            // alhajb by aljad, we put it even if there is hajb by ab for detailed info
+            if (alikhwa_li_om >= 1) {
+                hajb(Warith.ALIKHWA_LI_OM, "الإخوة لأم", "هم", "الجد");
             }
-
-            if (alakhawat_li_om >= 1)
-            {
-                mirath_alakhawat_li_om = hajb("الأخوات لأم", "هن", "الجد", mirath_alakhawat_li_om);
+            if (alakhawat_li_om >= 1) {
+                hajb(Warith.ALAKHAWAT_LI_OM, "الأخوات لأم", "هن", "الجد");
             }
-
-            if (abna_alikhwa_alashika >= 1)
-            {
-                mirath_abna_alikhwa_alashika = hajb("أبناء الإخوة الأشقاء", "هم", "الجد", mirath_abna_alikhwa_alashika);
+            if (abna_alikhwa_alashika >= 1) {
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, "أبناء الإخوة الأشقاء", "هم", "الجد");
             }
-
-            if (abna_alikhwa_li_ab >= 1)
-            {
-                mirath_abna_alikhwa_li_ab = hajb("أبناء الإخوة لأب", "هم", "الجد", mirath_abna_alikhwa_li_ab);
+            if (abna_alikhwa_li_ab >= 1) {
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, "أبناء الإخوة لأب", "هم", "الجد");
             }
-
-            if (ala3mam_alashika >= 1)
-            {
-                mirath_ala3mam_alashika = hajb("الأعمام الأشقاء", "هم", "الجد", mirath_ala3mam_alashika);
+            if (ala3mam_alashika >= 1) {
+                hajb(Warith.ALA3MAM_ALASHIKA, "الأعمام الأشقاء", "هم", "الجد");
             }
-
-            if (ala3mam_li_ab >= 1)
-            {
-                mirath_ala3mam_li_ab = hajb("الأعمام لأب", "هم", "الجد", mirath_ala3mam_li_ab);
+            if (ala3mam_li_ab >= 1) {
+                hajb(Warith.ALA3MAM_LI_AB, "الأعمام لأب", "هم", "الجد");
             }
-
-            if (abna_ala3mam_alashika >= 1)
-            {
-                mirath_abna_ala3mam_alashika = hajb("أبناء الأعمام الأشقاء", "هم", "الجد", mirath_abna_ala3mam_alashika);
+            if (abna_ala3mam_alashika >= 1) {
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, "أبناء الأعمام الأشقاء", "هم", "الجد");
             }
-
-            if (abna_ala3mam_li_ab >= 1)
-            {
-                mirath_abna_ala3mam_li_ab = hajb("أبناء الأعمام لأب", "هم", "الجد", mirath_abna_ala3mam_li_ab);
+            if (abna_ala3mam_li_ab >= 1) {
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, "أبناء الأعمام لأب", "هم", "الجد");
             }
         }
 
         // mirath alom
-        if (alom)
-        {
-            mirath_alom = "الأم ترث ";
-            if (jam3_alikhwa || far3_wareth)
-            {
-                mirath_alom += "السدس 1/6 فرضا";
+        if (alom) {
+            tafsir = "الأم ترث ";
+            if (jam3_alikhwa || far3_warith) {
+                tafsir += "السدس 1\\6 فرضا";
+                maqam = 6;
+                baqi = false;
+            } else if ((alab) && ((azawjat > 0) || (zawj))) {
+                tafsir = "الأم ترث ثلث 1\\3 الباقي";
+                maqam = 3;
+                baqi = true;
+                special_case = "مسألة الغرّاوين";
+            } else {
+                tafsir += "الثلث 1\\3 فرضا";
+                maqam = 3;
+                baqi = false;
             }
-            else
-            {
-                mirath_alom += "الثلث 1/3 فرضا";
+            warathah.put(Warith.ALOM, new Mirath(tafsir, 1, maqam, baqi));
+
+            // alhajb bi alom
+            if (aljadah_li_ab) {
+                hajb(Warith.ALJADAH_LI_AB, "الجدة لأب", "تها", "الأم");
+            }
+            if (aljadah_li_om) {
+                hajb(Warith.ALJADAH_LI_OM, "الجدة لأم", "تها", "الأم");
+            }
+        } else { // mirath aljadat
+            if (aljadah_li_ab && !alab) {
+                tafsir = "الجدة لأب ";
+                if (aljadah_li_om) {
+                    tafsir += "تشترك بالتساوي مع الجدة لأم في السدس 1\\6 فرضا";
+                    ro2os = 2;
+                } else {
+                    tafsir += "ترث السدس 1\\6 فرضا";
+                    ro2os = 1;
+                }
+                warathah.put(Warith.ALJADAH_LI_AB, new Mirath(tafsir, 1, 6, false, 1, ro2os));
             }
 
-            if ((alab) && ((azawjat > 0) || (zawj)) && !far3_wareth)
-            {
-                mirath_alom = "الأم ترث ثلث 1/3 الباقي (مسألة الغرّاوين)";
-            }
-
-            // alhajb
-            if (aljadah_li_ab)
-            {
-                mirath_aljadah_li_ab = hajb("الجدة لأب", "تها", "الأم", mirath_aljadah_li_ab);
-            }
-
-            if (aljadah_li_om)
-            {
-                mirath_aljadah_li_om = hajb("الجدة لأم", "تها", "الأم", mirath_aljadah_li_om);
-            }
-        }
-        else
-        {
-            // mirath aljadat
-            if (aljadah_li_ab && (mirath_aljadah_li_ab == null))
-            {
-                mirath_aljadah_li_ab = "الجدة لأب ";
-                if (aljadah_li_om)
-                {
-                    mirath_aljadah_li_ab += "تشترك بالتساوي مع الجدة لأم في السدس 1/6 فرضا";
+            if (aljadah_li_om) {
+                tafsir = "الجدة لأم ";
+                if (aljadah_li_ab && !alab) {
+                    tafsir += "تشترك بالتساوي مع الجدة لأب في السدس 1\\6 فرضا";
+                    ro2os = 2;
+                } else {
+                    tafsir += "ترث السدس 1\\6 فرضا";
+                    ro2os = 1;
                 }
-                else
-                {
-                    mirath_aljadah_li_ab += "ترث السدس 1/6 فرضا";
-                }
-            }
-
-            if (aljadah_li_om)
-            {
-                mirath_aljadah_li_om = "الجدة لأم ";
-                if ((mirath_aljadah_li_ab == null) || mirath_aljadah_li_ab.startsWith("حجب")) 
-                {
-                    mirath_aljadah_li_om += "ترث السدس 1/6 فرضا";
-                }
-                else
-                {
-                    mirath_aljadah_li_om += "تشترك بالتساوي مع الجدة لأب في السدس 1/6 فرضا";
-                }
+                warathah.put(Warith.ALJADAH_LI_OM, new Mirath(tafsir, 1, 6, false, 1,  ro2os));
             }
         }
 
         // mirath alikhwa li om
-        if ((walad_alom > 0) /* && (mirath_alikhwa_li_om == null) && (alakhawat_li_om == null) */)
-        {
-            if (far3_wareth)
-            {
-                if (alikhwa_li_om > 0)
-                {
-                    mirath_alikhwa_li_om = hajb("الأخوة لأم", "هم", "الفرع الوارث", mirath_alikhwa_li_om);
+        if (awlad_alom > 0) {
+            if (far3_warith) {
+                if (alikhwa_li_om > 0) {
+                    hajb(Warith.ALIKHWA_LI_OM, "الإخوة لأم", "هم", "الفرع الوارث");
                 }
-
-                if (alakhawat_li_om > 0)
-                {
-                    mirath_alakhawat_li_om = hajb("الأخوات لأم", "هن", "الفرع الوارث", mirath_alakhawat_li_om);
+                if (alakhawat_li_om > 0) {
+                    hajb(Warith.ALAKHAWAT_LI_OM, "الأخوات لأم", "هن", "الفرع الوارث");
                 }
-            }
-            else
-            {
-                if (walad_alom > 1)
-                {
-                    if (alikhwa_li_om > 0)
-                    {
-                        String warith;
-                        String dhamir;
-                        if (alikhwa_li_om == 1)
-                        {
-                            warith = "الأخ لأم";
-                            dhamir = "";
-                        }
-                        else
-                        {
-                            warith = "الأخوة لأم";
-                            dhamir = "ون";
-                        }
-                        mirath_alikhwa_li_om = warith + " يشترك" + dhamir + " بالتساوي مع أولاد الأم في الثلث 1/3 فرضا";
+            } else if (!asl_warith_dhaker) { // hajb by asl warith dhaker done above
+                if (awlad_alom > 1) {
+                    if (alikhwa_li_om > 0) {
+                        ism = (alikhwa_li_om == 1) ? "الأخ لأم" : "الإخوة لأم";
+                        dhamir = (alikhwa_li_om == 1) ?  "" : "ون";
+                        tafsir = ism + " يشترك" + dhamir + " بالتساوي مع أولاد الأم في الثلث 1\\3 فرضا";
+                        warathah.put(Warith.ALIKHWA_LI_OM, new Mirath(tafsir, 1, 3, false, alikhwa_li_om, awlad_alom));
                     }
-
-                    if (alakhawat_li_om > 0)
-                    {
-                        String warith;
-                        String dhamir;
-                        if (alakhawat_li_om == 1)
-                        {
-                            warith = "الأخت لأم";
-                            dhamir = "";
-                        }
-                        else
-                        {
-                            warith = "الأخوات لأم";
-                            dhamir = "ون";
-                        }
-                        mirath_alakhawat_li_om = warith + " تشترك" + dhamir + " بالتساوي مع أولاد الأم في الثلث 1/3 فرضا";
+                    if (alakhawat_li_om > 0) {
+                        ism = (alakhawat_li_om == 1) ? "الأخت لأم": "الأخوات لأم";
+                        dhamir = (alakhawat_li_om == 1) ? "" : "ن";
+                        tafsir = ism + " تشترك" + dhamir + " بالتساوي مع أولاد الأم في الثلث 1\\3 فرضا";
+                        warathah.put(Warith.ALAKHAWAT_LI_OM, new Mirath(tafsir, 1, 3, false, alakhawat_li_om, awlad_alom));
                     }
-                }
-                else if (alikhwa_li_om == 1)
-                {
-                    mirath_alikhwa_li_om = "الأخ لأم يرث السدس 1/6 فرضا";
-                }
-                else  // alakhawat_li_om == 1
-                {
-                    mirath_alakhawat_li_om = "الأخت لأم ترث السدس 1/6 فرضا";
+                } else if (alikhwa_li_om == 1) {
+                    warathah.put(Warith.ALIKHWA_LI_OM, new Mirath("الأخ لأم يرث السدس 1\\6 فرضا", 1, 6));
+                } else { // alakhawat_li_om == 1
+                    warathah.put(Warith.ALAKHAWAT_LI_OM, new Mirath("الأخت لأم ترث السدس 1\\6 فرضا", 1, 6));
                 }
             }
         }
 
         // mirath albanat ma3a 3adam wojud alabna
-        if (alabna == 0)
-        {
-            if (albanat == 1)
-            {
-                mirath_albanat = "البنت ترث النصف 1/2 فرضا";
-
-                if (abna_alabna == 0) 
-                {
-                    if (banat_alabna == 1)
-                    {
-                        mirath_banat_alabna = "بنت الإبن ترث السدس 1/6 تتمة الثلثين فرضا";
-                    }
-                    else if (banat_alabna > 1)
-                    {
-                        mirath_banat_alabna = "بنات الإبن تشتركن بالتساوي في السدس 1/6 تتمة الثلثين فرضا";
-                    }
+        if (alabna == 0) {
+            if (albanat == 1) {
+                warathah.put(Warith.ALBANAT, new Mirath("البنت ترث النصف 1\\2 فرضا", 1, 2));
+                if ((abna_alabna == 0) && (banat_alabna > 0)) {
+                    tafsir = (banat_alabna == 1) ? "بنت الابن ترث" : "بنات الأبناء تشتركن بالتساوي في";
+                    tafsir += " السدس 1\\6 تتمة الثلثين فرضا";
+                    warathah.put(Warith.BANAT_ALABNA, new Mirath(tafsir, 1, 6, false, banat_alabna));
                 }
-            }
-            else if (albanat >= 2)
-            {
-                mirath_albanat = "البنات تشتركن بالتساوي في الثلثين 2/3 فرضا";
-
-                if ((abna_alabna == 0) && (banat_alabna >= 1))
-                {
-                    String dhamir = (banat_alabna == 1) ? "ها" : "هن";
-                    mirath_banat_alabna = hajb("بنات الأبناء", dhamir, "الجمع من البنات");
+            } else if (albanat >= 2) {
+                warathah.put(Warith.ALBANAT, new Mirath("البنات تشتركن بالتساوي في الثلثين 2\\3 فرضا", 2, 3, false, albanat));
+                if ((abna_alabna == 0) && (banat_alabna > 0)) {
+                    ism = (banat_alabna == 1) ? "بنت الابن" : "بنات الأبناء";
+                    dhamir = (banat_alabna == 1) ? "ها" : "هن";
+                    hajb(Warith.BANAT_ALABNA, ism, dhamir, "الجمع من البنات");
                 }
-            }
-            else // albanat == 0
-            {
-                // same for 2nd generation
-                if (abna_alabna == 0)
-                {
-                    if (banat_alabna == 1)
-                    {
-                        mirath_banat_alabna = "بنت الإبن ترث النصف 1/2 فرضا";
+            } else { // albanat == 0
+                // same logic holds for 2nd generation if present
+                if ((abna_alabna == 0) && (banat_alabna > 0)) {
+                    if (banat_alabna == 1) {
+                        bast = 1; maqam = 2;
+                        tafsir = "بنت الابن ترث النصف 1\\2 فرضا";
+                    } else {
+                        bast = 2; maqam = 3;
+                        tafsir = "بنات الأبناء تشتركن بالتساوي في الثلثين 2\\3 فرضا";
                     }
-                    else if (banat_alabna >= 2)
-                    {
-                        mirath_banat_alabna = "بنات الأبناء تشتركن بالتساوي في الثلثين 2/3 فرضا";
-                    }
+                    warathah.put(Warith.BANAT_ALABNA, new Mirath(tafsir, bast, maqam, false, banat_alabna));
                 }
             }
         }
 
         // mirath alakhawat ashakikat 3inda 3adam wojud alikhwa alashika
-        if ((alakhawat_ashakikat > 0) && !alab && !far3_wareth_dhakar && (alikhwa_alashika == 0))
-        {
-            if (!far3_wareth_ontha)
-            {
-                if (alakhawat_ashakikat == 1)
-                {
-                    mirath_alakhawat_ashakikat = "الأخت الشقيقة ترث النصف 1/2 فرضا";
+        if ((alakhawat_ashakikat > 0) && !alab && !far3_warith_dhakar && (alikhwa_alashika == 0)) {
+            if (!far3_warith_ontha) {
+                baqi = false;
+                if (alakhawat_ashakikat == 1) {
+                    bast = 1; maqam = 2;
+                    tafsir = "الأخت الشقيقة ترث النصف 1\\2 فرضا";
+                } else { // (alakhawat_ashakikat >= 2)
+                    bast = 2; maqam = 3;
+                    tafsir ="الأخوات الشقيقات تشتركن بالتساوي في الثلثين 2\\3 فرضا";
                 }
-                else // (alakhawat_ashakikat >= 2)
-                {
-                    mirath_alakhawat_ashakikat = "الأخوات الشقيقات تشتركن بالتساوي في الثلثين 2/3 فرضا";
-                }
+            } else { // presence of far3_warith_ontha
+                baqi = true;
+                bast = 0; maqam = 1;
+                tafsir = (alakhawat_ashakikat == 1) ? "الأخت الشقيقة ترث" : "الأخوات الشقيقات تشتركن بالتساوي في";
+                tafsir += " الباقي تعصيبا مع الغير";
             }
-            else
-            {
-                if (alakhawat_ashakikat == 1)
-                {
-                    mirath_alakhawat_ashakikat = "الأخت الشقيقة تصير عصبة مع الغير";
-                }
-                else // (alakhawat_ashakikat >= 2)
-                {
-                    mirath_alakhawat_ashakikat = "الأخوات الشقيقات يصرن عصبة مع الغير";
-                }    
-            }
+            warathah.put(Warith.ALAKHAWAT_ASHAKIKAT, new Mirath(tafsir, bast, maqam, baqi, alakhawat_ashakikat, alakhawat_ashakikat));
         }
 
         // mirath alakhawat li ab 3inda 3adam wojud alikhwa
-        if ((alakhawat_li_ab > 0) && !alab && !far3_wareth_dhakar && (alikhwa_alashika == 0) && (alikhwa_li_ab == 0))
-        {
-            if (!far3_wareth_ontha)
-            {
-                if (alakhawat_ashakikat == 0)
-                {
-                    if (alakhawat_li_ab == 1)
-                    {
-                        mirath_alakhawat_li_ab = "الأخت لأب ترث النصف 1/2 فرضا";
+        if ((alakhawat_li_ab > 0) && !alab && !far3_warith_dhakar && !alikhwa_alashika_wa_li_ab) {
+            if (!far3_warith_ontha) {
+                if (alakhawat_ashakikat == 0) {
+                    if (alakhawat_li_ab == 1) {
+                        warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath("الأخت لأب ترث النصف 1\\2 فرضا", 1, 2));
+                    } else { // (alakhawat_li_ab >= 2)
+                        warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath("الأخوات لأب تشتركن بالتساوي في الثلثين 2\\3 فرضا", 2, 3, false, alakhawat_li_ab));
                     }
-                    else // (alakhawat_li_ab >= 2)
-                    {
-                        mirath_alakhawat_li_ab = "الأخوات لأب تشتركن بالتساوي في الثلثين 2/3 فرضا";
+                } else if (alakhawat_ashakikat == 1) {
+                    if (alakhawat_li_ab == 1) {
+                        warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath("الأخت لأب ترث السدس 1\\6 تتمة الثلثين فرضا", 1, 6));
+                    } else {// (alakhawat_li_ab >= 2)
+                        warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath("الأخوات لأب تشتركن بالتساوي في السدس 1\\6 تتمة الثلثين فرضا", 1, 6, false, alakhawat_li_ab));
                     }
-                }
-                else if (alakhawat_ashakikat == 1)
-                {
-                    if (alakhawat_li_ab == 1)
-                    {
-                        mirath_alakhawat_li_ab = "الأخت لأب ترث السدس 1/6 تتمة الثلثين فرضا";
-                    }
-                    else // (alakhawat_li_ab >= 2)
-                    {
-                        mirath_alakhawat_li_ab = "الأخوات لأب تشتركن بالتساوي في السدس 1/6 تتمة الثلثين فرضا";
-                    }
-                }
-                else
-                {
-                    String warith;
-                    String dhamir;
-                    String hajib = (alakhawat_ashakikat == 1) ? "الأخت الشقيقة" : "الأخوات الشقيقات";
-                    if (alakhawat_li_ab == 1) 
-                    {
-                        warith = "الأخت لأب";
+                } else { //(alakhawat_alshakikat > 1)
+                    if (alakhawat_li_ab == 1) {
+                        ism = "الأخت لأب";
                         dhamir = "ها";
-                    }
-                    else 
-                    {
-                        warith = "الأخوات لأب";
+                    } else {
+                        ism = "الأخوات لأب";
                         dhamir = "هن";
                     }
-                    mirath_alakhawat_li_ab = hajb(warith, dhamir, hajib, mirath_alakhawat_li_ab);
+                    hajb(Warith.ALAKHAWAT_LI_AB, ism, dhamir, "الأخوات الشقيقات");
                 }
-            }
-            else
-            {
-                String warith_v;
-                String warith;
-                String dhamir;
-                if (alakhawat_li_ab == 1)
-                {
-                    warith_v = "الأخت لأب تصير";
-                    warith = "الأخت لأب";
-                    dhamir = "ها";
-                }
-                else
-                {
-                    warith_v = "الأخوات لأب يصرن";
-                    warith = "الأخوات لأب";
-                    dhamir = "هن";
-                }
-
-                if (alakhawat_ashakikat == 0)
-                {
-                    mirath_alakhawat_li_ab = warith_v + " عصبة مع الغير";
-                }
-                else
-                {
-                    String hajib = (alakhawat_ashakikat == 1) ?  "الأخت الشقيقة" : "الأخوات الشقيقات";
-                    mirath_alakhawat_li_ab = hajb(warith, dhamir, hajib, mirath_alakhawat_li_ab);
-                    //mirath_alakhawat_li_ab = hajb(dhamir, "alakhawat ashakikat sirna 3osba ma3a alghayr", mirath_alakhawat_li_ab);
+            } else { // far3_warith_ontha
+                if (alakhawat_ashakikat == 0) {
+                    tafsir = (alakhawat_li_ab == 1) ? "الأخت لأب ترث" : "الأخوات لأب تشتركن بالتساوي في";
+                    tafsir += " الباقي تعصيبا مع الغير";
+                    warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath(tafsir, 0, 1, true, alakhawat_li_ab, alakhawat_li_ab));
+                } else {
+                    hajib = (alakhawat_ashakikat == 1) ? "الأخت الشقيقة" : "الأخوات الشقيقات";
+                    if (alakhawat_li_ab == 1) {
+                        ism = "الأخت لأب";
+                        dhamir = "تها";
+                    } else {
+                        ism = "الأخوات لأب";
+                        dhamir = "هن";
+                    }
+                    hajb(Warith.ALAKHAWAT_LI_AB, ism, dhamir, hajib);
                 }
             }
         }
 
-        String result = "";
-        String[] warathah = {
-            mirath_alab,
-            mirath_alom,
-            mirath_aljad,
-            mirath_aljadah_li_ab,
-            mirath_aljadah_li_om,
-            mirath_azawj,
-            mirath_azawjat,
-            mirath_alabna,
-            mirath_albanat,
-            mirath_abna_alabna,
-            mirath_banat_alabna,
-            mirath_alikhwa_li_om,
-            mirath_alakhawat_li_om,
-            mirath_alikhwa_alashika,
-            mirath_alakhawat_ashakikat,
-            mirath_alikhwa_li_ab,
-            mirath_alakhawat_li_ab,
-            mirath_abna_alikhwa_alashika,
-            mirath_abna_alikhwa_li_ab,
-            mirath_ala3mam_alashika,
-            mirath_ala3mam_li_ab,
-            mirath_abna_ala3mam_alashika,
-            mirath_abna_ala3mam_li_ab
-        };
+        //mirath alabna + albanat 3inda woujoud alabna
+        if (alabna > 0) {
+            if (albanat == 0) {
+                tafsir = (alabna == 1) ? "الابن يرث الباقي تعصيبا بالنفس" : "الأبناء يشتركون في الباقي تعصيبا بالنفس";
+                warathah.put(Warith.ALABNA, new Mirath(tafsir, 0, 1, true, alabna, alabna));
+            } else {
+                String tafsir2;
+                if (albanat == 1) {
+                    tafsir = (alabna == 1) ? "الابن يشترك مع البنت في الباقي تعصيبا بالنفس" : "الأبناء يشتركون مع البنت في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alabna == 1) ? "البنت تشترك مع الابن في الباقي تعصيبا" : "البنت تشترك مع الأبناء في الباقي تعصيبا";
+                } else { // albanat > 1
+                    tafsir = (alabna == 1) ? "الابن يشترك مع البنات في الباقي تعصيبا بالنفس" : "الأبناء يشتركون مع البنات في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alabna == 1) ? "البنات تشتركن مع الابن في الباقي تعصيبا بالغير" : "البنات تشتركن مع الأبناء في الباقي تعصيبا بالغير";
+                }
+                ro2os = 2 * alabna + albanat;
 
-        for (int i = 0; i < warathah.length; i++) {
-            if (warathah[i] != null)
-                result += "- " + warathah[i] + ".\n";
+                tafsir += " (للذكر مثل حظ الأنثيين)";
+                warathah.put(Warith.ALABNA, new Mirath(tafsir, 0, 1, true, alabna, ro2os));
+
+                tafsir2 += " (للذكر مثل حظ الأنثيين)";
+                warathah.put(Warith.ALBANAT, new Mirath(tafsir2, 0, 1, true, albanat, ro2os));
+            }
+
+            // hajb by alabna
+            hajib = (alabna == 1) ? "الابن" : "الأبناء";
+            if (abna_alabna > 0) {
+                ism = (abna_alabna == 1) ? "ابن الابن" : "أبناء الأبناء";
+                dhamir = (abna_alabna == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALABNA, ism, dhamir, hajib);
+            }
+            if (banat_alabna > 0) {
+                ism = (banat_alabna == 1) ? "بنت الابن" : "بنات الأبناء";
+                dhamir = (banat_alabna == 1) ? "ها" : "هن";
+                hajb(Warith.BANAT_ALABNA, ism, dhamir, hajib);
+            }
+            if (alikhwa_alashika > 0) {
+                ism = (alikhwa_alashika == 1) ? "الأخ الشقيق" : "الإخوة الأشقاء";
+                dhamir = (alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (alakhawat_ashakikat > 0) {
+                ism = (alakhawat_ashakikat == 1) ? "الأخت الشقيقة" : "الأخوات الشقيقات";
+                dhamir = (alakhawat_ashakikat == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_ASHAKIKAT, ism, dhamir, hajib);
+            }
+            if (alikhwa_li_ab > 0) {
+                ism = (alikhwa_li_ab == 1) ? "الأخ لأب" : "الإخوة لأب";
+                dhamir = (alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (alakhawat_li_ab > 0) {
+                ism = (alakhawat_li_ab == 1) ? "الأخت لأب" : "الأخوات لأب";
+                dhamir = (alakhawat_li_ab == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_LI_AB, ism, dhamir, hajib);
+            }
+            //الحجب تم بالفرع الوارث سابقا في ميراث أولاد الأم
+           /* if (alikhwa_li_om > 0) {
+                ism = (alikhwa_li_om == 1) ? "الأخ لأم" : "الإخوة لأم";
+                dhamir = (alikhwa_li_om == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_LI_OM, ism, dhamir, hajib);
+            }
+            if (alakhawat_li_om > 0) {
+                ism = (alakhawat_li_om == 1) ? "الأخت لأم" : "الأخوات لأم";
+                dhamir = (alakhawat_li_om == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_LI_OM, ism, dhamir, hajib);
+            } */
+            if (abna_alikhwa_alashika > 0) {
+                ism = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق" : "أبناء الإخوة الأشقاء";
+                dhamir = (abna_alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_alikhwa_li_ab > 0) {
+                ism = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+                dhamir = (abna_alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
         }
 
-        return result;
+        // mirath abna_alabna + banat_alabna
+        if ((abna_alabna > 0) && (alabna == 0)) {
+            if (banat_alabna == 0) {
+                tafsir = (abna_alabna == 1) ? "ابن الابن يرث الباقي تعصيبا بالنفس" :  "أبناء الأبناء يشتركون في الباقي تعصيبا بالنفس";
+                warathah.put(Warith.ABNA_ALABNA, new Mirath(tafsir, 0, 1, true, abna_alabna, abna_alabna));
+            } else {
+                String str2;
+                if (banat_alabna == 1) {
+                    tafsir = (abna_alabna == 1) ? "ابن الابن يشترك مع بنت الابن في الباقي تعصيبا بالنفس" : "أبناء الأبناء يشتركون مع بنت الابن في الباقي تعصيبا بالنفس";
+                    str2 = (abna_alabna == 1) ? "بنت الابن تشترك مع ابن الابن في الباقي تعصيبا بالغير" : "بنت الابن تشترك مع أبناء الأبناء في الباقي تعصيبا بالغير";
+                } else { // banat_alabna > 1
+                    tafsir = (abna_alabna == 1) ? "ابن الابن يشترك مع بنات الأبناء في الباقي تعصيبا بالنفس" : "أبناء الأبناء يشتركون مع بنات الأبناء في الباقي تعصيبا بالنفس";
+                    str2 = (abna_alabna == 1) ? "بنات الأبناء تشتركن مع ابن الابن في الباقي تعصيبا بالغير" : "بنات الأبناء تشتركن مع أبناء الأبناء في الباقي تعصيبا بالغير";
+                }
+                ro2os = 2 * abna_alabna + banat_alabna;
+
+                tafsir += " (للذكر مثل حظ الأنثيين)";
+                warathah.put(Warith.ABNA_ALABNA, new Mirath(tafsir, 0, 1, true, abna_alabna, ro2os));
+
+                str2 += " (للذكر مثل حظ الأنثيين)";
+                warathah.put(Warith.BANAT_ALABNA, new Mirath(str2, 0, 1, true, banat_alabna, ro2os));
+            }
+
+            // hajb by abna alabna
+            hajib = (abna_alabna == 1) ? "ابن الابن" : "أبناء الأبناء";
+            if (alikhwa_alashika > 0) {
+                ism = (alikhwa_alashika == 1) ? "الأخ الشقيق" : "الإخوة الأشقاء";
+                dhamir = (alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (alakhawat_ashakikat > 0) {
+                ism = (alakhawat_ashakikat == 1) ? "الأخت الشقيقة" : "الأخوات الشقيقات";
+                dhamir = (alakhawat_ashakikat == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_ASHAKIKAT, ism, dhamir, hajib);
+            }
+            if (alikhwa_li_ab > 0) {
+                ism = (alikhwa_li_ab == 1) ? "الأخ لأب" : "الإخوة لأب";
+                dhamir = (alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (alakhawat_li_ab > 0) {
+                ism = (alakhawat_li_ab == 1) ? "الأخت لأب" : "الأخوات لأب";
+                dhamir = (alakhawat_li_ab == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_LI_AB, ism, dhamir, hajib);
+            }
+            //الحجب تم بالفرع الوارث سابقا في ميراث أولاد الأم
+         /*   if (alikhwa_li_om > 0) {
+                ism = (alikhwa_li_om == 1) ? "الأخ لأم" : "الإخوة لأم";
+                dhamir = (alikhwa_li_om == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_LI_OM, ism, dhamir, hajib);
+            }
+            if (alakhawat_li_om > 0) {
+                ism = (alakhawat_li_om == 1) ? "الأخت لأم" : "الأخوات لأم";
+                dhamir = (alakhawat_li_om == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_LI_OM, ism, dhamir, hajib);
+            }*/
+            if (abna_alikhwa_alashika > 0) {
+                ism = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق" : "أبناء الإخوة الأشقاء";
+                dhamir = (abna_alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_alikhwa_li_ab > 0) {
+                ism = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+                dhamir = (abna_alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath alab and hajb by alab were previously calculated
+        // mirath aljad and hajb by aljad were previously calculated
+
+        // mirath alikhwa alashika + alakhawat ashakikat
+        if (alikhwa_alashika > 0 && !far3_warith_dhakar && !alab) {
+            if (alakhawat_ashakikat == 0) {
+                tafsir = (alikhwa_alashika == 1) ? "الأخ الشقيق يرث الباقي تعصيبا بالنفس" : "الإخوة الأشقاء يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+                tafsir += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALIKHWA_ALASHIKA, new Mirath(tafsir, 0, 1, true, alikhwa_alashika, alikhwa_alashika));
+            } else {
+                String tafsir2;
+
+                if (alakhawat_ashakikat == 1) {
+                    tafsir = (alikhwa_alashika == 1) ? "الأخ الشقيق يشترك مع الأخت الشقيقة في الباقي تعصيبا بالنفس" : "الإخوة الأشقاء يشتركون مع الأخت الشقيقة في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alikhwa_alashika == 1) ? "الأخت الشقيقة تشترك مع الأخ الشقيق في الباقي تعصيبا بالغير" : "الأخت الشقيقة تشترك مع الإخوة الأشقاء في الباقي تعصيبا بالغير";
+                } else { // alakhawat_ashakikat > 1
+                    tafsir = (alikhwa_alashika == 1) ? "الأخ الشقيق يشترك مع الأخوات الشقيقات في الباقي تعصيبا بالنفس" : "الإخوة الأشقاء يشتركون مع الأخوات الشقيقات في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alikhwa_alashika == 1) ? "الأخوات الشقيقات تشتركن مع الأخ الشقيق في الباقي تعصيبا بالغير" : "الأخوات الشقيقات تشتركن مع الإخوة الأشقاء في الباقي تعصيبا بالغير";
+                }
+                ro2os = 2 * alikhwa_alashika + alakhawat_ashakikat;
+
+                tafsir += " (للذكر مثل حظ الأنثيين)";
+                tafsir += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALIKHWA_ALASHIKA, new Mirath(tafsir, 0, 1, true, alikhwa_alashika, ro2os));
+
+                tafsir2 += " (للذكر مثل حظ الأنثيين)";
+                tafsir2 += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALAKHAWAT_ASHAKIKAT, new Mirath(tafsir2, 0, 1, true, alakhawat_ashakikat, ro2os));
+            }
+
+            // الحجب بالإخوة الأشقاء
+            hajib = (alikhwa_alashika == 1) ? "الأخ الشقيق" : "الإخوة الأشقاء";
+            if (alikhwa_li_ab > 0) {
+                ism = (alikhwa_li_ab == 1) ? "الأخ لأب" : "الإخوة لأب";
+                dhamir = (alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (alakhawat_li_ab > 0) {
+                ism = (alakhawat_li_ab == 1) ? "الأخت لأب" : "الأخوات لأب";
+                dhamir = (alakhawat_li_ab == 1) ? "ها" : "هن";
+                hajb(Warith.ALAKHAWAT_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_alikhwa_alashika > 0) {
+                ism = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق" : "أبناء الإخوة الأشقاء";
+                dhamir = (abna_alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_alikhwa_li_ab > 0) {
+                ism = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+                dhamir = (abna_alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath alikhwa li ab + alakhawat li ab
+        if ((alikhwa_li_ab > 0) && !far3_warith_dhakar && !alab && (alikhwa_alashika == 0)) {
+            if (alakhawat_li_ab == 0) {
+                tafsir = (alikhwa_li_ab == 1) ? "الأخ لأب يرث الباقي تعصيبا بالنفس" : "الإخوة لأب يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+                tafsir += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALIKHWA_LI_AB, new Mirath(tafsir, 0, 1, true, alikhwa_li_ab, alikhwa_li_ab));
+            } else {
+                String tafsir2;
+
+                if (alakhawat_li_ab == 1) {
+                    tafsir = (alikhwa_li_ab == 1) ? "الأخ لأب يشترك مع الأخت لأب في الباقي تعصيبا بالنفس" : "الإخوة لأب يشتركون مع الأخت لأب في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alikhwa_li_ab == 1) ? "الأخت لأب تشترك مع الأخ لأب في الباقي تعصيبا بالغير" : "الأخت لأب تشترك مع الإخوة لأب في الباقي تعصيبا بالغير";
+                } else { // alakhawat_li_ab > 1
+                    tafsir = (alikhwa_li_ab == 1) ? "الأخ لأب يشترك مع الأخوات لأب في الباقي تعصيبا بالنفس" : "الإخوة لأب يشتركون مع الأخوات لأب في الباقي تعصيبا بالنفس";
+                    tafsir2 = (alikhwa_li_ab == 1) ? "الأخوات لأب تشتركن مع الأخ لأب في الباقي تعصيبا بالغير" : "الأخوات لأب تشتركن مع الإخوة لأب في الباقي تعصيبا بالغير";
+                }
+                ro2os = 2 * alikhwa_li_ab + alakhawat_li_ab;
+
+                tafsir += " (للذكر مثل حظ الأنثيين)";
+                tafsir += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALIKHWA_LI_AB, new Mirath(tafsir, 0, 1, true, alikhwa_li_ab, ro2os));
+
+                tafsir2 += " (للذكر مثل حظ الأنثيين)";
+                tafsir2 += (aljad) ? " مقاسمة مع الجد" : "";
+                warathah.put(Warith.ALAKHAWAT_LI_AB, new Mirath(tafsir2, 0, 1, true, alakhawat_li_ab, ro2os));
+            }
+
+            // alhajb by alikhwa li ab
+            hajib = (alikhwa_li_ab == 1) ? "الأخ لأب" : "الإخوة لأب";
+            if (abna_alikhwa_alashika > 0) {
+                ism = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق" : "أبناء الإخوة الأشقاء";
+                dhamir = (abna_alikhwa_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_alikhwa_li_ab > 0) {
+                ism = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+                dhamir = (abna_alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath abna alikhwa alashika
+        if ((abna_alikhwa_alashika > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_alashika_wa_li_ab) {
+            tafsir = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق يرث الباقي تعصيبا بالنفس" : "أبناء الإخوة الأشقاء يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ABNA_ALIKHWA_ALASHIKA, new Mirath(tafsir, 0, 1, true, abna_alikhwa_alashika, abna_alikhwa_alashika));
+
+            // alhajb by abna alikhwa alashika
+            hajib = (abna_alikhwa_alashika == 1) ? "ابن الأخ الشقيق" : "أبناء الإخوة الأشقاء";
+            if (abna_alikhwa_li_ab > 0) {
+                ism = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+                dhamir = (abna_alikhwa_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALIKHWA_LI_AB, ism, dhamir, hajib);
+            }
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath abna alikhwa li ab
+        if ((abna_alikhwa_li_ab > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_alashika_wa_li_ab && (abna_alikhwa_alashika == 0)) {
+            tafsir = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب يرث الباقي تعصيبا بالنفس" : "أبناء الإخوة لأب يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ABNA_ALIKHWA_LI_AB, new Mirath(tafsir, 0, 1, true, abna_alikhwa_li_ab, abna_alikhwa_li_ab));
+
+            // alhajb by abna alikhwa li ab
+            hajib = (abna_alikhwa_li_ab == 1) ? "ابن الأخ لأب" : "أبناء الإخوة لأب";
+            if (ala3mam_alashika > 0) {
+                ism = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+                dhamir = (ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath ala3mam alashika
+        if ((ala3mam_alashika > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_wa_abna_alikhwa) {
+            tafsir = (ala3mam_alashika == 1) ? "العم الشقيق يرث الباقي تعصيبا بالنفس" : "الأعمام الأشقاء يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ALA3MAM_ALASHIKA, new Mirath(tafsir, 0, 1, true, ala3mam_alashika, ala3mam_alashika));
+
+            // alhajb by mirath ala3mam alashika
+            hajib = (ala3mam_alashika == 1) ? "العم الشقيق" : "الأعمام الأشقاء";
+            if (ala3mam_li_ab > 0) {
+                ism = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+                dhamir = (ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath ala3mam li ab
+        if ((ala3mam_li_ab > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_wa_abna_alikhwa && (ala3mam_alashika == 0)) {
+            tafsir = (ala3mam_li_ab == 1) ? "العم لأب يرث الباقي تعصيبا بالنفس" : "الأعمام لأب يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ALA3MAM_LI_AB, new Mirath(tafsir, 0, 1, true, ala3mam_li_ab, ala3mam_li_ab));
+
+            // alhajb by mirath ala3mam li ab
+            hajib = (ala3mam_li_ab == 1) ? "العم لأب" : "الأعمام لأب";
+            if (abna_ala3mam_alashika > 0) {
+                ism = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+                dhamir = (abna_ala3mam_alashika == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_ALASHIKA, ism, dhamir, hajib);
+            }
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath abna ala3mam alashika
+        if ((abna_ala3mam_alashika > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_wa_abna_alikhwa && !ala3mam) {
+            tafsir = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق يرث الباقي تعصيبا بالنفس" : "أبناء الأعمام الأشقاء يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ABNA_ALA3MAM_ALASHIKA, new Mirath(tafsir, 0, 1, true, abna_ala3mam_alashika, abna_ala3mam_alashika));
+
+            // alhajb by abna ala3mam alashika
+            hajib = (abna_ala3mam_alashika == 1) ? "ابن العم الشقيق" : "أبناء الأعمام الأشقاء";
+            if (abna_ala3mam_li_ab > 0) {
+                ism = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب" : "أبناء الأعمام لأب";
+                dhamir = (abna_ala3mam_li_ab == 1) ? "ه" : "هم";
+                hajb(Warith.ABNA_ALA3MAM_LI_AB, ism, dhamir, hajib);
+            }
+        }
+
+        // mirath abnaa ala3mam li ab
+        if ((abna_ala3mam_li_ab > 0) && !far3_wa_asl_warith_dhaker && !alikhwa_wa_abna_alikhwa && !ala3mam && (abna_ala3mam_alashika == 0)) {
+            tafsir = (abna_ala3mam_li_ab == 1) ? "ابن العم لأب يرث الباقي تعصيبا بالنفس" : "أبناء الأعمام لأب يشتركون بالتساوي في الباقي تعصيبا بالنفس";
+            warathah.put(Warith.ABNA_ALA3MAM_LI_AB, new Mirath(tafsir, 0, 1, true, abna_ala3mam_li_ab, abna_ala3mam_li_ab));
+        }
+
+        // al-hissab
+        StringBuilder result = new StringBuilder();
+        for (Mirath m : warathah.values()) {
+            result.append("- ").append(m.getTafsir()).append(".\n");
+
+            if (m.getMaqam() != 1) {
+                asl_mas2ala = lcm(asl_mas2ala, m.getMaqam());
+            }
+
+            if (m.baqi()) {
+                adad_3assabat = m.getRo2os();
+                break;
+            }
+        }
+        result.append("\n" + "أصل المسألة: " + asl_mas2ala + "\n");
+        if (adad_3assabat > 0)  {
+            result.append("الباقي يُقسم على: " + adad_3assabat + "\n");
+        }
+
+//        result.append(String.format("\t | \t | \t\n", ));
+
+        return result.toString();
+    }
+
+    private int lcm(int a, int b) {
+        if (a == 0 || b == 0) {
+            return 0;
+        }
+        int aa = Math.abs(a);
+        int ab = Math.abs(b);
+        int h = Math.max(aa, ab);
+        int l = Math.min(aa, ab);
+        int lcm = h;
+        while (lcm % l != 0) {
+            lcm += h;
+        }
+        return lcm;
     }
 }
