@@ -20,57 +20,54 @@
 package com.djalel.android.zaid;
 
 public class Mirath {
-    // TODO: add who/warith field of enum type {ab, jad, etc.}
+    private Warith warith;
     private String tafsir;
     private int nbr;            // عدد الورثة المتشابهين في كل شيء
 
     private int bast;           // البسط في سهم صاحب الفرض
     private int maqam;          // المقام في سهم صاحب الفرض
 
-    private boolean baqi;           // هل يرث بالباقي (مع الفرض أو لا)
+    private boolean baqi;       // هل يرث بالباقي (مع الفرض أو لا)
     private int ro2os;          // عدد الرؤوس المشتركين في الباقي
 
-    public Mirath(String tafsir, int bast, int maqam, boolean baqi, int nbr, int ro2os) {
+    // calculated later
+    private int fardh;
+    private int sahm;
+
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi, int nbr, int ro2os) {
         // TODO assert maqam != 0 & tafsir != null
+        this.warith = warith;
         this.tafsir = tafsir;
         this.nbr = nbr;
         this.bast = bast;
         this.maqam = maqam;
         this.baqi = baqi;
         this.ro2os = ro2os;
+
+        fardh = 0;
+        sahm = 0;
     }
 
-    public Mirath(String tafsir, int bast, int maqam, boolean baqi, int nbr) {
-        this(tafsir, bast, maqam, baqi, nbr, 1);
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi, int nbr) {
+        this(warith, tafsir, bast, maqam, baqi, nbr, nbr);
     }
 
-    public Mirath(String tafsir, int bast, int maqam, boolean baqi) {
-        this(tafsir, bast, maqam, baqi, 1);
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi) {
+        this(warith, tafsir, bast, maqam, baqi, 1);
     }
 
-    public Mirath( String tafsir, int bast, int maqam) {
-        this(tafsir, bast, maqam, false);
+    public Mirath(Warith warith, String tafsir, int bast, int maqam) {
+        this(warith, tafsir, bast, maqam, false);
     }
 
-    public Mirath(String hajb) {
-        this(hajb, 0, 1);
+    public Mirath(Warith warith, String hajb) {
+        this(warith, hajb, 0, 1);
         // TODO assert hajb != null
-        // TODO: move hajb method inside this class?
     }
 
     // no default constructor
     private Mirath() {
-        this(null,0, 0, false, 0, 0);
-    }
-
-
-    public boolean mahjoob() {
-        if (bast == 0 && !baqi) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        this(null, null, 0, 0, false, 0, 0);
     }
 
     public void addHajib(String hajb) {
@@ -78,6 +75,10 @@ public class Mirath {
         // assert hajb != null
         tafsir += " و " + hajb;
     }
+
+    public String getTafsir() { return tafsir; }
+
+    public int getNbr() { return  nbr; }
 
     public int getBast() {
         return bast;
@@ -87,27 +88,25 @@ public class Mirath {
         return maqam;
     }
 
-    public boolean baqi() {
+    public boolean isBaqi() {
         return baqi;
     }
 
-    public int getNbr() { return  nbr; }
-
     public int getRo2os() { return ro2os; }
 
-    public String getTafsir() { return tafsir; }
+    public boolean isShirka() { return (ro2os > 1); }
 
-    public void setBast(int bast) {
-        this.bast = bast;
-    }
+    public int getFardh() { return fardh; }
 
-    public void setMaqam(int maqam) {
-        this.maqam = maqam;
-    }
+    public Warith getWarith() { return warith; }
 
-    public void setBaqi(boolean baqi) {
-        this.baqi = baqi;
-    }
+    public boolean mahjoob() { return (bast == 0) && !baqi; }
 
-    public void setTafsir(String tafsir) { this.tafsir = tafsir; }
+    public boolean isFardh() { return (bast != 0) && (maqam != 1); }
+
+
+
+    public void setFardh(int fardh) { this.fardh = fardh; }
+
+    public void setSahm(int sahm) { this.sahm = sahm; }
 }
