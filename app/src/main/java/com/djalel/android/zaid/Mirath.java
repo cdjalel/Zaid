@@ -21,23 +21,28 @@ package com.djalel.android.zaid;
 
 public class Mirath {
     private Warith warith;
-    private String tafsir;
+    private String sharh;
     private int nbr;            // عدد الورثة المتشابهين في كل شيء
 
-    private int bast;           // البسط في سهم صاحب الفرض
-    private int maqam;          // المقام في سهم صاحب الفرض
+    private int bast;           // البسط في نصيب صاحب الفرض
+    private int maqam;          // المقام في نصيب صاحب الفرض
 
-    private boolean ta3seeb;       // هل يرث بالتعصيب (مع الفرض أو لا)
+    private boolean ta3seeb;    // هل يرث بالتعصيب (مع الفرض أو لا)
     private int ro2os;          // عدد الرؤوس المشتركين في الباقي
 
     // calculated later
-    private int fardh;
-    private int sahm;
+    private int fardh;          // أسهم صاحب الفرض من أصل المسألة
+    private int nassib;           // إجمالي نصيب الوارث من أصل المسألة
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb, int nbr, int ro2os) {
+    // textual form of the solution
+    private String irth;
+    private String ism;
+    private String nassibTxt;
+
+    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int nbr, int ro2os) {
         // TODO assert maqam != 0 & tafsir != null
         this.warith = warith;
-        this.tafsir = tafsir;
+        this.sharh = sharh;
         this.nbr = nbr;
         this.bast = bast;
         this.maqam = maqam;
@@ -45,19 +50,23 @@ public class Mirath {
         this.ro2os = ro2os;
 
         fardh = 0;
-        sahm = 0;
+        nassib = 0;
+
+        irth = null;
+        ism = null;
+        nassibTxt = null;
     }
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb, int nbr) {
-        this(warith, tafsir, bast, maqam, ta3seeb, nbr, nbr);
+    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int nbr) {
+        this(warith, sharh, bast, maqam, ta3seeb, nbr, nbr);
     }
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb) {
-        this(warith, tafsir, bast, maqam, ta3seeb, 1);
+    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb) {
+        this(warith, sharh, bast, maqam, ta3seeb, 1);
     }
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam) {
-        this(warith, tafsir, bast, maqam, false);
+    public Mirath(Warith warith, String sharh, int bast, int maqam) {
+        this(warith, sharh, bast, maqam, false);
     }
 
     public Mirath(Warith warith, String hajb) {
@@ -73,10 +82,10 @@ public class Mirath {
     public void addHajib(String hajb) {
         // assert tafsir != null
         // assert hajb != null
-        tafsir += " و " + hajb;
+        sharh += " و " + hajb;
     }
 
-    public String getTafsir() { return tafsir; }
+    public String getSharh() { return sharh; }
 
     public int getNbr() { return  nbr; }
 
@@ -108,7 +117,19 @@ public class Mirath {
 
     public void setFardh(int fardh) { this.fardh = fardh; }
 
-    public void setSahm(int sahm) { this.sahm = sahm; }
+    public void setNassib(int nassib) { this.nassib = nassib; }
 
-    public int getSahm() { return this.sahm; }
+    public int getNassib() { return this.nassib; }
+
+    public String getIrth() { return irth; }
+
+    public void setIrth(String irth) { this.irth =  irth; }
+
+    public String getIsm() { return ism; }
+
+    public void setIsm(String ism) { this.ism = ism; }
+
+    public String getNassibTxt() { return this.nassibTxt; }
+
+    public void setNassibTxt(String nassibTxt) { this.nassibTxt = nassibTxt; }
 }

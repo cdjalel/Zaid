@@ -26,8 +26,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 
 public class Activity6 extends AppCompatActivity {
-
-    ZaidApplication mApp;
+    WarathaInput mInput;
     NumberPicker fullUnclesNP;
     NumberPicker paternalUnclesNP;
 
@@ -36,7 +35,8 @@ public class Activity6 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_6);
 
-        mApp = (ZaidApplication) this.getApplication();
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mInput = app.getWarathaInput();
 
         fullUnclesNP = (NumberPicker) findViewById(R.id.fullUnclesNumberPicker);
         fullUnclesNP.setValue(0);
@@ -46,7 +46,7 @@ public class Activity6 extends AppCompatActivity {
         fullUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_ala3mam_alashika(newVal);
+                mInput.set_ala3mam_alashika(newVal);
             }
         });
 
@@ -58,7 +58,7 @@ public class Activity6 extends AppCompatActivity {
         paternalUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_ala3mam_li_ab(newVal);
+                mInput.set_ala3mam_li_ab(newVal);
             }
         });
 
