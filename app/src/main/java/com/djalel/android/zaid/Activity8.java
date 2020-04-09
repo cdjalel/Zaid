@@ -20,7 +20,6 @@ package com.djalel.android.zaid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
@@ -42,6 +41,6 @@ public class Activity8 extends AppCompatActivity {
         super.onStart();
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
-        mResultTextView.setText(app.calculate_furudh());
+        mResultTextView.setText(app.hissabMawarith());
     }
 }

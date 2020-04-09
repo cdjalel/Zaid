@@ -27,7 +27,7 @@ import android.widget.NumberPicker;
 
 public class Activity3 extends AppCompatActivity {
 
-    ZaidApplication mApp;
+    WarathaInput mInput;
     NumberPicker sonsOfSonsNP;
     NumberPicker daughtersOfSonsNP;
     NumberPicker maternalBrothersNP;
@@ -38,7 +38,8 @@ public class Activity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_3);
 
-        mApp = (ZaidApplication) this.getApplication();
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mInput = app.getWarathaInput();
 
         sonsOfSonsNP = (NumberPicker) findViewById(R.id.sonsOfSonsNumberPicker);
         sonsOfSonsNP.setValue(0);
@@ -48,7 +49,7 @@ public class Activity3 extends AppCompatActivity {
         sonsOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
 		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_abna_alabna(newVal);
+                mInput.set_abna_alabna(newVal);
 		    }
 	    });
 
@@ -60,7 +61,7 @@ public class Activity3 extends AppCompatActivity {
         daughtersOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_banat_alabna(newVal);
+                mInput.set_banat_alabna(newVal);
             }
         });
 
@@ -72,7 +73,7 @@ public class Activity3 extends AppCompatActivity {
         maternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
 		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alikhwa_li_om(newVal);
+                mInput.set_alikhwa_li_om(newVal);
 		    }
 	    });
 
@@ -84,7 +85,7 @@ public class Activity3 extends AppCompatActivity {
         maternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alakhawat_li_om(newVal);
+                mInput.set_alakhawat_li_om(newVal);
             }
         });
     }

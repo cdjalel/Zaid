@@ -29,8 +29,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class Activity2 extends AppCompatActivity {
-
-    ZaidApplication mApp;
+    WarathaInput mInput;
     NumberPicker zawjatNP;
     NumberPicker sonsNP;
     NumberPicker daughtersNP;
@@ -40,14 +39,15 @@ public class Activity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
 
-        mApp = (ZaidApplication) this.getApplication();
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mInput = app.getWarathaInput();
 
         // read default values from layout
         RadioGroup radioGroup;
         radioGroup = (RadioGroup) findViewById(R.id.radioGroupZawj);
         zawjatNP = (NumberPicker) findViewById(R.id.zawjatNumberPicker);
 
-        if (mApp.is_male()) {
+        if (mInput.is_male()) {
             radioGroup.setEnabled(false);
             for(int i = 0; i < radioGroup.getChildCount(); i++) {
                 ((RadioButton)radioGroup.getChildAt(i)).setEnabled(false);
@@ -63,7 +63,7 @@ public class Activity2 extends AppCompatActivity {
             zawjatNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    mApp.set_azawjat(newVal);
+                    mInput.set_azawjat(newVal);
                 }
             });
         }
@@ -87,7 +87,7 @@ public class Activity2 extends AppCompatActivity {
         sonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alabna(newVal);
+                mInput.set_alabna(newVal);
                 }
         });
 
@@ -99,7 +99,7 @@ public class Activity2 extends AppCompatActivity {
         daughtersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
 		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_albanat(newVal);
+                mInput.set_albanat(newVal);
 		    }
 	    });
     }
@@ -109,12 +109,12 @@ public class Activity2 extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonZawjYes:
                 if (checked)
-                    mApp.set_zawj(true);
+                    mInput.set_zawj(true);
                 break;
 
             case R.id.radioButtonZawjNo:
                 if (checked)
-                    mApp.set_zawj(false);
+                    mInput.set_zawj(false);
                 break;
         }
     }

@@ -27,8 +27,7 @@ import android.widget.NumberPicker;
 
 
 public class Activity4 extends AppCompatActivity {
-
-    ZaidApplication mApp;
+    WarathaInput mInput;
     NumberPicker fullBrothersNP;
     NumberPicker fullSistersNP;
     NumberPicker paternalBrothersNP;
@@ -39,7 +38,8 @@ public class Activity4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_4);
 
-        mApp = (ZaidApplication) this.getApplication();
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mInput = app.getWarathaInput();
 
         fullBrothersNP = (NumberPicker) findViewById(R.id.fullBrothersNumberPicker);
         fullBrothersNP.setValue(0);
@@ -49,7 +49,7 @@ public class Activity4 extends AppCompatActivity {
         fullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alikhwa_alashika(newVal);
+                mInput.set_alikhwa_alashika(newVal);
             }
         });
 
@@ -61,7 +61,7 @@ public class Activity4 extends AppCompatActivity {
         fullSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
 		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alakhawat_ashakikat(newVal);
+                mInput.set_alakhawat_ashakikat(newVal);
 		    }
 	    });
 
@@ -73,7 +73,7 @@ public class Activity4 extends AppCompatActivity {
         paternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alikhwa_li_ab(newVal);
+                mInput.set_alikhwa_li_ab(newVal);
             }
         });
 
@@ -85,7 +85,7 @@ public class Activity4 extends AppCompatActivity {
         paternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mApp.set_alakhawat_li_ab(newVal);
+                mInput.set_alakhawat_li_ab(newVal);
             }
         });
 

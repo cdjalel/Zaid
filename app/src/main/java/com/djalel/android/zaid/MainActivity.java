@@ -27,15 +27,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
-
-    ZaidApplication mApp;
+    WarathaInput mInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mApp = (ZaidApplication) this.getApplication();
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mInput = app.getWarathaInput();
 
         // read default values from layout
         RadioGroup radioGroup;
@@ -67,22 +67,22 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonMaliki:
                 if (checked)
-                    mApp.set_madhab(Madhab.MALIKI);
+                    mInput.set_madhab(Madhab.MALIKI);
                 break;
 
             case R.id.radioButtonChafi3i:
                 if (checked)
-                    mApp.set_madhab(Madhab.CHAFI3I);
+                    mInput.set_madhab(Madhab.CHAFI3I);
                 break;
 
             case R.id.radioButtonHanafi:
                 if (checked)
-                    mApp.set_madhab(Madhab.HANAFI);
+                    mInput.set_madhab(Madhab.HANAFI);
                 break;
 
             case R.id.radioButtonHambali:
                 if (checked)
-                    mApp.set_madhab(Madhab.HAMBALI);
+                    mInput.set_madhab(Madhab.HAMBALI);
                 break;
         }
     }
@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonMale:
                 if (checked)
-                    mApp.set_male(true);
+                    mInput.set_male(true);
                 break;
 
             case R.id.radioButtonFemale:
                 if (checked)
-                    mApp.set_male(false);
+                    mInput.set_male(false);
                 break;
         }
     }
@@ -108,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonFatherYes:
                 if (checked)
-                    mApp.set_alab(true);
+                    mInput.set_alab(true);
                 break;
 
             case R.id.radioButtonFatherNo:
                 if (checked)
-                    mApp.set_alab(false);
+                    mInput.set_alab(false);
                 break;
         }
     }
@@ -124,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonMotherYes:
                 if (checked)
-                    mApp.set_alom(true);
+                    mInput.set_alom(true);
                 break;
 
             case R.id.radioButtonMotherNo:
                 if (checked)
-                    mApp.set_alom(false);
+                    mInput.set_alom(false);
                 break;
         }
     }
@@ -139,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonGrandFatherYes:
                 if (checked)
-                    mApp.set_aljad(true);
+                    mInput.set_aljad(true);
                 break;
 
             case R.id.radioButtonGrandFatherNo:
                 if (checked)
-                    mApp.set_aljad(false);
+                    mInput.set_aljad(false);
                 break;
         }
     }
@@ -154,12 +154,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonPaternalGrandMotherYes:
                 if (checked)
-                    mApp.set_aljadah_li_ab(true);
+                    mInput.set_aljadah_li_ab(true);
                 break;
 
             case R.id.radioButtonPaternalGrandMotherNo:
                 if (checked)
-                    mApp.set_aljadah_li_ab(false);
+                    mInput.set_aljadah_li_ab(false);
                 break;
         }
     }
@@ -169,12 +169,12 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.radioButtonMaternalGrandMotherYes:
                 if (checked)
-                    mApp.set_aljadah_li_om(true);
+                    mInput.set_aljadah_li_om(true);
                 break;
 
             case R.id.radioButtonMaternalGrandMotherNo:
                 if (checked)
-                    mApp.set_aljadah_li_om(false);
+                    mInput.set_aljadah_li_om(false);
                 break;
         }
     }
