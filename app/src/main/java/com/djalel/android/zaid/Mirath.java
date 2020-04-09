@@ -27,33 +27,33 @@ public class Mirath {
     private int bast;           // البسط في سهم صاحب الفرض
     private int maqam;          // المقام في سهم صاحب الفرض
 
-    private boolean baqi;       // هل يرث بالباقي (مع الفرض أو لا)
+    private boolean ta3seeb;       // هل يرث بالتعصيب (مع الفرض أو لا)
     private int ro2os;          // عدد الرؤوس المشتركين في الباقي
 
     // calculated later
     private int fardh;
     private int sahm;
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi, int nbr, int ro2os) {
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb, int nbr, int ro2os) {
         // TODO assert maqam != 0 & tafsir != null
         this.warith = warith;
         this.tafsir = tafsir;
         this.nbr = nbr;
         this.bast = bast;
         this.maqam = maqam;
-        this.baqi = baqi;
+        this.ta3seeb = ta3seeb;
         this.ro2os = ro2os;
 
         fardh = 0;
         sahm = 0;
     }
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi, int nbr) {
-        this(warith, tafsir, bast, maqam, baqi, nbr, nbr);
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb, int nbr) {
+        this(warith, tafsir, bast, maqam, ta3seeb, nbr, nbr);
     }
 
-    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean baqi) {
-        this(warith, tafsir, bast, maqam, baqi, 1);
+    public Mirath(Warith warith, String tafsir, int bast, int maqam, boolean ta3seeb) {
+        this(warith, tafsir, bast, maqam, ta3seeb, 1);
     }
 
     public Mirath(Warith warith, String tafsir, int bast, int maqam) {
@@ -88,8 +88,8 @@ public class Mirath {
         return maqam;
     }
 
-    public boolean isBaqi() {
-        return baqi;
+    public boolean isTa3seeb() {
+        return ta3seeb;
     }
 
     public int getRo2os() { return ro2os; }
@@ -100,13 +100,15 @@ public class Mirath {
 
     public Warith getWarith() { return warith; }
 
-    public boolean mahjoob() { return (bast == 0) && !baqi; }
+    public boolean mahjoob() { return (bast == 0) && !ta3seeb; }
 
     public boolean isFardh() { return (bast != 0) && (maqam != 1); }
 
-
+    public boolean isTholuthAlbaqi() { return bast == 1 && maqam == 3 && ta3seeb; }
 
     public void setFardh(int fardh) { this.fardh = fardh; }
 
     public void setSahm(int sahm) { this.sahm = sahm; }
+
+    public int getSahm() { return this.sahm; }
 }

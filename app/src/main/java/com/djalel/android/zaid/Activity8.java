@@ -20,17 +20,28 @@ package com.djalel.android.zaid;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public class Activity8 extends AppCompatActivity {
+    private TextView mResultTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_8);
 
+        mResultTextView = (TextView) findViewById(R.id.resultTextView);
+        mResultTextView.setMovementMethod(new ScrollingMovementMethod());
+//        resultTextView.setTypeface(Typeface.MONOSPACE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         ZaidApplication app = (ZaidApplication) this.getApplication();
-        TextView resultTextView = (TextView) findViewById(R.id.resultTextView);
-        resultTextView.setText(app.calculate_furudh());
+        mResultTextView.setText(app.calculate_furudh());
     }
 }

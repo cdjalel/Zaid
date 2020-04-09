@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.NumberPicker;
 
-
 public class Activity5 extends AppCompatActivity {
 
     ZaidApplication mApp;

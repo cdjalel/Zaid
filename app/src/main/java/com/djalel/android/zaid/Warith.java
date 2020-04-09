@@ -18,6 +18,8 @@
 
 package com.djalel.android.zaid;
 
+import android.provider.Settings;
+
 public enum Warith {
     // order matters
     ALAB("الأب", "الأب", "الأب", "أب"),
@@ -31,14 +33,14 @@ public enum Warith {
     ALBANAT("البنت", "البنتان", "البنات", "بنت"),
     ABNA_ALABNA("ابن الابن", "ابني الابن", "أبناء الأبناء", "ابن ابن"),
     BANAT_ALABNA("بنت الابن", "بنتي الابن", "بنات الأبناء", "بنت ابن"),
-    ALIKHWA_LI_OM("أخ لأم", "الأخوان لأم", "الإخوة لأم", "خ م"),
-    ALAKHAWAT_LI_OM("أخت لأم", "الأختان لأم", "الأخوات لأم", "حت م"),
+    ALIKHWA_LI_OM("الأخ لأم", "الأخوان لأم", "الإخوة لأم", "خ م"),
+    ALAKHAWAT_LI_OM("الأخت لأم", "الأختان لأم", "الأخوات لأم", "حت م"),
     ALIKHWA_ALASHIKA("الأخ شقيق", "الأخوان الشقيقان", "الإخوة الأشقاء", "خ ش"),
     ALAKHAWAT_ASHAKIKAT("الأحت الشقيقة", "الأختان الشقيقتان", "الأخوات الشقيقات", "خت ش"),
     ALIKHWA_LI_AB("الأخ لأب", "الأخوان لأب", "الإخوة لأب", "خ ب"),
     ALAKHAWAT_LI_AB("الأخت لأب", "الأختان لأب", "الأخوات لأب", "خت ب"),
-    ABNA_ALIKHWA_ALASHIKA("ابن أخ شقيق", "ابني الأخ الشقيق", "أبناء الإخوة الأشقاء", "ابن خ ش"),
-    ABNA_ALIKHWA_LI_AB("ابن أخ لأب", "ابني الأخ لأب", "أبناء الإخوة لأب", "ابن خ ب"),
+    ABNA_ALIKHWA_ALASHIKA("ابن الأخ الشقيق", "ابني الأخ الشقيق", "أبناء الإخوة الأشقاء", "ابن خ ش"),
+    ABNA_ALIKHWA_LI_AB("ابن الأخ لأب", "ابني الأخ لأب", "أبناء الإخوة لأب", "ابن خ ب"),
     ALA3MAM_ALASHIKA("العم الشقيق", "العمان الشقيقان", "الأعمام الأشقاء", "عم ش"),
     ALA3MAM_LI_AB("العم لأب", "العمان لأب", "الأعمام لأب", "عم ب"),
     ABNA_ALA3MAM_ALASHIKA("ابن العم الشقيق", "ابني العم الشقيق", "أبناء الأعمام الأشقاء", "ابن عم ش"),
@@ -68,7 +70,7 @@ public enum Warith {
         return short_name;
     }
 
-    public final String getVerb(int n) {
+    public final String getVerb(int n, boolean shirka) {
         switch (this) {
             case ALAB:
             case AZAWJ:
@@ -78,12 +80,12 @@ public enum Warith {
                 return "ترث";
 
             case ALJAD:
-                return n == 1 ? "يرث" : "يتقاسم";
+                return /* assert n == 1  &&*/ !shirka? "يرث" : "يتقاسم";
 
 
             case ALJADAH_LI_AB:
             case ALJADAH_LI_OM:
-                return n == 1 ? "ترث" : "تشترك في";
+                return /* assert n == 1  &&*/ !shirka? "ترث" : "تشترك";
 
             case AZAWJAT:
             case ALBANAT:
@@ -91,7 +93,7 @@ public enum Warith {
             case ALAKHAWAT_LI_OM:
             case ALAKHAWAT_ASHAKIKAT:
             case ALAKHAWAT_LI_AB:
-                return n == 1 ? "ترث" : (n == 2 ? "تشتركان في" : "تشتركن في");
+                return n == 1 ? (shirka? "تشترك" : "ترث") : (n == 2 ? "تشتركان" : "تشتركن");
 
             case ALABNA:
             case ABNA_ALABNA:
@@ -105,59 +107,80 @@ public enum Warith {
             case ABNA_ALA3MAM_ALASHIKA:
             case ABNA_ALA3MAM_LI_AB:
             default:
-                return n == 1 ? "يرث" : (n == 2 ? "يشتركان في" : "يشتركون في");
+                return n == 1 ? (shirka? "يشترك" : "يرث")  : (n == 2 ? "يشتركان" : "يشتركون");
         }
     }
 
     public final String getVerb() {
-        return getVerb(1);
+        return getVerb(1, false);
     }
 
-    public final String getDhamir(int n) {
-        if (n == 2) { return "هما"; }
-        switch (this) {
-            case ALAB:
-            case ALJAD:
-            case AZAWJ:
-                return "ه";
+    public final String getDhamirHajaba(int n, Warith hajib) {
+        String fa3el;                  // argument, hajib
+        String maf3oul;                // this object, mahjoob
 
-            case ALOM:
-            case ALJADAH_LI_AB:
-            case ALJADAH_LI_OM:
-                return "ها";
-
-            case AZAWJAT:
-            case ALBANAT:
-            case BANAT_ALABNA:
-            case ALAKHAWAT_LI_OM:
-            case ALAKHAWAT_ASHAKIKAT:
-            case ALAKHAWAT_LI_AB:
-                return n == 1 ? "ها" : "هن";
-
-            case ALABNA:
-            case ABNA_ALABNA:
-            case ALIKHWA_LI_OM:
-            case ALIKHWA_ALASHIKA:
-            case ALIKHWA_LI_AB:
-            case ABNA_ALIKHWA_ALASHIKA:
-            case ABNA_ALIKHWA_LI_AB:
-            case ALA3MAM_ALASHIKA:
-            case ALA3MAM_LI_AB:
-            case ABNA_ALA3MAM_ALASHIKA:
-            case ABNA_ALA3MAM_LI_AB:
+        switch (hajib) {
+            case ALOM:                  // assert this == ALJADA_LI_OM || ALJADA__LI_AB
+            case ALAKHAWAT_ASHAKIKAT:   // assert this == ALAKHAWAT_LI_OM, ALAKHAWAT_LI_AB
+                fa3el = "ت";
+                break;
             default:
-                return n == 1 ? "ه" : "هم";
+                fa3el = "";
+                break;
         }
-    }
-    public final String getDhamir() { return getDhamir(1); }
 
+        if (n == 2) {
+            maf3oul = "هما";
+        }
+        else {
+            switch (this) {
+                case ALJAD:
+                    maf3oul = "ه";
+                    break;
+                case ALJADAH_LI_AB:
+                case ALJADAH_LI_OM:
+                    maf3oul = "ها";
+                    break;
+                case BANAT_ALABNA:
+                case ALAKHAWAT_LI_OM:
+                case ALAKHAWAT_ASHAKIKAT:
+                case ALAKHAWAT_LI_AB:
+                    maf3oul = n == 1 ? "ها" : "هن";
+                    break;
+                case ABNA_ALABNA:
+                case ALIKHWA_LI_OM:
+                case ALIKHWA_ALASHIKA:
+                case ALIKHWA_LI_AB:
+                case ABNA_ALIKHWA_ALASHIKA:
+                case ABNA_ALIKHWA_LI_AB:
+                case ALA3MAM_ALASHIKA:
+                case ALA3MAM_LI_AB:
+                case ABNA_ALA3MAM_ALASHIKA:
+                case ABNA_ALA3MAM_LI_AB:
+                    maf3oul = n == 1 ? "ه" : "هم";
+                    break;
+
+                case ALAB:
+                case ALOM:
+                case AZAWJ:
+                case AZAWJAT:
+                case ALABNA:
+                case ALBANAT:
+                default:
+                    maf3oul = "";
+                    System.out.println("BUG! ضمير حجب " + ordinal() + ", n=" + n + "hajib=" + hajib.ordinal());
+                    break;
+            }
+        }
+        return fa3el + maf3oul;
+    }
     public final String getTafsirPrefix(int n, Warith ma3a, int n2, boolean tassawi) {
         StringBuilder prefix = new StringBuilder();
 
-        prefix.append(getName(1));
+        prefix.append(getName(n));
         prefix.append(" ");
-        prefix.append(getVerb(1));
-        prefix.append(" ");
+        prefix.append(getVerb(n, true));
+        prefix.append(" مع ");
         prefix.append(ma3a.getName(n2));
         prefix.append(tassawi ? " (بالتساوي)" : " (للذكر مثل حظ الأنثيين)");
         prefix.append(" في ");
@@ -168,9 +191,9 @@ public enum Warith {
     public final String getTafsirPrefix(int n) {
         StringBuilder prefix = new StringBuilder();
 
-        prefix.append(getName(1));
+        prefix.append(getName(n));
         prefix.append(" ");
-        prefix.append(getVerb(1));
+        prefix.append(getVerb(n, false));
         prefix.append(" ");
         if (n > 1) {
             prefix.append("(بالتساوي) في ");
@@ -184,7 +207,7 @@ public enum Warith {
 
         prefix.append(getName(1));
         prefix.append(" ");
-        prefix.append(getVerb(1));
+        prefix.append(getVerb(1, false));
         prefix.append(" ");
 
         return prefix.toString();
