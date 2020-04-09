@@ -63,7 +63,6 @@ public class Activity7 extends AppCompatActivity {
         });
     }
 
-
     public void onNextClicked(View view) {
         // start next activity
         Intent intent = new Intent(this, Activity8.class);

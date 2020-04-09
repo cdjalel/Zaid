@@ -20,17 +20,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".MainActivity">
+    android:layout_height="match_parent"  tools:context=".Activity8">
 
 
     <TextView
+        android:id="@+id/resultTextView"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/title_activity8"
-        android:id="@+id/resultTextView"
         android:layout_gravity="center"
-        android:gravity="center_vertical|right"
         android:layout_marginRight="10dp"
-        style="@style/Base.TextAppearance.AppCompat.Large" />
+        android:gravity="center_vertical|right"
+        android:scrollbars="vertical"
+        android:text="@string/title_activity8" />
 
 </LinearLayout>
