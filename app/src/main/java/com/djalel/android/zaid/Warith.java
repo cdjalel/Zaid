@@ -80,7 +80,7 @@ public enum Warith {
                 return "ترث";
 
             case ALJAD:
-                return /* assert n == 1  &&*/ !shirka? "يرث" : "يتقاسم";
+                return /* assert n == 1  &&*/ !shirka? "يرث" : "يشترك";
 
 
             case ALJADAH_LI_AB:
@@ -174,7 +174,7 @@ public enum Warith {
         }
         return fa3el + maf3oul;
     }
-    public final String getTafsirPrefix(int n, Warith ma3a, int n2, boolean tassawi) {
+    public final String getSharhPrefix(int n, Warith ma3a, int n2, boolean tassawi) {
         StringBuilder prefix = new StringBuilder();
 
         prefix.append(getName(n));
@@ -188,7 +188,7 @@ public enum Warith {
         return prefix.toString();
     }
 
-    public final String getTafsirPrefix(int n) {
+    public final String getSharhPrefix(int n) {
         StringBuilder prefix = new StringBuilder();
 
         prefix.append(getName(n));
@@ -202,7 +202,7 @@ public enum Warith {
         return prefix.toString();
     }
 
-    public final String getTafsirPrefix() {
+    public final String getSharhPrefix() {
         StringBuilder prefix = new StringBuilder();
 
         prefix.append(getName(1));
@@ -212,4 +212,37 @@ public enum Warith {
 
         return prefix.toString();
     }
+
+    public boolean isThakar() {
+        switch (this) {
+            case AZAWJ:
+            case ALAB:
+            case ALJAD:
+            case ALABNA:
+            case ABNA_ALABNA:
+            case ALIKHWA_LI_OM:
+            case ALIKHWA_ALASHIKA:
+            case ALIKHWA_LI_AB:
+            case ABNA_ALIKHWA_ALASHIKA:
+            case ABNA_ALIKHWA_LI_AB:
+            case ALA3MAM_ALASHIKA:
+            case ALA3MAM_LI_AB:
+            case ABNA_ALA3MAM_ALASHIKA:
+            case ABNA_ALA3MAM_LI_AB:
+                return true;
+            case ALOM:
+            case AZAWJAT:
+            case ALJADAH_LI_AB:
+            case ALJADAH_LI_OM:
+            case ALBANAT:
+            case BANAT_ALABNA:
+            case ALAKHAWAT_LI_OM:
+            case ALAKHAWAT_ASHAKIKAT:
+            case ALAKHAWAT_LI_AB:
+            default:
+                return false;
+        }
+    }
+
+    public boolean isOntha() { return !isThakar();}
 }
