@@ -29,44 +29,122 @@ public class Mirath {
 
     private boolean ta3seeb;    // هل يرث بالتعصيب (مع الفرض أو لا)
     private int ro2os;          // عدد الرؤوس المشتركين في الباقي
+    private boolean tassawi;    // بالتساوي أو للذكر مثل حظ الأنثيين
 
     // calculated later
     private int fardh;          // أسهم صاحب الفرض من أصل المسألة
     private int nassib;           // إجمالي نصيب الوارث من أصل المسألة
 
-    // textual form of the solution
-    private String irth;
+    // short textual form of the solution to display in a table
+    private String hokom;
     private String ism;
     private String nassibTxt;
 
-    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int nbr, int ro2os) {
-        // TODO assert maqam != 0 & tafsir != null
+    public Mirath(Warith warith, int nbr, String sharh, int bast, int maqam, boolean ta3seeb, int ro2os, boolean tassawi) {
+        // TODO assert maqam != 0 & sharh != null
         this.warith = warith;
-        this.sharh = sharh;
         this.nbr = nbr;
+        this.sharh = sharh;
         this.bast = bast;
         this.maqam = maqam;
         this.ta3seeb = ta3seeb;
         this.ro2os = ro2os;
+        this.tassawi = tassawi;
 
+        switch (bast) {
+            case 1:
+                switch (maqam) {
+                    case 2:
+                        hokom = "1\\2"; //"½";
+                        break;
+                    case 3:
+                        hokom = ta3seeb? "1\\3 ب": "1\\3"; //"⅓" ;
+                        // من يأخذ ثلث الباقي: الأم في الغراوين أو بعض حالات الجد مع الإخوة
+                        break;
+                    case 4:
+                        hokom = "1\\4"; // "¼";
+                        break;
+                    case 6:
+                        hokom = ta3seeb? "1\\6 + ب" : "1\\6"; //"⅙";
+                        // الأب والجد يمكن أن يرثا السدس زائد الباقي
+                        break;
+                    case 8:
+                        hokom = "1\\8"; //"⅛";
+                        break;
+                    default:  // assert(0)
+                        hokom = "";
+                        break;
+                }
+                break;
+            case 2:         // assert maqam == 3
+                hokom = "2\\3"; //"⅔";
+                break;
+            case 0:
+            default:
+                hokom = ta3seeb ? "ب" : "ح";
+                break;
+        }
+
+        StringBuilder tmp = new StringBuilder();
+        tmp.append(warith.getShortName());
+        if (nbr > 1) {
+            tmp.append("|").append(nbr);
+        }
+        ism = tmp.toString();
+
+        // calculated later
         fardh = 0;
         nassib = 0;
-
-        irth = null;
-        ism = null;
         nassibTxt = null;
     }
 
-    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int nbr) {
-        this(warith, sharh, bast, maqam, ta3seeb, nbr, nbr);
-    }
-
-    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb) {
-        this(warith, sharh, bast, maqam, ta3seeb, 1);
-    }
-
+    // وارث واحد يرث بالفرض فقط
     public Mirath(Warith warith, String sharh, int bast, int maqam) {
-        this(warith, sharh, bast, maqam, false);
+        this(warith, 1, sharh, bast, maqam, false, 1, true);
+    }
+
+    // الجدة ترث بالفرض فقط وربما مقاسمة مع الجدة الأخرى
+    public Mirath(Warith warith, String sharh, int bast, int maqam, int ro2os) {
+        this(warith, 1, sharh, bast, maqam, false, ro2os, true);
+    }
+    // عدة ورثة من نفس النوع (مثلا 3 زوجات أو بنتين دون ابن) يرثون بالفرض فقط
+    public Mirath(Warith warith, int nbr, String sharh, int bast, int maqam) {
+        this(warith, nbr, sharh, bast, maqam, false, nbr, true);
+    }
+
+    // عدة ورثة  (أولاد الأم) يرثون بالفرض فقط
+    public Mirath(Warith warith, int nbr, String sharh, int bast, int maqam, int ro2os) {
+        this(warith, nbr, sharh, bast, maqam, false, ro2os, true);
+    }
+
+    // وارث واحد بالتعصيب فقط
+    public Mirath(Warith warith, String sharh, boolean ta3seeb) {
+        this(warith, 1, sharh, 0, 1, ta3seeb, 1, true);
+    }
+
+    // عدة ورثة متشابهين يرثون بالتصعيب بالتساوي
+    public Mirath(Warith warith, int nbr, String sharh) {
+        this(warith, nbr, sharh, 0, 1, true, nbr, true);
+    }
+
+    // عدة ورثة (الإخوة مع الأخوات أو الجد) يرثون بالتصعيب بالتساوي أو للذكر مثل حظ الأنثيين
+    public Mirath(Warith warith, int nbr, String sharh, int ro2os, boolean tassawi) {
+        this(warith, nbr, sharh, 0, 1, true, ro2os, tassawi);
+    }
+
+    // عدة ورثة متشابهين يرثون بالتصعيب للذكر مثل حظ الأنثيين
+    public Mirath(Warith warith, int nbr, String sharh, int ro2os) {
+        this(warith, nbr, sharh, 0, 1, true, ro2os, false);
+    }
+
+    // وارث واحد بالفرض والتعصيب لوحده أو من يأخذ ثلث الباقي (الأم في الغرواين)
+    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb) {
+        this(warith, 1, sharh, bast, maqam, ta3seeb, 1, true);
+    }
+
+    // وارث واحد بالفرض والتعصيب مقاسمة وهو الجد مع الإخوة
+    public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int ro2os, boolean tassawi) {
+        this(warith, 1, sharh, bast, maqam, ta3seeb, ro2os, tassawi);
     }
 
     public Mirath(Warith warith, String hajb) {
@@ -76,11 +154,11 @@ public class Mirath {
 
     // no default constructor
     private Mirath() {
-        this(null, null, 0, 0, false, 0, 0);
+        this(null, 0, null, 0, 0, false, 0, false);
     }
 
     public void addHajib(String hajb) {
-        // assert tafsir != null
+        // assert sharh != null
         // assert hajb != null
         sharh += " و " + hajb;
     }
@@ -89,17 +167,13 @@ public class Mirath {
 
     public int getNbr() { return  nbr; }
 
-    public int getBast() {
-        return bast;
-    }
+    public int getBast() { return bast; }
 
-    public int getMaqam() {
-        return maqam;
-    }
+    public int getMaqam() { return maqam; }
 
-    public boolean isTa3seeb() {
-        return ta3seeb;
-    }
+    public boolean isTa3seeb() { return ta3seeb; }
+
+    public boolean isTassawi() { return tassawi; }
 
     public int getRo2os() { return ro2os; }
 
@@ -121,9 +195,9 @@ public class Mirath {
 
     public int getNassib() { return this.nassib; }
 
-    public String getIrth() { return irth; }
+    public String getHokom() { return hokom; }
 
-    public void setIrth(String irth) { this.irth =  irth; }
+    public void setHokom(String hokom) { this.hokom = hokom; }
 
     public String getIsm() { return ism; }
 
