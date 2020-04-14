@@ -30,7 +30,7 @@ public class Massala {
     private boolean mHal;
     private boolean mFardh;
     private boolean mTa3seeb;
-    private boolean mTassawi;
+    private boolean mTassawi;           // تعصيب بالتساوي أو للذكر مثل حظ الأنثيين
     private boolean mIstighraq;
 
     private int mAsl;
@@ -40,6 +40,8 @@ public class Massala {
     private int mAwl;
     private int mMissah;
     private String mSpecialCase;
+
+    private int mJadIndex;              // initial position of Aljad in mWarathah
 
     private enum Naw3 {  // TODO public or package private
         NAW3_NONE,
@@ -67,13 +69,15 @@ public class Massala {
         mIstighraq = false;
 
         mNaw3 = Naw3.NAW3_NONE;
+
+        mJadIndex = -1;
     }
 
-    public void addMirath(Mirath m) {
+    private void addMirath(Mirath m) {
         mWarathah.add(m);
     }
 
-    public void addHajb(Warith warith, int nw, String hajib, Warith hajib2, int nh)
+    private void addHajb(Warith warith, int nw, String hajib, Warith hajib2, int nh)
     {
         for(Mirath m : mMahjoobin) {
             if (warith == m.getWarith()) {
@@ -91,22 +95,22 @@ public class Massala {
         mMahjoobin.add(new Mirath(warith, hajb));
     }
 
-    public void addHajb(Warith warith, int nw, Warith hajib2, int nh)
+    private void addHajb(Warith warith, int nw, Warith hajib2, int nh)
     {
         addHajb(warith, nw, null, hajib2, nh);
     }
 
-    public void addHajb(Warith warith, int nw, String hajib)
+    private void addHajb(Warith warith, int nw, String hajib)
     {
         addHajb(warith, nw, hajib, null, 1);
     }
 
-    public void addHajb(Warith warith, int nw, Warith hajib)
+    private void addHajb(Warith warith, int nw, Warith hajib)
     {
         addHajb(warith, nw, hajib, 1);
     }
 
-    public void addHajb(Warith warith, Warith hajib)
+    private void addHajb(Warith warith, Warith hajib)
     {
         addHajb(warith, 1, hajib, 1);
     }
@@ -318,13 +322,14 @@ public class Massala {
                         }
                         sharh += Warith.ALJAD.getSharhPrefix(1, Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), tassawi);
                     }
+                    mJadIndex = mWarathah.size();
                 }
                 else {       // الجد يرث الباقي لوحده
                     sharh = Warith.ALJAD.getSharhPrefix();
                 }
                 sharh += "الباقي تعصيبا بالنفس";
             }
-            addMirath(new Mirath(Warith.ALJAD, sharh, bast, maqam, ta3seeb, ro2os, tassawi));
+            addMirath(new Mirath(Warith.ALJAD, sharh, bast, maqam, ta3seeb, ro2os));
         }
 
         // alhajb by aljad, we add it even if there is hajb by ab for detailed info
@@ -705,6 +710,15 @@ public class Massala {
         }
     }
 
+    private void moveAljadBeforeAlikhaw() {
+        if (mJadIndex != -1) {
+            // assert mJadIndex < mWarathah.size()
+            Mirath aljad = mWarathah.remove(mJadIndex);
+            mJadIndex = mWarathah.size();
+            mWarathah.add(aljad);
+        }
+    }
+
     private void mirathAlikhwaAlashika(boolean far3_warith_dhakar) {
         int nbr_a = mInput.get_alikhwa_alashika();
         if (nbr_a == 0 || far3_warith_dhakar || mInput.alab()) return;
@@ -718,12 +732,13 @@ public class Massala {
             if (mInput.aljad()) {
                 ro2os++;
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a, Warith.ALJAD, 1, true);
+               moveAljadBeforeAlikhaw();
             }
             else {
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a);
             }
             sharh += "الباقي تعصيبا بالنفس";
-            addMirath(new Mirath(Warith.ALIKHWA_ALASHIKA, nbr_a, sharh, ro2os, true));
+            addMirath(new Mirath(Warith.ALIKHWA_ALASHIKA, nbr_a, sharh, ro2os));
         } else {
             String sharh2;
             mTassawi = false;
@@ -736,6 +751,7 @@ public class Massala {
                 sharh += " ومقاسمة مع الجد";
                 sharh2 += " ومقاسمة مع الجد";
                 ro2os += 2;
+                moveAljadBeforeAlikhaw();
             }
             addMirath(new Mirath(Warith.ALIKHWA_ALASHIKA, nbr_a, sharh, ro2os));
             addMirath(new Mirath(Warith.ALAKHAWAT_ASHAKIKAT, nbr_b, sharh2, ro2os));
@@ -781,12 +797,13 @@ public class Massala {
             if (mInput.aljad()) {
                 ro2os++;
                 sharh = Warith.ALIKHWA_LI_AB.getSharhPrefix(nbr_a, Warith.ALJAD, 1, true);
+                moveAljadBeforeAlikhaw();
             }
             else {
                 sharh = Warith.ALIKHWA_LI_AB.getSharhPrefix(nbr_a);
             }
             sharh += "الباقي تعصيبا بالنفس";
-            addMirath(new Mirath(Warith.ALIKHWA_LI_AB, nbr_a, sharh, ro2os, true));
+            addMirath(new Mirath(Warith.ALIKHWA_LI_AB, nbr_a, sharh, ro2os));
         } else {
             String sharh2;
             mTassawi = false;
@@ -799,6 +816,7 @@ public class Massala {
                 sharh += " ومقاسمة مع الجد";
                 sharh2 += " ومقاسمة مع الجد";
                 ro2os += 2;
+                moveAljadBeforeAlikhaw();
             }
             addMirath(new Mirath(Warith.ALIKHWA_LI_AB, nbr_a, sharh, ro2os));
             addMirath(new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh2, ro2os));
@@ -1003,7 +1021,8 @@ public class Massala {
         all.addAll(mWarathah);
         all.addAll(mMahjoobin);
         for (Mirath m : all) {          // Here be dragons
-            StringBuilder nassibTxt = new StringBuilder();
+            StringBuilder nassibMojmal = new StringBuilder();
+            StringBuilder nassibFardi = new StringBuilder();
 
             if (m.isFardh()) {
                 if (m.isTa3seeb()) {
@@ -1011,49 +1030,57 @@ public class Massala {
                     if (m.isTholuthAlbaqi()) { // الأم في الغراوين والجد مع الإخوة
                         // الأم في الغراوين (ص 19) سهمها دوما 1
                         nassib = 1;
-                        nassibTxt.append(mBaqi).append(" * 1\\3 = 1");
+                        nassibMojmal.append(mBaqi).append(" * 1\\3 ");
+                        nassibFardi.append("1");
                         // TODO تفصيل الجد مع الإخوة في حال أخذ الجد ثلث الباقي بالمفاضلة يجب حسابه
                     }
                     else {                     // حالات الأب والجد يرثان 1\6 + ب
                         nassib = m.getFardh();
-                        nassibTxt.append(m.getFardh() + " + ");
+                        nassibMojmal.append(m.getFardh() + " + ");
                         if (mBaqi > 0) {
-                            nassibTxt.append(mBaqi);
+                            nassibMojmal.append(mBaqi);
                             if (m.isShirka()) {                 // assert Aljada
+                                nassibMojmal.append("ش");
+
                                 int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
-                                nassibTxt.append(" * ");
-                                nassibTxt.append(factor);
-                                nassibTxt.append("\\").append(m.getRo2os());
+                                nassibFardi.append(mBaqi);
+                                nassibFardi.append(" * ");
+                                nassibFardi.append(factor);
+                                nassibFardi.append("\\").append(m.getRo2os());
 
                                 int bast = mBaqi * factor * m.getNbr();   // bast only for now
                                 if (bast % m.getRo2os() == 0) {
                                     nassib += bast / m.getRo2os();
-                                    nassibTxt.append(" = ").append(nassib);
+                                    nassibFardi.append(" = ").append(nassib);
                                 }
                                 else {
                                     // TODO انكسار
                                     // TODO nassib +=
-                                    nassib += bast / m.getRo2os();
+//                                    nassib += bast / m.getRo2os();
+                                    nassib = -1;
                                 }
                             } else {                            // assert Alab
                                 nassib += mBaqi;
                             }
                         } else {
-                            nassibTxt.append(0);
+                            nassibMojmal.append(0);
                         }
                     }
                 }
                 else {
-                    nassibTxt.append(m.getFardh());
+                    nassibMojmal.append(m.getFardh());
                     if (m.isShirka()) {
-                        nassibTxt.append(" * 1\\").append(m.getRo2os());
+                        nassibMojmal.append("ش");
+
+                        nassibFardi.append(m.getFardh()).append(" * 1\\").append(m.getRo2os());
                         if (m.getFardh() % m.getRo2os() == 0) {
                             nassib = m.getFardh() / m.getRo2os();
-                            nassibTxt.append(" = ").append(nassib);
+                            nassibFardi.append(" = ").append(nassib);
                         }
                         else {  // TODO إنكسار
-                            nassib = m.getFardh() / m.getRo2os();
-                        }
+//                            nassib = m.getFardh() / m.getRo2os();
+                            nassib = -1;
+   }
                     } else {
                         nassib = m.getFardh();
                     }
@@ -1061,34 +1088,37 @@ public class Massala {
             }
             else if (m.isTa3seeb()) {
                 if (mBaqi > 0) {
-                    nassibTxt.append(mBaqi);
+                    nassibMojmal.append(mBaqi);
                     if (m.isShirka()) {
-                        int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
+                        nassibMojmal.append("ش");
 
-                        nassibTxt.append(" * ");
-                        nassibTxt.append(factor);
-                        nassibTxt.append("\\").append(m.getRo2os());
+                        int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
+                        nassibFardi.append(mBaqi);
+                        nassibFardi.append(" * ");
+                        nassibFardi.append(factor);
+                        nassibFardi.append("\\").append(m.getRo2os());
 
                         int bast = mBaqi * factor * m.getNbr();   // bast only for now
                         if (bast % m.getRo2os() == 0) {
                             nassib = bast / m.getRo2os();
-                            nassibTxt.append(" = ").append(nassib);
+                            nassibFardi.append(" = ").append(nassib);
                         }
                         else {
                             // TODO انكسار
                             // TODO nassib =
-                            nassib = bast / m.getRo2os();
+                            // nassib = bast / m.getRo2os();
+                            nassib = -1;
                         }
                     } else {
                         nassib = mBaqi;
                     }
                 } else {
                     nassib = 0;
-                    nassibTxt.append(0);
+                    nassibMojmal.append(0);
                 }
             }
             else if (m.mahjoob()) {
-                nassibTxt.append("--");
+                nassibMojmal.append("--");
                 nassib = 0;
             }
             else {
@@ -1096,7 +1126,8 @@ public class Massala {
                 continue;
             }
 
-            m.setNassibTxt(nassibTxt.toString());
+            m.setNassibMojmal(nassibMojmal.toString());
+            m.setNassibFardi(nassibFardi.toString());
             m.setNassib(nassib);
         }
     }
@@ -1163,7 +1194,7 @@ public class Massala {
         List<Mirath> all = getMawarith();
         for (Mirath m : all) {
             table.append(String.format("│ %s\t│ %s\t │ %s\t │\n",
-                    m.getNassibTxt(), m.getIsm(), m.getHokom()));
+                    m.getNassibMojmal(), m.getIsm(), m.getHokom()));
             if (all.indexOf(m) == (all.size() - 1)) {
                 table.append("└──────────┴──────────┴──────────┘\n");
             } else {
