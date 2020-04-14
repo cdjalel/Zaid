@@ -28,6 +28,8 @@ public class ZaidApplication extends Application {
 
     public WarathaInput getWarathaInput() { return mInput; }
 
+    public Massala getMassala() { return massala; }
+
     public String hissabMawarith() {
         massala = new Massala();
         massala.hissabMawarith(mInput);
