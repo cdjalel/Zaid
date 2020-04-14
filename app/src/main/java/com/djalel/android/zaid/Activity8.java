@@ -22,10 +22,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -35,8 +31,6 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class Activity8 extends AppCompatActivity {
 
@@ -82,21 +76,25 @@ public class Activity8 extends AppCompatActivity {
             //row of awl
             r = new TableRow(this);
             r.addView(createHeadTextView(String.valueOf(massala.getAwl())),0);
+            r.addView(createHeadTextView(""),0);
             mawarithTable.addView(r);
 
             //row of asl
             r = new TableRow(this);
-            r.addView(createHeadTextView(massala.getAsl() + " ع"),0);
+            r.addView(createHeadTextView(massala.getAsl() + " عول"),0);
+            r.addView(createHeadTextView("كل فرد"),0);
             mawarithTable.addView(r);
         } else {
             r = new TableRow(this);
             r.addView(createHeadTextView(String.valueOf(massala.getAsl())),0);
+            r.addView(createHeadTextView("نصيب كل فرد"),0);
             mawarithTable.addView(r);
         }
 
         for (Mirath m : massala.getMawarith()) {
             r = new TableRow(this);
-            r.addView(createCellTextView(m.getNassibTxt()));
+            r.addView(createCellTextView(m.getNassibFardi()));
+            r.addView(createCellTextView(m.getNassibMojmal()));
             r.addView(createCellTextView(m.getIsm()));
             r.addView(createCellTextView(m.getHokom()));
             mawarithTable.addView(r);
@@ -108,9 +106,9 @@ public class Activity8 extends AppCompatActivity {
     private TextView createHeadTextView(CharSequence txt) {
         TextView head = new TextView(this);
 
-        head.setTextSize(23);
+        head.setTextSize(20);
         head.setTextColor(Color.BLACK);
-        head.setGravity(Gravity.CENTER);
+        head.setGravity(Gravity.RIGHT);
         head.setBackgroundColor(Color.rgb(177, 177, 177));
         head.setTextDirection(View.TEXT_DIRECTION_RTL);
         head.setText(txt);
@@ -121,13 +119,16 @@ public class Activity8 extends AppCompatActivity {
     private TextView createCellTextView(CharSequence txt) {
         TextView cell = new TextView(this);
 
-        cell.setTextSize(23);
+        cell.setTextSize(20);
         cell.setTextColor(Color.BLACK);
-        cell.setGravity(Gravity.CENTER);
+        cell.setGravity(Gravity.RIGHT);
         cell.setBackgroundColor(Color.rgb(225, 225, 225));
         cell.setTextDirection(View.TEXT_DIRECTION_RTL);
         cell.setText(txt);
 
         return cell;
+    }
+    private TextView createCellTextView(int n) {
+            return createCellTextView("" + n);
     }
 }
