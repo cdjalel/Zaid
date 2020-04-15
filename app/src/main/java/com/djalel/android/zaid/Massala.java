@@ -325,7 +325,7 @@ public class Massala {
                     mJadIndex = mWarathah.size();
                 }
                 else {       // الجد يرث الباقي لوحده
-                    sharh = Warith.ALJAD.getSharhPrefix();
+                    sharh += Warith.ALJAD.getSharhPrefix();
                 }
                 sharh += "الباقي تعصيبا بالنفس";
             }
