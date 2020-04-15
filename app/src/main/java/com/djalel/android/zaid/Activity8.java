@@ -21,6 +21,7 @@ package com.djalel.android.zaid;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 public class Activity8 extends AppCompatActivity {
 
     LinearLayout mPrincipalLayout;
+    LinearLayout mButtonsLayout;
     private TextView mResultTextView;
 
     @Override
@@ -51,6 +53,7 @@ public class Activity8 extends AppCompatActivity {
         mResultTextView = (TextView) findViewById(R.id.resultTextView);
         mResultTextView.setMovementMethod(new ScrollingMovementMethod());
         mPrincipalLayout = (LinearLayout) findViewById(R.id.principalLayout);
+        mButtonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
 //        resultTextView.setTypeface(Typeface.MONOSPACE);
     }
 
@@ -64,6 +67,23 @@ public class Activity8 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
         mPrincipalLayout.addView(printTable(app));
+
+        mPrincipalLayout.addView(mButtonsLayout);
+    }
+
+    public void onRestartClicked(View view) {
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        app.getWarathaInput().resetWarathahInput();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+    }
+
+    public void onChangeMassalaClicked(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
