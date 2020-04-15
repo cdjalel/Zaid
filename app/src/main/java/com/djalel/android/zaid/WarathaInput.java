@@ -48,6 +48,35 @@ public class WarathaInput {
 
     public  WarathaInput () {}
 
+    public void resetWarathahInput(){
+        madhab = Madhab.MALIKI;
+        male = true;
+        alab = false;
+        alom = false;
+        aljad = false;
+        aljadah_li_ab = false;
+        aljadah_li_om = false;
+        zawj = false;
+
+        azawjat = 0;
+        alabna = 0;
+        albanat = 0;
+        abna_alabna = 0;
+        banat_alabna = 0;
+        alikhwa_li_om = 0;
+        alakhawat_li_om = 0;
+        alikhwa_alashika = 0;
+        alakhawat_ashakikat = 0;
+        alikhwa_li_ab = 0;
+        alakhawat_li_ab = 0;
+        abna_alikhwa_alashika = 0;
+        abna_alikhwa_li_ab = 0;
+        ala3mam_alashika = 0;
+        ala3mam_li_ab = 0;
+        abna_ala3mam_alashika = 0;
+        abna_ala3mam_li_ab = 0;
+    }
+
     public void set_madhab(Madhab m) {
         madhab = m;
     }
