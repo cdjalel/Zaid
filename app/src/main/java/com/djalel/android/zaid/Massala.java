@@ -974,6 +974,9 @@ public class Massala {
                 }
             }
         }
+        if (!mFardh && mTa3seeb) {
+            mAsl = mAdadRo2os;
+        }
     }
 
     private void hissabAshomAndBaqi() {
