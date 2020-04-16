@@ -847,7 +847,7 @@ public class Massala {
         int nbr = mInput.get_abna_alikhwa_alashika();
         if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab) return;
 
-        String sharh = Warith.ABNA_ALIKHWA_ALASHIKA.getName(nbr);
+        String sharh = Warith.ABNA_ALIKHWA_ALASHIKA.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ABNA_ALIKHWA_ALASHIKA, nbr, sharh));
 
@@ -873,7 +873,7 @@ public class Massala {
         int nbr = mInput.get_abna_alikhwa_li_ab();
         if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab || (mInput.get_abna_alikhwa_alashika() > 0)) return;
 
-        String sharh = Warith.ABNA_ALIKHWA_LI_AB.getName(nbr);
+        String sharh = Warith.ABNA_ALIKHWA_LI_AB.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ABNA_ALIKHWA_LI_AB, nbr, sharh));
 
@@ -896,7 +896,7 @@ public class Massala {
         int nbr = mInput.get_ala3mam_alashika();
         if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa) return;
 
-        String sharh = Warith.ALA3MAM_ALASHIKA.getName(nbr);
+        String sharh = Warith.ALA3MAM_ALASHIKA.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ALA3MAM_ALASHIKA, nbr, sharh));
 
@@ -916,7 +916,7 @@ public class Massala {
         int nbr = mInput.get_ala3mam_li_ab();
         if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa && (mInput.get_ala3mam_alashika() > 0)) return;
 
-        String sharh = Warith.ALA3MAM_LI_AB.getName(nbr);
+        String sharh = Warith.ALA3MAM_LI_AB.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ALA3MAM_LI_AB, nbr, sharh));
 
@@ -933,7 +933,7 @@ public class Massala {
         int nbr = mInput.get_abna_ala3mam_alashika();
         if ((mInput.get_abna_ala3mam_alashika() == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam) return;
 
-        String sharh = Warith.ABNA_ALA3MAM_ALASHIKA.getName(mInput.get_abna_ala3mam_alashika());
+        String sharh = Warith.ABNA_ALA3MAM_ALASHIKA.getSharhPrefix(mInput.get_abna_ala3mam_alashika());
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ABNA_ALA3MAM_ALASHIKA, nbr, sharh));
 
@@ -947,7 +947,7 @@ public class Massala {
         int nbr = mInput.get_abna_ala3mam_li_ab();
         if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam || (mInput.get_abna_ala3mam_alashika() > 0))  return;
 
-        String sharh = Warith.ABNA_ALA3MAM_LI_AB.getName(mInput.get_abna_ala3mam_li_ab());
+        String sharh = Warith.ABNA_ALA3MAM_LI_AB.getSharhPrefix(mInput.get_abna_ala3mam_li_ab());
         sharh += "الباقي تعصيبا بالنفس";
         addMirath(new Mirath(Warith.ABNA_ALA3MAM_LI_AB, nbr, sharh));
     }
