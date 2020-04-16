@@ -199,4 +199,6 @@ public class Mirath {
     public String getNassibFardi() { return this.nassibFardi; }
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
+
+    public boolean isJada(){ return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
 }

@@ -981,10 +981,15 @@ public class Massala {
 
     private void hissabAshomAndBaqi() {
         // حساب مجموع أسهم أصحاب الفروض وباقي المسألة
+        boolean counted = false;
         for (Mirath m : mWarathah) {
             if (m.isFardh()) {
                 int fardh = m.getBast() * mAsl / m.getMaqam();
                 m.setFardh(fardh);
+                if (m.isJada()) {
+                    if (counted) { continue; }
+                    counted = true;
+                }
                 mAshom += fardh;
             }
         }
