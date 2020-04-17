@@ -128,6 +128,9 @@ public class Massala {
         boolean alikhwa_alashika_wa_li_ab = (mInput.get_alikhwa_alashika() + mInput.get_alikhwa_li_ab()) > 0;
         boolean alikhwa_wa_abna_alikhwa = (mInput.get_alikhwa_alashika() + mInput.get_alikhwa_li_ab() + mInput.get_abna_alikhwa_alashika() + mInput.get_abna_alikhwa_li_ab()) > 0;
         boolean ala3mam = (mInput.get_ala3mam_alashika() + mInput.get_ala3mam_li_ab()) > 0;
+        boolean alakhawat_ashakikat_3asaba_ma3a_lghayr = (mInput.get_albanat() > 0 && mInput.get_alakhawat_ashakikat() > 0 && !far3_wa_asl_warith_dhaker && mInput.get_alikhwa_alashika() == 0 );
+        boolean alakhawat_li_ab_3asaba_ma3a_lghayr = (mInput.get_albanat() > 0 && mInput.get_alakhawat_li_ab() > 0 && !far3_wa_asl_warith_dhaker
+                && mInput.get_alikhwa_alashika() == 0 && mInput.get_alakhawat_ashakikat() ==0 && mInput.get_alikhwa_li_ab() == 0);
 
         // Order matters. Here be dragons
         mirathAzawj(far3_warith);
@@ -139,17 +142,17 @@ public class Massala {
         mirathAwladAlom(far3_warith, asl_warith_dhaker);
         mirathAlbanat();
         mirathAlkhawatAshakikat(far3_warith_dhakar, far3_warith_ontha);
-        mirathAlakhawatLiAb(far3_warith_dhakar, far3_warith_ontha, alikhwa_alashika_wa_li_ab);
+        mirathAlakhawatLiAb(far3_warith_dhakar, far3_warith_ontha, alikhwa_alashika_wa_li_ab, alakhawat_ashakikat_3asaba_ma3a_lghayr);
         mirathAlabnaWaAlbanat();
         mirathAbnaWaBanatAlabna();
         mirathAlikhwaAlashika(far3_warith_dhakar);
-        mirathAlikhwaLiAb(far3_warith_dhakar);
-        mirathAbnaAlikhwaAlashika(far3_wa_asl_warith_dhaker, alikhwa_alashika_wa_li_ab);
-        mirathAbnaAlikhwaLiAb(far3_wa_asl_warith_dhaker, alikhwa_alashika_wa_li_ab);
-        mirathAla3mamAlashika(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa);
-        mirathAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa);
-        mirathAbnaAla3mamAlashika(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam);
-        mirathAbnaAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam);
+        mirathAlikhwaLiAb(far3_warith_dhakar, alakhawat_ashakikat_3asaba_ma3a_lghayr);
+        mirathAbnaAlikhwaAlashika(far3_wa_asl_warith_dhaker, alikhwa_alashika_wa_li_ab, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
+        mirathAbnaAlikhwaLiAb(far3_wa_asl_warith_dhaker, alikhwa_alashika_wa_li_ab, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
+        mirathAla3mamAlashika(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
+        mirathAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
+        mirathAbnaAla3mamAlashika(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
+        mirathAbnaAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam, alakhawat_ashakikat_3asaba_ma3a_lghayr, alakhawat_li_ab_3asaba_ma3a_lghayr);
 
         // TODO assert none of the Warith enums is both in mWarathah & mMahjoobin
         if (noInput()) {
@@ -536,13 +539,39 @@ public class Massala {
         else { // presence of far3_warith_ontha
             sharh += "الباقي تعصيبا مع الغير";
             addMirath(new Mirath(Warith.ALAKHAWAT_ASHAKIKAT, nbr, sharh));
+
+            //alhajb by ALAKHAWAT_ASHAKIKAT
+            if (mInput.get_alikhwa_li_ab() >= 1) {
+                addHajb(Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_alakhawat_li_ab() >= 1){
+                addHajb(Warith.ALAKHAWAT_LI_AB, mInput.get_alakhawat_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_abna_alikhwa_alashika() >= 1) {
+                addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_abna_alikhwa_li_ab() >= 1) {
+                addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_ala3mam_alashika() >= 1) {
+                addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_ala3mam_li_ab() >= 1) {
+                addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_abna_ala3mam_alashika() >= 1) {
+                addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
+            if (mInput.get_abna_ala3mam_li_ab() >= 1) {
+                addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr);
+            }
         }
     }
 
-    private void mirathAlakhawatLiAb(boolean far3_warith_dhakar, boolean far3_warith_ontha, boolean alikhwa_alashika_wa_li_ab) {
+    private void mirathAlakhawatLiAb(boolean far3_warith_dhakar, boolean far3_warith_ontha, boolean alikhwa_alashika_wa_li_ab, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr) {
         // mirath alakhawat li ab 3inda 3adam wojud alikhwa
         int nbr = mInput.get_alakhawat_li_ab();
-        if ((nbr == 0) || mInput.alab() || far3_warith_dhakar || alikhwa_alashika_wa_li_ab) return;
+        if ((nbr == 0) || mInput.alab() || far3_warith_dhakar || alikhwa_alashika_wa_li_ab || alakhawat_ashakikat_3asaba_ma3a_lghayr) return;
 
         String sharh;
         int bast;
@@ -572,6 +601,26 @@ public class Massala {
                 sharh = Warith.ALAKHAWAT_LI_AB.getSharhPrefix(nbr);
                 sharh += " الباقي تعصيبا مع الغير";
                 addMirath(new Mirath(Warith.ALAKHAWAT_LI_AB, nbr, sharh));
+
+                //alhajb by ALAKHAWAT_LI_AB
+                if (mInput.get_abna_alikhwa_alashika() >= 1) {
+                    addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
+                if (mInput.get_abna_alikhwa_li_ab() >= 1) {
+                    addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
+                if (mInput.get_ala3mam_alashika() >= 1) {
+                    addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
+                if (mInput.get_ala3mam_li_ab() >= 1) {
+                    addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
+                if (mInput.get_abna_ala3mam_alashika() >= 1) {
+                    addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
+                if (mInput.get_abna_ala3mam_li_ab() >= 1) {
+                    addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr);
+                }
             } else {
                 addHajb(Warith.ALAKHAWAT_LI_AB, nbr, Warith.ALAKHAWAT_ASHAKIKAT, mInput.get_alakhawat_ashakikat());
             }
@@ -732,7 +781,7 @@ public class Massala {
             if (mInput.aljad()) {
                 ro2os++;
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a, Warith.ALJAD, 1, true);
-               moveAljadBeforeAlikhaw();
+                moveAljadBeforeAlikhaw();
             }
             else {
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a);
@@ -784,9 +833,9 @@ public class Massala {
         }
     }
 
-    private void mirathAlikhwaLiAb(boolean far3_warith_dhakar) {
+    private void mirathAlikhwaLiAb(boolean far3_warith_dhakar, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr) {
         int nbr_a = mInput.get_alikhwa_li_ab();
-        if ((nbr_a == 0) || far3_warith_dhakar || mInput.alab() || (mInput.get_alikhwa_alashika() > 0)) return;
+        if ((nbr_a == 0) || far3_warith_dhakar || mInput.alab() || (mInput.get_alikhwa_alashika() > 0) || alakhawat_ashakikat_3asaba_ma3a_lghayr) return;
 
         String sharh;
         int nbr_b = mInput.get_alakhawat_li_ab();
@@ -843,9 +892,9 @@ public class Massala {
         }
     }
 
-    private void mirathAbnaAlikhwaAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_alashika_wa_li_ab) {
+    private void mirathAbnaAlikhwaAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_alashika_wa_li_ab, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_abna_alikhwa_alashika();
-        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab) return;
+        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr) return;
 
         String sharh = Warith.ABNA_ALIKHWA_ALASHIKA.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
@@ -869,9 +918,9 @@ public class Massala {
         }
     }
 
-    private void mirathAbnaAlikhwaLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_alashika_wa_li_ab) {
+    private void mirathAbnaAlikhwaLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_alashika_wa_li_ab, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_abna_alikhwa_li_ab();
-        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab || (mInput.get_abna_alikhwa_alashika() > 0)) return;
+        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_alashika_wa_li_ab || (mInput.get_abna_alikhwa_alashika() > 0) || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr) return;
 
         String sharh = Warith.ABNA_ALIKHWA_LI_AB.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
@@ -892,9 +941,9 @@ public class Massala {
         }
     }
 
-    private void mirathAla3mamAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa) {
+    private void mirathAla3mamAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_ala3mam_alashika();
-        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa) return;
+        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr) return;
 
         String sharh = Warith.ALA3MAM_ALASHIKA.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
@@ -912,9 +961,9 @@ public class Massala {
         }
     }
 
-    private void mirathAla3mamLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa) {
+    private void mirathAla3mamLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_ala3mam_li_ab();
-        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa && (mInput.get_ala3mam_alashika() > 0)) return;
+        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa && (mInput.get_ala3mam_alashika() > 0) || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr) return;
 
         String sharh = Warith.ALA3MAM_LI_AB.getSharhPrefix(nbr);
         sharh += "الباقي تعصيبا بالنفس";
@@ -929,9 +978,9 @@ public class Massala {
         }
     }
 
-    private void mirathAbnaAla3mamAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean ala3mam) {
+    private void mirathAbnaAla3mamAlashika(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean ala3mam, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_abna_ala3mam_alashika();
-        if ((mInput.get_abna_ala3mam_alashika() == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam) return;
+        if ((mInput.get_abna_ala3mam_alashika() == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr) return;
 
         String sharh = Warith.ABNA_ALA3MAM_ALASHIKA.getSharhPrefix(mInput.get_abna_ala3mam_alashika());
         sharh += "الباقي تعصيبا بالنفس";
@@ -943,9 +992,9 @@ public class Massala {
         }
     }
 
-    private void mirathAbnaAla3mamLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean ala3mam) {
+    private void mirathAbnaAla3mamLiAb(boolean far3_wa_asl_warith_dhaker, boolean alikhwa_wa_abna_alikhwa, boolean ala3mam, boolean alakhawat_ashakikat_3asaba_ma3a_lghayr, boolean alakhawat_li_ab_3asaba_ma3a_lghayr) {
         int nbr = mInput.get_abna_ala3mam_li_ab();
-        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam || (mInput.get_abna_ala3mam_alashika() > 0))  return;
+        if ((nbr == 0) || far3_wa_asl_warith_dhaker || alikhwa_wa_abna_alikhwa || ala3mam || (mInput.get_abna_ala3mam_alashika() > 0) || alakhawat_ashakikat_3asaba_ma3a_lghayr || alakhawat_li_ab_3asaba_ma3a_lghayr)  return;
 
         String sharh = Warith.ABNA_ALA3MAM_LI_AB.getSharhPrefix(mInput.get_abna_ala3mam_li_ab());
         sharh += "الباقي تعصيبا بالنفس";
@@ -1088,7 +1137,7 @@ public class Massala {
                         else {  // TODO إنكسار
 //                            nassib = m.getFardh() / m.getRo2os();
                             nassib = -1;
-   }
+                        }
                     } else {
                         nassib = m.getFardh();
                     }
