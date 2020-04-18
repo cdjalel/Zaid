@@ -42,23 +42,24 @@ public class Activity2 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        // read default values from layout
+        // update layout
         RadioGroup radioGroup;
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupZawj);
-        zawjatNP = (NumberPicker) findViewById(R.id.zawjatNumberPicker);
+        radioGroup = findViewById(R.id.radioGroupZawj);
+        zawjatNP = findViewById(R.id.zawjatNumberPicker);
 
         if (mInput.is_male()) {
             radioGroup.setEnabled(false);
             for(int i = 0; i < radioGroup.getChildCount(); i++) {
-                ((RadioButton)radioGroup.getChildAt(i)).setEnabled(false);
+                radioGroup.getChildAt(i).setEnabled(false);
+                ((RadioButton)radioGroup.getChildAt(i)).setChecked(false);
             }
-            ((TextView) findViewById(R.id.zawjTextView)).setEnabled(false);
+            findViewById(R.id.zawjTextView).setEnabled(false);
 
-            ((TextView) findViewById(R.id.zawjatTextView)).setEnabled(true);
+            findViewById(R.id.zawjatTextView).setEnabled(true);
             zawjatNP.setEnabled(true);
-            zawjatNP.setValue(0);
             zawjatNP.setMinValue(0);
             zawjatNP.setMaxValue(4);
+            zawjatNP.setValue(mInput.get_azawjat());
             zawjatNP.setWrapSelectorWheel(false);
             zawjatNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -68,21 +69,24 @@ public class Activity2 extends AppCompatActivity {
             });
         }
         else {
+            mInput.set_azawjat(0);
+            zawjatNP.setValue(0);
             zawjatNP.setEnabled(false);
-            ((TextView) findViewById(R.id.zawjatTextView)).setEnabled(false);
+            findViewById(R.id.zawjatTextView).setEnabled(false);
 
-            ((TextView) findViewById(R.id.zawjTextView)).setEnabled(true);
+            findViewById(R.id.zawjTextView).setEnabled(true);
             radioGroup.setEnabled(true);
             for(int i = 0; i < radioGroup.getChildCount(); i++) {
-                ((RadioButton)radioGroup.getChildAt(i)).setEnabled(true);
+                radioGroup.getChildAt(i).setEnabled(true);
             }
-            onZawjButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+            ((RadioButton)findViewById(mInput.zawj() ?
+                    R.id.radioButtonZawjYes : R.id.radioButtonZawjNo)).setChecked(true);
         }
 
-        sonsNP = (NumberPicker) findViewById(R.id.sonsNumberPicker);
-        sonsNP.setValue(0);
+        sonsNP = findViewById(R.id.sonsNumberPicker);
         sonsNP.setMinValue(0);
         sonsNP.setMaxValue(50);
+        sonsNP.setValue(mInput.get_alabna());
         sonsNP.setWrapSelectorWheel(false);
         sonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -91,10 +95,10 @@ public class Activity2 extends AppCompatActivity {
                 }
         });
 
-        daughtersNP = (NumberPicker) findViewById(R.id.daughtersNumberPicker);
-        daughtersNP.setValue(0);
+        daughtersNP = findViewById(R.id.daughtersNumberPicker);
         daughtersNP.setMinValue(0);
         daughtersNP.setMaxValue(50);
+        daughtersNP.setValue(mInput.get_albanat());
         daughtersNP.setWrapSelectorWheel(false);
         daughtersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 

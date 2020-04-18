@@ -38,10 +38,10 @@ public class Activity6 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        fullUnclesNP = (NumberPicker) findViewById(R.id.fullUnclesNumberPicker);
-        fullUnclesNP.setValue(0);
+        fullUnclesNP = findViewById(R.id.fullUnclesNumberPicker);
         fullUnclesNP.setMinValue(0);
         fullUnclesNP.setMaxValue(50);
+        fullUnclesNP.setValue(mInput.get_ala3mam_alashika());
         fullUnclesNP.setWrapSelectorWheel(false);
         fullUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -50,10 +50,10 @@ public class Activity6 extends AppCompatActivity {
             }
         });
 
-        paternalUnclesNP = (NumberPicker) findViewById(R.id.paternalUnclesNumberPicker);
-        paternalUnclesNP.setValue(0);
+        paternalUnclesNP = findViewById(R.id.paternalUnclesNumberPicker);
         paternalUnclesNP.setMinValue(0);
         paternalUnclesNP.setMaxValue(50);
+        paternalUnclesNP.setValue(mInput.get_ala3mam_li_ab());
         paternalUnclesNP.setWrapSelectorWheel(false);
         paternalUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 

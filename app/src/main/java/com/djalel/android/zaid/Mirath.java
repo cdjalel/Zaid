@@ -64,7 +64,7 @@ public class Mirath {
                         hokom = "1\\4"; // "¼";
                         break;
                     case 6:
-                        hokom = ta3seeb? "1\\6 + الباقي" : "1\\6"; //"⅙";
+                        hokom = ta3seeb? "1\\6 + تعصيب" : "1\\6"; //"⅙";
                         // الأب والجد يمكن أن يرثا السدس زائد الباقي
                         break;
                     case 8:
@@ -80,7 +80,7 @@ public class Mirath {
                 break;
             case 0:
             default:
-                hokom = ta3seeb ? "الباقي" : "حجب";
+                hokom = ta3seeb ? "تعصيب" : "حجب";
                 break;
         }
 
@@ -132,12 +132,12 @@ public class Mirath {
         this(warith, nbr, sharh, 0, 1, true, ro2os);
     }
 
-    // وارث واحد بالفرض والتعصيب لوحده (الأب والجد) أو من يأخذ ثلث الباقي (الأم في الغرواين)
+    // وارث واحد بالفرض والتعصيب لوحده (الأب والجد)
     public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb) {
         this(warith, 1, sharh, bast, maqam, ta3seeb, 1);
     }
 
-    // وارث واحد بالفرض والتعصيب مقاسمة وهو الجد مع الإخوة
+    // وارث واحد بالفرض والتعصيب مقاسمة وهو الجد مع الإخوة أو من يأخذ ثلث الباقي (الأم في الغرواين)
     public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int ro2os) {
         this(warith, 1, sharh, bast, maqam, ta3seeb, ro2os);
     }
@@ -178,7 +178,7 @@ public class Mirath {
 
     public boolean mahjoob() { return (bast == 0) && !ta3seeb; }
 
-    public boolean isFardh() { return (bast != 0) && (maqam != 1); }
+    public boolean isFardh() { return (bast != 0) && (maqam != 1) && !isTholuthAlbaqi(); }
 
     public boolean isTholuthAlbaqi() { return bast == 1 && maqam == 3 && ta3seeb; }
 

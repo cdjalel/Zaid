@@ -38,10 +38,10 @@ public class Activity7 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        sonsOfFullUnclesNP = (NumberPicker) findViewById(R.id.sonsOfFullUnclesNumberPicker);
-        sonsOfFullUnclesNP.setValue(0);
+        sonsOfFullUnclesNP = findViewById(R.id.sonsOfFullUnclesNumberPicker);
         sonsOfFullUnclesNP.setMinValue(0);
         sonsOfFullUnclesNP.setMaxValue(50);
+        sonsOfFullUnclesNP.setValue(mInput.get_abna_ala3mam_alashika());
         sonsOfFullUnclesNP.setWrapSelectorWheel(false);
         sonsOfFullUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -50,10 +50,10 @@ public class Activity7 extends AppCompatActivity {
 		    }
 	    });
 
-        sonsOfPaternalUnclesNP = (NumberPicker) findViewById(R.id.sonsOfPaternalUnclesNumberPicker);
-        sonsOfPaternalUnclesNP.setValue(0);
+        sonsOfPaternalUnclesNP = findViewById(R.id.sonsOfPaternalUnclesNumberPicker);
         sonsOfPaternalUnclesNP.setMinValue(0);
         sonsOfPaternalUnclesNP.setMaxValue(50);
+        sonsOfPaternalUnclesNP.setValue(mInput.get_abna_ala3mam_li_ab());
         sonsOfPaternalUnclesNP.setWrapSelectorWheel(false);
         sonsOfPaternalUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
