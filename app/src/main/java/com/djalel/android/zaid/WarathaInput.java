@@ -46,7 +46,9 @@ public class WarathaInput {
     private int abna_ala3mam_alashika;
     private int abna_ala3mam_li_ab;
 
-    public  WarathaInput () {}
+    public  WarathaInput () {
+        resetWarathahInput();
+    }
 
     public void resetWarathahInput(){
         madhab = Madhab.MALIKI;

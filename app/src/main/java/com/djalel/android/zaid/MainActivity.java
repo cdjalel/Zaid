@@ -37,29 +37,31 @@ public class MainActivity extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        // read default values from layout
-        RadioGroup radioGroup;
+        // update layout
+        switch (mInput.get_madhab()) {
+            case MALIKI: ((RadioButton)findViewById(R.id.radioButtonMaliki)).setChecked(true); break;
+            case CHAFI3I: ((RadioButton)findViewById(R.id.radioButtonChafi3i)).setChecked(true); break;
+            case HAMBALI: ((RadioButton)findViewById(R.id.radioButtonHambali)).setChecked(true); break;
+            case HANAFI: default: ((RadioButton)findViewById(R.id.radioButtonHanafi)).setChecked(true); break;
+        }
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupMadhab);
-        onMadhabButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.is_male() ?
+                R.id.radioButtonMale : R.id.radioButtonFemale)).setChecked(true);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupGender);
-        onGenderButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.alab() ?
+                R.id.radioButtonFatherYes : R.id.radioButtonFatherNo)).setChecked(true);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupFather);
-        onFatherButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.alom() ?
+                R.id.radioButtonMotherYes : R.id.radioButtonMotherNo)).setChecked(true);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupMother);
-        onMotherButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.aljad() ?
+                R.id.radioButtonGrandFatherYes : R.id.radioButtonGrandFatherNo)).setChecked(true);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupGrandFather);
-        onGrandFatherButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.aljadah_li_ab() ?
+                R.id.radioButtonPaternalGrandMotherYes : R.id.radioButtonPaternalGrandMotherNo)).setChecked(true);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupPaternalGrandMother);
-        onPaternalGrandMotherButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
-
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroupMaternalGrandMother);
-        onMaternalGrandMotherButtonClicked(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        ((RadioButton)findViewById(mInput.aljadah_li_om() ?
+                R.id.radioButtonMaternalGrandMotherYes : R.id.radioButtonMaternalGrandMotherNo)).setChecked(true);
     }
 
     public void onMadhabButtonClicked(View view) {
@@ -93,15 +95,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButtonMale:
                 if (checked)
                     mInput.set_male(true);
+                    mInput.set_zawj(false);
                 break;
 
             case R.id.radioButtonFemale:
                 if (checked)
                     mInput.set_male(false);
+                    mInput.set_azawjat(0);
                 break;
         }
     }
-
 
     public void onFatherButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
@@ -117,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
     public void onMotherButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
