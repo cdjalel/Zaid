@@ -176,7 +176,7 @@ public class Mirath {
 
     public Warith getWarith() { return warith; }
 
-    public boolean mahjoob() { return (bast == 0) && !ta3seeb; }
+    public boolean isMahjoob() { return (bast == 0) && !ta3seeb; }
 
     public boolean isFardh() { return (bast != 0) && (maqam != 1) && !isTholuthAlbaqi(); }
 
@@ -200,5 +200,5 @@ public class Mirath {
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
 
-    public boolean isJada(){ return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
+    public boolean isJadah(){ return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
 }

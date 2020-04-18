@@ -103,12 +103,12 @@ public class Activity8 extends AppCompatActivity {
             //row of asl
             r = new TableRow(this);
             r.addView(createHeadTextView(massala.getAsl() + " عول"),0);
-            r.addView(createHeadTextView("كل فرد"),0);
+            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
             mawarithTable.addView(r);
         } else {
             r = new TableRow(this);
             r.addView(createHeadTextView(String.valueOf(massala.getAsl())),0);
-            r.addView(createHeadTextView("نصيب كل فرد"),0);
+            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
             mawarithTable.addView(r);
         }
 
@@ -116,8 +116,8 @@ public class Activity8 extends AppCompatActivity {
         boolean shirkatTa3seebFirst = true;
         for (Mirath m : massala.getMawarith()) {
             r = new TableRow(this);
-            r.addView(createCellTextView(m.getNassibFardi()));
-            if (m.isShirka() && m.isFardh() && m.isJada() ) {
+            r.addView(createCellTextView(String.valueOf(m.getNassib())));
+            if (m.isShirka() && m.isFardh() && m.isJadah() ) {
                 if (jadaFirst) {
                     r.addView(createCellTextView(m.getNassibMojmal()+" ↓"));
                     jadaFirst = false;
@@ -126,7 +126,7 @@ public class Activity8 extends AppCompatActivity {
                 }
             } else if (m.isShirka() && m.isTa3seeb() && massala.isShirkaTa3seeb()) {
                 if (shirkatTa3seebFirst) {
-                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓"));
+                    r.addView(createCellTextView(m.getNassibMojmal() + " ↓"));
                     shirkatTa3seebFirst = false;
                 } else {
                     r.addView(createCellTextView(""));

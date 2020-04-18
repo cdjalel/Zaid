@@ -38,9 +38,8 @@ public class Massala {
     private boolean m_alakhawat_3assabat_ma3a_lghayr;
 
     private int mAsl;
-    private int mAshom;
     private int mBaqi;
-    private int mAdadRo2os;
+    private int mAdadRo2osAlbaqi;
     private int mAwl;
     private int mMissah;
     private String mSpecialCase;
@@ -62,8 +61,7 @@ public class Massala {
 
         mSpecialCase = null;
         mAsl = 1;
-        mAshom = 0;
-        mAdadRo2os = 1;
+        mAdadRo2osAlbaqi = 1;
         mAwl = 0;
 
         mHal = false;
@@ -1045,6 +1043,7 @@ public class Massala {
 
     private void hissabAslAndRo2os() {
         // استخراج أصل المسألة (ص 40 من كتاب "الفرائض المُيسر) وعدد رؤوس ورثة الباقي"
+        mAsl = 1;
         for (Mirath m : mWarathah) {
             if (m.isFardh()) {
                 mAsl = lcm(mAsl, m.getMaqam());
@@ -1053,8 +1052,8 @@ public class Massala {
                 }
             }
             if (m.isTa3seeb()) {
-                if ((m.getRo2os() != 1) && (mAdadRo2os == 1)) {
-                    mAdadRo2os = m.getRo2os();
+                if ((m.getRo2os() != 1) && (mAdadRo2osAlbaqi == 1)) {
+                    mAdadRo2osAlbaqi = m.getRo2os();
                 }
                 if (!mTa3seeb) {
                     mTa3seeb = true;
@@ -1062,25 +1061,26 @@ public class Massala {
             }
         }
         if (!mFardh && mTa3seeb) {
-            mAsl = mAdadRo2os;
+            mAsl = mAdadRo2osAlbaqi;
         }
     }
 
     private void hissabAshomAndBaqi() {
         // حساب مجموع أسهم أصحاب الفروض وباقي المسألة
+        int ashom = 0;
         boolean counted = false;
         for (Mirath m : mWarathah) {
             if (m.isFardh()) {
                 int fardh = m.getBast() * mAsl / m.getMaqam();
                 m.setFardh(fardh);
-                if (m.isJada()) {
+                if (m.isJadah()) {
                     if (counted) { continue; }
                     counted = true;
                 }
-                mAshom += fardh;
+                ashom += fardh;
             }
         }
-        mBaqi = mAsl - mAshom;
+        mBaqi = mAsl - ashom;
         if (mBaqi == 0) {
             if (mFardh) {
                 mNaw3 = Naw3.NAW3_ADILA;
@@ -1094,24 +1094,26 @@ public class Massala {
                 // TODO ADILA here?
                 // TODO mBaqi % mAdadRo2os != 0
             }
-            else if (mAshom != 0) {                           // مسألة ناقصة فيها رد
+            else if (ashom != 0) {                           // مسألة ناقصة فيها رد
                 mNaw3 = Naw3.NAW3_RAD;
                 // TODO rad albaqi
             }
         } else {                                // مسألة عائلة
             mNaw3 = Naw3.NAW3_AWL;
-            mAwl = mAshom;
+            mAwl = ashom;
             if (mTa3seeb) {
                 mIstighraq = true;
             }
             // TODO  XXX mBaqi < 0
+            mBaqi = 0;
         }
     }
 
     private void hissabAnsiba() {
         // قسمة الأسهم في الجدول
         int nassib;
-        ArrayList<Mirath> all = new ArrayList<Mirath>();
+        int missahFactor = 1;
+        ArrayList<Mirath> all = new ArrayList<>();
 
         all.addAll(mWarathah);
         all.addAll(mMahjoobin);
@@ -1120,85 +1122,80 @@ public class Massala {
             StringBuilder nassibFardi = new StringBuilder();
 
             if (m.isFardh()) {
-                if (m.isTa3seeb()) { // حالات الأب والجد يرثان 1\6 + ب
-                    // assert m.getBast() == 1
-                    nassib = m.getFardh();
-                    nassibMojmal.append(m.getFardh() + " + ");
-                    if (mBaqi > 0) {
-                        nassibMojmal.append(mBaqi);
-                        nassib += mBaqi;
+                nassib = m.getFardh();
+                nassibMojmal.append(nassib);
+                nassibFardi.append(nassib);
+
+                if (m.isTa3seeb()) { // حالات الأب والجد يرثان 1\6 + باقي
+                    // assert m.getBast() == 1 && m.getMaqam() == 6
+                    nassibMojmal.append(" + ").append(mBaqi);
+                    nassibFardi.append(" + ").append(mBaqi);
+
+                    if (m.isShirka()) {                 // assert Aljada
+                        nassibMojmal.append("ش");
+
+                        int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
+                        nassibFardi.append(" * ");
+                        nassibFardi.append(factor);
+                        nassibFardi.append("\\").append(m.getRo2os());
+
+                        int bast = mBaqi * factor * m.getNbr();
+                        if (bast % m.getRo2os() == 0) {
+                            nassib += bast / m.getRo2os();
+                            nassibFardi.append(" = ").append(nassib);
+                        }
+                        else { // إنكسار
+                            int gcd = gcd(bast, m.getRo2os());
+                            missahFactor = lcm(missahFactor, gcd == 1 ? m.getRo2os() : gcd);
+                            nassib = -bast;                 // bast only for now
+                        }
                     } else {
-                        nassibMojmal.append(0);
+                        nassib += mBaqi;
                     }
-                    nassibFardi = nassibMojmal;
-                }
-                else {
-                    nassibMojmal.append(m.getFardh());
+                } else {              // وارث بالفرض فقط
                     if (m.isShirka()) {
                         nassibMojmal.append("ش");
 
-                        nassibFardi.append(m.getFardh());
                         nassibFardi.append(" * 1\\");
                         nassibFardi.append(m.getRo2os());
                         if (m.getFardh() % m.getRo2os() == 0) {
                             nassib = m.getFardh() / m.getRo2os();
                             nassibFardi.append(" = ").append(nassib);
                         }
-                        else {  // TODO إنكسار
-//                            nassib = m.getFardh() / m.getRo2os();
-                            nassib = -1;
-                            nassibFardi.append(" = ...");
+                        else {  // إنكسار
+                            int gcd = gcd(m.getFardh(), m.getRo2os());
+                            missahFactor = lcm(missahFactor, gcd == 1 ? m.getRo2os() : gcd);
+                            nassib = -m.getFardh();         // bast only for now
                         }
-                    } else {
-                        nassib = m.getFardh();
-                        nassibFardi.append(nassib);
                     }
                 }
             }
-            else if (m.isTa3seeb()) {
-                if (mBaqi > 0) {
-                    nassibMojmal.append(mBaqi);
-                    if (m.isShirka()) {
-                        nassibMojmal.append("ش");
+            else if (m.isTa3seeb()) {       // وارث بالتعصيب فقط
+                nassib = mBaqi;
+                nassibMojmal.append(mBaqi);
+                nassibFardi.append(mBaqi);
 
-                        int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
-                        nassibFardi.append(mBaqi);
-                        nassibFardi.append(" * ");
-                        nassibFardi.append(factor);
-                        nassibFardi.append("\\").append(m.getRo2os());
+                if (m.isShirka()) {
+                    nassibMojmal.append("ش");
 
-                        int bast = mBaqi * factor * m.getNbr();   // bast only for now
-                        if (bast % m.getRo2os() == 0) {
-                            nassib = bast / m.getRo2os();
-                            nassibFardi.append(" = ").append(nassib);
-                        }
-                        else { // TODO إنكسار
-                            // TODO remove next if when Inkissar is implemented
-                            if (m.isTholuthAlbaqi()) { // الأم في الغراوين والجد مع الإخوة
-                                // الأم في الغراوين (ص 19) سهمها دوما 1
-                                nassib = 1;
-                                nassibMojmal.append("ش").append(mBaqi);
-                                nassibFardi.append(" = 1");
-                                // TODO تفصيل الجد مع الإخوة في حال أخذ الجد ثلث الباقي بالمفاضلة يجب حسابه
-                            } else {
-                                // TODO انكسار
-                                // TODO nassib =
-                                // nassib = bast / m.getRo2os();
-                                nassib = -1;
-                                nassibFardi.append(" = ...");
-                            }
-                        }
-                    } else {
-                        nassib = mBaqi;
-                        nassibFardi.append(nassib);
+                    int factor = mTassawi || m.getWarith().isOntha() ? 1 : 2;
+                    nassibFardi.append(" * ");
+                    nassibFardi.append(factor);
+                    nassibFardi.append("\\").append(m.getRo2os());
+
+                    int bast = mBaqi * factor * m.getNbr();
+                    if (bast % m.getRo2os() == 0) {
+                        nassib = bast / m.getRo2os();
+                        nassibFardi.append(" = ").append(nassib);
                     }
-                } else {
-                    nassib = 0;
-                    nassibMojmal.append(nassib);
-                    nassibFardi.append(nassib);
+                    else { //  إنكسار
+                        int gcd = gcd(bast, m.getRo2os());
+                        missahFactor = lcm(missahFactor, gcd == 1 ? m.getRo2os() : gcd);
+                        nassib = -bast;                         // bast only for now
+                    }
                 }
             }
-            else if (m.mahjoob()) {
+            else if (m.isMahjoob()) {
                 nassibMojmal.append("--");
                 nassibFardi.append("--");
                 nassib = 0;
@@ -1211,6 +1208,29 @@ public class Massala {
             m.setNassibMojmal(nassibMojmal.toString());
             m.setNassibFardi(nassibFardi.toString());
             m.setNassib(nassib);
+        }
+
+        mMissah =  mAwl == 0?  mAsl * missahFactor : mAwl * missahFactor;
+        if (missahFactor != 1) {
+            // Tasshih, go again :-)
+            for (Mirath m:all) {
+                if (m.isMahjoob()) continue;
+                int oldNassib = m.getNassib();
+                if (oldNassib < 0) {
+                    if (m.isFardh() && m.isTa3seeb()) {
+                        nassib = m.getFardh() * missahFactor;
+                        nassib += -oldNassib * missahFactor / m.getRo2os();
+                    }
+                    else {
+                        nassib = -oldNassib * missahFactor / m.getRo2os();
+                    }
+                }
+                else {
+                    nassib = oldNassib * missahFactor;
+                }
+                m.setNassib(nassib);
+                m.setNassibFardi(m.getNassibFardi() + " -> "+ nassib);
+            }
         }
     }
 
@@ -1233,7 +1253,7 @@ public class Massala {
             sharh.append(mSpecialCase + "\n");
         }
 
-        sharh.append("\n" + "- أصل المسألة: " + mAsl + ".\n");
+        sharh.append("\n" + "- أصل المسألة " + mAsl + ".\n");
         switch (mNaw3) {
             case NAW3_ADILA:
                 sharh.append("- المسألة عادلة (تساوى أصلها مع أسهمها).\n");
@@ -1242,7 +1262,7 @@ public class Massala {
                 sharh.append(String.format("- المسألة ناقصة (أسهمها أقل من أصلها) فيرد الباقي %d على أصحاب الفروض عدى الزوجين.\n", mBaqi));
                 break;
             case NAW3_AWL:
-                sharh.append(String.format("- المسألة عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", mAshom));
+                sharh.append(String.format("- المسألة عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", mAwl));
             default:
                 break;
         }
@@ -1251,8 +1271,12 @@ public class Massala {
             if (mIstighraq) {
                 sharh.append("- استغرق أصحاب الفروض الأسهم ولم يبق للورثة بالتعصيب شيء.\n");
             } else {
-                sharh.append(String.format("- الباقي %d وعدد رؤوسه %d.\n", mBaqi, mAdadRo2os));
+                sharh.append(String.format("- الباقي %d وعدد رؤوسه %d.\n", mBaqi, mAdadRo2osAlbaqi));
             }
+        }
+
+        if (isInkissar() ) {
+            sharh.append("- المسألة فيها انكسار وتصح من " + mMissah + ".\n");
         }
 
         return sharh.toString();
@@ -1267,41 +1291,71 @@ public class Massala {
         if (getAwl() != 0) {
             table.append(String.format("│ %d\t │\n", getAwl()));
             table.append("├──────┤\n");
-            table.append(String.format("│ ع%d\t │\n", getAsl()));  // TODO strikethrough
+            table.append(String.format("│ ع%d\t │\n", getAsl()));
         } else {
             table.append(String.format("│ %d\t │\n", getAsl()));
         }
-        table.append(String.format("├──────────┼──────────┬──────────┐\n"));
 
         boolean jadaFirst = true;
         boolean shirkatTa3seebFirst = true;
         List<Mirath> all = getMawarith();
-        for (Mirath m : all) {
-            if (m.isShirka() && m.isFardh() && m.isShirka() ) {
-                if (jadaFirst) {
-                    table.append(String.format("│ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
-                    jadaFirst = false;
-                } else {
-                    table.append(String.format("│ \t│ %s\t │ %s\t │\n", m.getIsm(), m.getHokom()));
-                }
-            } else if (m.isShirka() && m.isTa3seeb() && isShirkaTa3seeb()) {
-                if (shirkatTa3seebFirst) {
-                    table.append(String.format("│ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
-                    shirkatTa3seebFirst = false;
-                } else {
-                    table.append(String.format("│ \t│ %s\t │ %s\t │\n", m.getIsm(), m.getHokom()));
-                }
-            } else {
-                table.append(String.format("│ %s\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
-            }
 
-            if (all.indexOf(m) == (all.size() - 1)) {
-                table.append("└──────────┴──────────┴──────────┘\n");
-            } else {
-                table.append("├──────────┼──────────┼──────────┤\n");
+        if (isInkissar()) {
+            table.append(String.format("├──────────┼──────────┬────────────┬──────────┐\n"));
+            for (Mirath m : all) {
+                if (m.isShirka() && m.isFardh() && m.isJadah() ) {
+                    if (jadaFirst) {
+                        table.append(String.format("│ %s\t │ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibFardi(), m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                        jadaFirst = false;
+                    } else {
+                        table.append(String.format("│ %s\t │ \t│ %s\t │ %s\t │\n", m.getNassibFardi(), m.getIsm(), m.getHokom()));
+                    }
+                } else if (m.isShirka() && m.isTa3seeb() && isShirkaTa3seeb()) {
+                    if (shirkatTa3seebFirst) {
+                        table.append(String.format("│ %s\t │ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibFardi(), m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                        shirkatTa3seebFirst = false;
+                    } else {
+                        table.append(String.format("│ %s\t │ \t│ %s\t │ %s\t │\n", m.getNassibFardi(), m.getIsm(), m.getHokom()));
+                    }
+                } else {
+                    table.append(String.format("│ %s\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                }
+
+                if (all.indexOf(m) == (all.size() - 1)) {
+                    table.append("└──────────┴──────────┴──────────┴──────────┘\n");
+                } else {
+                    table.append("├──────────┼──────────┼──────────┼──────────┤\n");
+                }
             }
         }
+        else {
+            table.append(String.format("├──────────┼──────────┬──────────┐\n"));
+            for (Mirath m : all) {
+                if (m.isShirka() && m.isFardh() && m.isJadah()) {
+                    if (jadaFirst) {
+                        table.append(String.format("│ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                        jadaFirst = false;
+                    } else {
+                        table.append(String.format("│ \t│ %s\t │ %s\t │\n", m.getIsm(), m.getHokom()));
+                    }
+                } else if (m.isShirka() && m.isTa3seeb() && isShirkaTa3seeb()) {
+                    if (shirkatTa3seebFirst) {
+                        table.append(String.format("│ %s ↓\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                        shirkatTa3seebFirst = false;
+                    } else {
+                        table.append(String.format("│ \t│ %s\t │ %s\t │\n", m.getIsm(), m.getHokom()));
+                    }
+                } else {
+                    table.append(String.format("│ %s\t│ %s\t │ %s\t │\n", m.getNassibMojmal(), m.getIsm(), m.getHokom()));
+                }
 
+                if (all.indexOf(m) == (all.size() - 1)) {
+                    table.append("└──────────┴──────────┴──────────┘\n");
+                } else {
+                    table.append("├──────────┼──────────┼──────────┤\n");
+                }
+            }
+        }
         System.out.println(table.toString());
     }
 
@@ -1315,9 +1369,9 @@ public class Massala {
 
     public boolean isShirkaTa3seeb() { return mShirkaTa3seeb; }
 
-    public int getAsl() { return mAsl; }
+    public boolean isInkissar() { return mAwl != 0 ? mAwl != mMissah : mAsl != mMissah;}
 
-    public int getAshom() { return mAshom; }
+    public int getAsl() { return mAsl; }
 
     public int getBaqi() { return mBaqi; }
 
@@ -1336,13 +1390,11 @@ public class Massala {
         return all;
     }
 
-    public int getAdadRo2os() { return mAdadRo2os; }
+    public int getAdadRo2os() { return mAdadRo2osAlbaqi; }
 
     // TODO move to Utilities clas
     private int lcm(int a, int b) {
-        if (a == 0 || b == 0) {
-            return 0;
-        }
+        if (a == 0 || b == 0) { return 0; }
         int aa = Math.abs(a);
         int ab = Math.abs(b);
         int h = Math.max(aa, ab);
@@ -1352,5 +1404,10 @@ public class Massala {
             lcm += h;
         }
         return lcm;
+    }
+
+    private int gcd(int a, int b) {  // Euclid's Algorithm
+        if (b == 0) { return a; }
+        return gcd(b, a % b);
     }
 }
