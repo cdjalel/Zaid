@@ -41,10 +41,10 @@ public class Activity4 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        fullBrothersNP = (NumberPicker) findViewById(R.id.fullBrothersNumberPicker);
-        fullBrothersNP.setValue(0);
+        fullBrothersNP = findViewById(R.id.fullBrothersNumberPicker);
         fullBrothersNP.setMinValue(0);
         fullBrothersNP.setMaxValue(50);
+        fullBrothersNP.setValue(mInput.get_alikhwa_alashika());
         fullBrothersNP.setWrapSelectorWheel(false);
         fullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -53,10 +53,10 @@ public class Activity4 extends AppCompatActivity {
             }
         });
 
-        fullSistersNP = (NumberPicker) findViewById(R.id.fullSistersNumberPicker);
-        fullSistersNP.setValue(0);
+        fullSistersNP = findViewById(R.id.fullSistersNumberPicker);
         fullSistersNP.setMinValue(0);
         fullSistersNP.setMaxValue(50);
+        fullSistersNP.setValue(mInput.get_alakhawat_ashakikat());
         fullSistersNP.setWrapSelectorWheel(false);
         fullSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -65,10 +65,10 @@ public class Activity4 extends AppCompatActivity {
 		    }
 	    });
 
-        paternalBrothersNP = (NumberPicker) findViewById(R.id.paternalBrothersNumberPicker);
-        paternalBrothersNP.setValue(0);
+        paternalBrothersNP = findViewById(R.id.paternalBrothersNumberPicker);
         paternalBrothersNP.setMinValue(0);
         paternalBrothersNP.setMaxValue(50);
+        paternalBrothersNP.setValue(mInput.get_alikhwa_li_ab());
         paternalBrothersNP.setWrapSelectorWheel(false);
         paternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -77,10 +77,10 @@ public class Activity4 extends AppCompatActivity {
             }
         });
 
-        paternalSistersNP = (NumberPicker) findViewById(R.id.paternalSistersNumberPicker);
-        paternalSistersNP.setValue(0);
+        paternalSistersNP = findViewById(R.id.paternalSistersNumberPicker);
         paternalSistersNP.setMinValue(0);
         paternalSistersNP.setMaxValue(50);
+        paternalSistersNP.setValue(mInput.get_alakhawat_li_ab());
         paternalSistersNP.setWrapSelectorWheel(false);
         paternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -88,7 +88,6 @@ public class Activity4 extends AppCompatActivity {
                 mInput.set_alakhawat_li_ab(newVal);
             }
         });
-
     }
 
     public void onNextClicked(View view) {

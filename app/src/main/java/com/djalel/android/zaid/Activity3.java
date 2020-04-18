@@ -41,10 +41,10 @@ public class Activity3 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        sonsOfSonsNP = (NumberPicker) findViewById(R.id.sonsOfSonsNumberPicker);
-        sonsOfSonsNP.setValue(0);
+        sonsOfSonsNP = findViewById(R.id.sonsOfSonsNumberPicker);
         sonsOfSonsNP.setMinValue(0);
         sonsOfSonsNP.setMaxValue(50);
+        sonsOfSonsNP.setValue(mInput.get_abna_alabna());
         sonsOfSonsNP.setWrapSelectorWheel(false);
         sonsOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -53,10 +53,10 @@ public class Activity3 extends AppCompatActivity {
 		    }
 	    });
 
-        daughtersOfSonsNP = (NumberPicker) findViewById(R.id.daughtersOfSonsNumberPicker);
-        daughtersOfSonsNP.setValue(0);
+        daughtersOfSonsNP = findViewById(R.id.daughtersOfSonsNumberPicker);
         daughtersOfSonsNP.setMinValue(0);
         daughtersOfSonsNP.setMaxValue(50);
+        daughtersOfSonsNP.setValue(mInput.get_banat_alabna());
         daughtersOfSonsNP.setWrapSelectorWheel(false);
         daughtersOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -65,10 +65,10 @@ public class Activity3 extends AppCompatActivity {
             }
         });
 
-        maternalBrothersNP = (NumberPicker) findViewById(R.id.maternalBrothersNumberPicker);
-        maternalBrothersNP.setValue(0);
+        maternalBrothersNP = findViewById(R.id.maternalBrothersNumberPicker);
         maternalBrothersNP.setMinValue(0);
         maternalBrothersNP.setMaxValue(50);
+        maternalBrothersNP.setValue(mInput.get_alikhwa_li_om());
         maternalBrothersNP.setWrapSelectorWheel(false);
         maternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
@@ -77,10 +77,10 @@ public class Activity3 extends AppCompatActivity {
 		    }
 	    });
 
-        maternalSistersNP = (NumberPicker) findViewById(R.id.maternalSistersNumberPicker);
-        maternalSistersNP.setValue(0);
+        maternalSistersNP = findViewById(R.id.maternalSistersNumberPicker);
         maternalSistersNP.setMinValue(0);
         maternalSistersNP.setMaxValue(50);
+        maternalSistersNP.setValue(mInput.get_alakhawat_li_om());
         maternalSistersNP.setWrapSelectorWheel(false);
         maternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
