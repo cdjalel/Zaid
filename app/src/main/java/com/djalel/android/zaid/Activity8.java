@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,8 +36,8 @@ import android.widget.TextView;
 
 public class Activity8 extends AppCompatActivity {
 
-    LinearLayout mPrincipalLayout;
-    LinearLayout mButtonsLayout;
+    private LinearLayout mPrincipalLayout;
+    private LinearLayout mButtonsLayout;
     private TextView mResultTextView;
 
     @Override
@@ -111,10 +112,28 @@ public class Activity8 extends AppCompatActivity {
             mawarithTable.addView(r);
         }
 
+        boolean jadaFirst = true;
+        boolean shirkatTa3seebFirst = true;
         for (Mirath m : massala.getMawarith()) {
             r = new TableRow(this);
             r.addView(createCellTextView(m.getNassibFardi()));
-            r.addView(createCellTextView(m.getNassibMojmal()));
+            if (m.isShirka() && m.isFardh() && m.isJada() ) {
+                if (jadaFirst) {
+                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓"));
+                    jadaFirst = false;
+                } else {
+                    r.addView(createCellTextView(""));
+                }
+            } else if (m.isShirka() && m.isTa3seeb() && massala.isShirkaTa3seeb()) {
+                if (shirkatTa3seebFirst) {
+                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓"));
+                    shirkatTa3seebFirst = false;
+                } else {
+                    r.addView(createCellTextView(""));
+                }
+            } else {
+                r.addView(createCellTextView(m.getNassibMojmal()));
+            }
             r.addView(createCellTextView(m.getIsm()));
             r.addView(createCellTextView(m.getHokom()));
             mawarithTable.addView(r);
@@ -126,7 +145,7 @@ public class Activity8 extends AppCompatActivity {
     private TextView createHeadTextView(CharSequence txt) {
         TextView head = new TextView(this);
 
-        head.setTextSize(20);
+        head.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
         head.setTextColor(Color.BLACK);
         head.setGravity(Gravity.RIGHT);
         head.setBackgroundColor(Color.rgb(177, 177, 177));
@@ -139,7 +158,7 @@ public class Activity8 extends AppCompatActivity {
     private TextView createCellTextView(CharSequence txt) {
         TextView cell = new TextView(this);
 
-        cell.setTextSize(20);
+        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
         cell.setTextColor(Color.BLACK);
         cell.setGravity(Gravity.RIGHT);
         cell.setBackgroundColor(Color.rgb(225, 225, 225));
@@ -147,8 +166,5 @@ public class Activity8 extends AppCompatActivity {
         cell.setText(txt);
 
         return cell;
-    }
-    private TextView createCellTextView(int n) {
-            return createCellTextView("" + n);
     }
 }
