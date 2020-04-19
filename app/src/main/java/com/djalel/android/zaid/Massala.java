@@ -227,7 +227,7 @@ public class Massala {
             bast = 0;
             maqam = 1;
             ta3seeb = true;
-            if (!jam3_alikhwa && ((mInput.get_azawjat() > 0) || (mInput.zawj()))) {
+            if (!jam3_alikhwa && mInput.alom() && ((mInput.get_azawjat() > 0) || (mInput.zawj()))) {
                 mTassawi = false;
                 mShirkaTa3seeb = true;
                 ro2os = 3;
