@@ -125,14 +125,14 @@ public class Activity8 extends AppCompatActivity {
                     r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
                     jadaFirst = false;
                 } else {
-                    r.addView(createCellTextView("", false, last_row));
+                    r.addView(createCellTextView("", false, last_row, true));
                 }
             } else if (m.isShirka() && m.isTa3seeb() && massala.isShirkaTa3seeb()) {
                 if (shirkatTa3seebFirst) {
                     r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
                     shirkatTa3seebFirst = false;
                 } else {
-                    r.addView(createCellTextView("", false, last_row));
+                    r.addView(createCellTextView("", false, last_row, true));
                 }
             } else {
                 r.addView(createCellTextView(m.getNassibMojmal(), false, last_row));
@@ -168,6 +168,24 @@ public class Activity8 extends AppCompatActivity {
             cell.setBackgroundResource((last_column)? R.drawable.last_row_and_column_borders : R.drawable.last_row_borders);
         } else {
             cell.setBackgroundResource((last_column)? R.drawable.last_column_borders : R.drawable.cell_borders);
+        }
+
+        cell.setTextDirection(View.TEXT_DIRECTION_RTL);
+        cell.setText(txt);
+
+        return cell;
+    }
+
+    private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row, boolean is_shirka) {
+        TextView cell = new TextView(this);
+
+        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
+        cell.setTextColor(Color.BLACK);
+        cell.setGravity(Gravity.RIGHT);
+        if (last_row) {
+            cell.setBackgroundResource((is_shirka)? R.drawable.last_row_shirka_borders : R.drawable.last_row_borders);
+        } else {
+            cell.setBackgroundResource((is_shirka)? R.drawable.shirka_cell_borders : R.drawable.cell_borders);
         }
 
         cell.setTextDirection(View.TEXT_DIRECTION_RTL);

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2019 Djalel Chefrour
+  ~ This file is part of Zaid.
+  ~
+  ~ Zaid is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ Zaid is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Draw a stroke/border around the rectangle shape -->
+            <stroke android:color="@android:color/black" android:width="1dp"/>
+        </shape>
+    </item>
+    <!-- Hide left, top and bottom side of rectangle with border using a solid color by padding right and top 1 dp -->
+    <!-- Shirka case-->
+    <item android:right="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/cell_color"/>
+            <padding android:right="5dp"/>  <!-- keep the writing away from the border a little-->
+        </shape>
+    </item>
+
+</layer-list>
