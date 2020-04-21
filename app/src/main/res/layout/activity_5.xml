@@ -17,67 +17,75 @@
   ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".Activity5">
+    android:layout_height="match_parent"  tools:context=".Activity5"
+    android:background="@android:color/white">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal">
 
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sonsOfFullBrothersNumberPicker"
-            android:layout_marginRight="5dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.50">
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:text="أبناء الإخوة الأشقاء:"
+        <LinearLayout
+            android:id="@+id/principalLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/SonsOfFullBrothersTextView"
-            android:layout_gravity="center_vertical"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/resultTextView"
+                style="@style/Base.TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="right|center_vertical"
+                android:text="@string/title_activity8" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center_horizontal">
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sonsOfPaternalBrothersNumberPicker"
-            android:layout_marginRight="5dp" />
+            <LinearLayout
+                android:id="@+id/buttonsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:text="أبناء الإخوة لأب:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sonsOfPaternalBrothersTextView"
-            android:layout_gravity="center_vertical" />
+                <Button
+                    android:id="@+id/changeMassalaBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="#cc98ff8d"
+                    android:onClick="onChangeMassalaClicked"
+                    android:text="تغيير المسألة"
+                    android:textSize="30sp" />
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/restartBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="#cc98ff8d"
+                    android:onClick="onRestartClicked"
+                    android:text="مسألة جديدة"
+                    android:textSize="30sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-    <Button
-        android:layout_width="216dp"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:id="@+id/buttonNext1"
-        style="@style/TextAppearance.AppCompat.Large"
-        android:onClick="onNextClicked"
-        android:layout_marginLeft="91dp"
-        android:layout_marginStart="91dp"
-        android:background="#cc98ff8d" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

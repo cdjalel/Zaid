@@ -28,10 +28,12 @@ import android.widget.NumberPicker;
 
 public class Activity4 extends AppCompatActivity {
     WarathaInput mInput;
-    NumberPicker fullBrothersNP;
-    NumberPicker fullSistersNP;
-    NumberPicker paternalBrothersNP;
-    NumberPicker paternalSistersNP;
+    NumberPicker sonsOfFullBrothersNP;
+    NumberPicker sonsOfPaternalBrothersNP;
+    NumberPicker fullUnclesNP;
+    NumberPicker paternalUnclesNP;
+    NumberPicker sonsOfFullUnclesNP;
+    NumberPicker sonsOfPaternalUnclesNP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,51 +43,75 @@ public class Activity4 extends AppCompatActivity {
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
 
-        fullBrothersNP = findViewById(R.id.fullBrothersNumberPicker);
-        fullBrothersNP.setMinValue(0);
-        fullBrothersNP.setMaxValue(50);
-        fullBrothersNP.setValue(mInput.get_alikhwa_alashika());
-        fullBrothersNP.setWrapSelectorWheel(false);
-        fullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        sonsOfFullBrothersNP = findViewById(R.id.sonsOfFullBrothersNumberPicker);
+        sonsOfFullBrothersNP.setMinValue(0);
+        sonsOfFullBrothersNP.setMaxValue(50);
+        sonsOfFullBrothersNP.setValue(mInput.get_abna_alikhwa_alashika());
+        sonsOfFullBrothersNP.setWrapSelectorWheel(false);
+        sonsOfFullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_alikhwa_alashika(newVal);
+                mInput.set_abna_alikhwa_alashika(newVal);
             }
         });
 
-        fullSistersNP = findViewById(R.id.fullSistersNumberPicker);
-        fullSistersNP.setMinValue(0);
-        fullSistersNP.setMaxValue(50);
-        fullSistersNP.setValue(mInput.get_alakhawat_ashakikat());
-        fullSistersNP.setWrapSelectorWheel(false);
-        fullSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_alakhawat_ashakikat(newVal);
-		    }
-	    });
-
-        paternalBrothersNP = findViewById(R.id.paternalBrothersNumberPicker);
-        paternalBrothersNP.setMinValue(0);
-        paternalBrothersNP.setMaxValue(50);
-        paternalBrothersNP.setValue(mInput.get_alikhwa_li_ab());
-        paternalBrothersNP.setWrapSelectorWheel(false);
-        paternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        sonsOfPaternalBrothersNP = findViewById(R.id.sonsOfPaternalBrothersNumberPicker);
+        sonsOfPaternalBrothersNP.setMinValue(0);
+        sonsOfPaternalBrothersNP.setMaxValue(50);
+        sonsOfPaternalBrothersNP.setValue(mInput.get_abna_alikhwa_li_ab());
+        sonsOfPaternalBrothersNP.setWrapSelectorWheel(false);
+        sonsOfPaternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_alikhwa_li_ab(newVal);
+                mInput.set_abna_alikhwa_li_ab(newVal);
             }
         });
 
-        paternalSistersNP = findViewById(R.id.paternalSistersNumberPicker);
-        paternalSistersNP.setMinValue(0);
-        paternalSistersNP.setMaxValue(50);
-        paternalSistersNP.setValue(mInput.get_alakhawat_li_ab());
-        paternalSistersNP.setWrapSelectorWheel(false);
-        paternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        fullUnclesNP = findViewById(R.id.fullUnclesNumberPicker);
+        fullUnclesNP.setMinValue(0);
+        fullUnclesNP.setMaxValue(50);
+        fullUnclesNP.setValue(mInput.get_ala3mam_alashika());
+        fullUnclesNP.setWrapSelectorWheel(false);
+        fullUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_alakhawat_li_ab(newVal);
+                mInput.set_ala3mam_alashika(newVal);
+            }
+        });
+
+        paternalUnclesNP = findViewById(R.id.paternalUnclesNumberPicker);
+        paternalUnclesNP.setMinValue(0);
+        paternalUnclesNP.setMaxValue(50);
+        paternalUnclesNP.setValue(mInput.get_ala3mam_li_ab());
+        paternalUnclesNP.setWrapSelectorWheel(false);
+        paternalUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_ala3mam_li_ab(newVal);
+            }
+        });
+
+        sonsOfFullUnclesNP = findViewById(R.id.sonsOfFullUnclesNumberPicker);
+        sonsOfFullUnclesNP.setMinValue(0);
+        sonsOfFullUnclesNP.setMaxValue(50);
+        sonsOfFullUnclesNP.setValue(mInput.get_abna_ala3mam_alashika());
+        sonsOfFullUnclesNP.setWrapSelectorWheel(false);
+        sonsOfFullUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_abna_ala3mam_alashika(newVal);
+            }
+        });
+
+        sonsOfPaternalUnclesNP = findViewById(R.id.sonsOfPaternalUnclesNumberPicker);
+        sonsOfPaternalUnclesNP.setMinValue(0);
+        sonsOfPaternalUnclesNP.setMaxValue(50);
+        sonsOfPaternalUnclesNP.setValue(mInput.get_abna_ala3mam_li_ab());
+        sonsOfPaternalUnclesNP.setWrapSelectorWheel(false);
+        sonsOfPaternalUnclesNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_abna_ala3mam_li_ab(newVal);
             }
         });
     }
