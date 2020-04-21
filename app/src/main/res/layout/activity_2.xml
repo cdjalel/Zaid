@@ -16,119 +16,133 @@
   ~ You should have received a copy of the GNU General Public License
   ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".Activity2">
-
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/zawjatNumberPicker"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/wives"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/zawjatTextView"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioGroupZawj"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:id="@+id/radioButtonZawjNo"
-                android:checked="true"
-                style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onZawjButtonClicked" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:id="@+id/radioButtonZawjYes"
-                style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onZawjButtonClicked"
-                android:checked="false" />
-
-        </RadioGroup>
-
-        <TextView
-            android:text="@string/husband"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/zawjTextView" />
-
-    </LinearLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Activity2">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:id="@+id/alabna_linearLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/abna_alabna_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/albanat_linearLayout"
+        app:layout_constraintTop_toTopOf="parent">
 
         <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/daughtersNumberPicker"
+            android:id="@+id/sonsNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
             android:layout_marginRight="5dp" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/daughters"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/daughtersTextView"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp" />
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sonsNumberPicker"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/sons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/sonsTextView"
-            android:layout_gravity="center_vertical"/>
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/sons" />
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="216dp"
+    <LinearLayout
+        android:id="@+id/albanat_linearLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/banat_alabna_linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/alabna_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <NumberPicker
+            android:id="@+id/daughtersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/daughtersTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/daughters" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/abna_alabna_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/banat_alabna_linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/alabna_linearLayout">
+
+        <NumberPicker
+            android:id="@+id/sonsOfSonsNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/sonsOfSonsTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="أبناء\nالأبناء:"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/banat_alabna_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext1"
+        app:layout_constraintEnd_toStartOf="@+id/abna_alabna_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/albanat_linearLayout">
+
+        <NumberPicker
+            android:id="@+id/daughtersOfSonsNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/daughtersOfSonsTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="بنات\nالأبناء:"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Button
         android:id="@+id/buttonNext1"
         style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:background="#cc98ff8d"
         android:onClick="onNextClicked"
-        android:layout_marginLeft="91dp"
-        android:layout_marginStart="91dp"
-        android:background="#cc98ff8d" />
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/abna_alabna_linearLayout" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
