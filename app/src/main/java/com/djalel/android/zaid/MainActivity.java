@@ -23,11 +23,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
     WarathaInput mInput;
+    NumberPicker zawjatNP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         mInput = app.getWarathaInput();
 
         // update layout
+        updateLayout();
+    }
+
+    public void updateLayout(){
         switch (mInput.get_madhab()) {
             case MALIKI: ((RadioButton)findViewById(R.id.radioButtonMaliki)).setChecked(true); break;
             case CHAFI3I: ((RadioButton)findViewById(R.id.radioButtonChafi3i)).setChecked(true); break;
@@ -62,6 +70,49 @@ public class MainActivity extends AppCompatActivity {
 
         ((RadioButton)findViewById(mInput.aljadah_li_om() ?
                 R.id.radioButtonMaternalGrandMotherYes : R.id.radioButtonMaternalGrandMotherNo)).setChecked(true);
+
+        RadioGroup radioGroup;
+        radioGroup = findViewById(R.id.radioGroupZawj);
+
+        zawjatNP = findViewById(R.id.zawjatNumberPicker);
+
+        if (mInput.is_male()) {
+            mInput.set_zawj(false);
+            radioGroup.setEnabled(false);
+            for(int i = 0; i < radioGroup.getChildCount(); i++) {
+                radioGroup.getChildAt(i).setEnabled(false);
+               // ((RadioButton)radioGroup.getChildAt(i)).setChecked(false);
+            }
+            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true); //check "no" for repaint case (when switching beetween male and female)
+            findViewById(R.id.zawjTextView).setEnabled(false);
+
+            findViewById(R.id.zawjatTextView).setEnabled(true);
+            zawjatNP.setEnabled(true);
+            zawjatNP.setMinValue(0);
+            zawjatNP.setMaxValue(4);
+            zawjatNP.setValue(mInput.get_azawjat());
+            zawjatNP.setWrapSelectorWheel(false);
+            zawjatNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                    mInput.set_azawjat(newVal);
+                }
+            });
+        }
+        else {
+            mInput.set_azawjat(0);
+            zawjatNP.setValue(0);
+            zawjatNP.setEnabled(false);
+            findViewById(R.id.zawjatTextView).setEnabled(false);
+
+            findViewById(R.id.zawjTextView).setEnabled(true);
+            radioGroup.setEnabled(true);
+            for(int i = 0; i < radioGroup.getChildCount(); i++) {
+                radioGroup.getChildAt(i).setEnabled(true);
+            }
+            ((RadioButton)findViewById(mInput.zawj() ?
+                    R.id.radioButtonZawjYes : R.id.radioButtonZawjNo)).setChecked(true);
+        }
     }
 
     public void onMadhabButtonClicked(View view) {
@@ -104,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                     mInput.set_azawjat(0);
                 break;
         }
+        updateLayout();
     }
 
     public void onFatherButtonClicked(View view) {
@@ -177,6 +229,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.radioButtonMaternalGrandMotherNo:
                 if (checked)
                     mInput.set_aljadah_li_om(false);
+                break;
+        }
+    }
+
+    public void onZawjButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.radioButtonZawjYes:
+                if (checked)
+                    mInput.set_zawj(true);
+                break;
+
+            case R.id.radioButtonZawjNo:
+                if (checked)
+                    mInput.set_zawj(false);
                 break;
         }
     }

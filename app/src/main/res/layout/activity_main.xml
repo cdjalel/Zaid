@@ -16,354 +16,422 @@
   ~ You should have received a copy of the GNU General Public License
   ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity" >
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/main"
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/madhab_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="0dp">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/moutawafa_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:text="@string/madhab"
+            android:id="@+id/madhabTextView"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/madhabTextView"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="5dp"
-            android:layout_gravity="center_horizontal" />
+            android:text="@string/madhab" />
 
         <RadioGroup
+            android:id="@+id/radioGroupMadhab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioGroupMadhab"
-            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hambali"
                 android:id="@+id/radioButtonHambali"
                 style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
                 android:onClick="onMadhabButtonClicked"
-                android:checked="false" />
+                android:text="@string/hambali" />
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hanafi"
                 android:id="@+id/radioButtonHanafi"
-                android:checked="false"
                 style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onMadhabButtonClicked" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/chafi3i"
+                android:checked="false"
+                android:onClick="onMadhabButtonClicked"
+                android:text="@string/hanafi" />
+
+            <RadioButton
                 android:id="@+id/radioButtonChafi3i"
-                android:checked="false"
                 style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onMadhabButtonClicked" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/maliki"
+                android:checked="false"
+                android:onClick="onMadhabButtonClicked"
+                android:text="@string/chafi3i" />
+
+            <RadioButton
                 android:id="@+id/radioButtonMaliki"
-                android:checked="true"
                 style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onMadhabButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onMadhabButtonClicked"
+                android:text="@string/maliki" />
 
         </RadioGroup>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/moutawafa_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="0dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/alab_alom_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/madhab_linearLayout">
 
         <RadioGroup
+            android:id="@+id/radioGroupGender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioGroupGender"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/female"
                 android:id="@+id/radioButtonFemale"
                 style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onGenderButtonClicked"
-                android:checked="false" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/male"
+                android:checked="false"
+                android:onClick="onGenderButtonClicked"
+                android:text="@string/female" />
+
+            <RadioButton
                 android:id="@+id/radioButtonMale"
-                android:checked="true"
                 style="@style/TextAppearance.AppCompat.Large"
-                android:onClick="onGenderButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onGenderButtonClicked"
+                android:text="@string/male" />
         </RadioGroup>
 
         <TextView
-            android:text="@string/deceased"
+            android:id="@+id/genderTextView"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/genderTextView"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/deceased" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/alab_alom_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/aljad_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moutawafa_linearLayout">
 
         <RadioGroup
+            android:id="@+id/radioGroupMother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:id="@+id/radioGroupMother">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
                 android:id="@+id/radioButtonMotherNo"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:checked="true"
-                android:onClick="onMotherButtonClicked" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes"
+                android:checked="true"
+                android:onClick="onMotherButtonClicked"
+                android:text="@string/no" />
+
+            <RadioButton
                 android:id="@+id/radioButtonMotherYes"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:onClick="onMotherButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onMotherButtonClicked"
+                android:text="@string/yes" />
         </RadioGroup>
 
         <TextView
+            android:id="@+id/motherTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/mother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/motherTextView"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="5dp" />
+            android:text="@string/mother" />
 
         <RadioGroup
+            android:id="@+id/radioGroupFather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:id="@+id/radioGroupFather">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
                 android:id="@+id/radioButtonFatherNo"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:checked="true"
-                android:onClick="onFatherButtonClicked" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes"
+                android:checked="true"
+                android:onClick="onFatherButtonClicked"
+                android:text="@string/no" />
+
+            <RadioButton
                 android:id="@+id/radioButtonFatherYes"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:onClick="onFatherButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onFatherButtonClicked"
+                android:text="@string/yes" />
 
         </RadioGroup>
 
         <TextView
+            android:id="@+id/fatherTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/father"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/fatherTextView"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/father" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/aljad_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/aljada_li_ab_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alab_alom_linearLayout">
 
         <RadioGroup
+            android:id="@+id/radioGroupGrandFather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:id="@+id/radioGroupGrandFather">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
                 android:id="@+id/radioButtonGrandFatherNo"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:checked="true"
-                android:onClick="onGrandFatherButtonClicked"/>
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes"
+                android:checked="true"
+                android:onClick="onGrandFatherButtonClicked"
+                android:text="@string/no" />
+
+            <RadioButton
                 android:id="@+id/radioButtonGrandFatherYes"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:onClick="onGrandFatherButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onGrandFatherButtonClicked"
+                android:text="@string/yes" />
         </RadioGroup>
 
         <TextView
+            android:id="@+id/grandFatherTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/grand_father"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/grandFatherTextView"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/grand_father" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/aljada_li_ab_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/aljada_li_om_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aljad_linearLayout">
 
         <RadioGroup
+            android:id="@+id/radioGroupPaternalGrandMother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:id="@+id/radioGroupPaternalGrandMother">
+            android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no"
                 android:id="@+id/radioButtonPaternalGrandMotherNo"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:checked="true"
-                android:onClick="onPaternalGrandMotherButtonClicked" />
-
-            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes"
+                android:checked="true"
+                android:onClick="onPaternalGrandMotherButtonClicked"
+                android:text="@string/no" />
+
+            <RadioButton
                 android:id="@+id/radioButtonPaternalGrandMotherYes"
                 style="@style/Base.TextAppearance.AppCompat.Large"
-                android:onClick="onPaternalGrandMotherButtonClicked" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onPaternalGrandMotherButtonClicked"
+                android:text="@string/yes" />
         </RadioGroup>
 
         <TextView
+            android:id="@+id/paternalGrandMotherTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="الجدة لأب:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/paternalGrandMotherTextView"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:text="الجدة لأب:" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/aljada_li_om_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/zawj_zawjat_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aljada_li_ab_linearLayout">
 
         <RadioGroup
+            android:id="@+id/radioGroupMaternalGrandMother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_horizontal"
-            android:id="@+id/radioGroupMaternalGrandMother"
+            android:orientation="horizontal"
             android:weightSum="1">
 
             <RadioButton
+                android:id="@+id/radioButtonMaternalGrandMotherNo"
+                style="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no"
-                android:id="@+id/radioButtonMaternalGrandMotherNo"
                 android:layout_gravity="center_horizontal"
-                style="@style/Base.TextAppearance.AppCompat.Large"
                 android:checked="true"
-                android:onClick="onMaternalGrandMotherButtonClicked" />
+                android:onClick="onMaternalGrandMotherButtonClicked"
+                android:text="@string/no" />
 
             <RadioButton
+                android:id="@+id/radioButtonMaternalGrandMotherYes"
+                style="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/yes"
-                android:id="@+id/radioButtonMaternalGrandMotherYes"
                 android:layout_gravity="center_horizontal"
-                style="@style/Base.TextAppearance.AppCompat.Large"
-                android:onClick="onMaternalGrandMotherButtonClicked" />
+                android:onClick="onMaternalGrandMotherButtonClicked"
+                android:text="@string/yes" />
         </RadioGroup>
 
         <TextView
+            android:id="@+id/maternalGrandMotherTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/maternal_grand_mother"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maternalGrandMotherTextView"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:text="@string/maternal_grand_mother" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/zawj_zawjat_linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_gravity="right">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aljada_li_om_linearLayout">
 
+        <NumberPicker
+            android:id="@+id/zawjatNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/zawjatTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="30dp"
+            android:text="@string/wives" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupZawj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButtonZawjNo"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onZawjButtonClicked"
+                android:text="@string/no" />
+
+            <RadioButton
+                android:id="@+id/radioButtonZawjYes"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:onClick="onZawjButtonClicked"
+                android:text="@string/yes" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/zawjTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/husband" />
 
     </LinearLayout>
 
     <Button
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
         android:id="@+id/buttonNext1"
         style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:background="#ffb4ffb0"
         android:onClick="onNextClicked"
-        android:layout_marginLeft="91dp"
-        android:layout_marginStart="91dp"
-        android:background="#ffb4ffb0" />
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zawj_zawjat_linearLayout" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
