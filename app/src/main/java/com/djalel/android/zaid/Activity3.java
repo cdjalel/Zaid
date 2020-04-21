@@ -28,10 +28,12 @@ import android.widget.NumberPicker;
 public class Activity3 extends AppCompatActivity {
 
     WarathaInput mInput;
-    NumberPicker sonsOfSonsNP;
-    NumberPicker daughtersOfSonsNP;
     NumberPicker maternalBrothersNP;
     NumberPicker maternalSistersNP;
+    NumberPicker fullBrothersNP;
+    NumberPicker fullSistersNP;
+    NumberPicker paternalBrothersNP;
+    NumberPicker paternalSistersNP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,30 +42,6 @@ public class Activity3 extends AppCompatActivity {
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mInput = app.getWarathaInput();
-
-        sonsOfSonsNP = findViewById(R.id.sonsOfSonsNumberPicker);
-        sonsOfSonsNP.setMinValue(0);
-        sonsOfSonsNP.setMaxValue(50);
-        sonsOfSonsNP.setValue(mInput.get_abna_alabna());
-        sonsOfSonsNP.setWrapSelectorWheel(false);
-        sonsOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-		    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_abna_alabna(newVal);
-		    }
-	    });
-
-        daughtersOfSonsNP = findViewById(R.id.daughtersOfSonsNumberPicker);
-        daughtersOfSonsNP.setMinValue(0);
-        daughtersOfSonsNP.setMaxValue(50);
-        daughtersOfSonsNP.setValue(mInput.get_banat_alabna());
-        daughtersOfSonsNP.setWrapSelectorWheel(false);
-        daughtersOfSonsNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_banat_alabna(newVal);
-            }
-        });
 
         maternalBrothersNP = findViewById(R.id.maternalBrothersNumberPicker);
         maternalBrothersNP.setMinValue(0);
@@ -86,6 +64,54 @@ public class Activity3 extends AppCompatActivity {
 
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 mInput.set_alakhawat_li_om(newVal);
+            }
+        });
+
+        fullBrothersNP = findViewById(R.id.fullBrothersNumberPicker);
+        fullBrothersNP.setMinValue(0);
+        fullBrothersNP.setMaxValue(50);
+        fullBrothersNP.setValue(mInput.get_alikhwa_alashika());
+        fullBrothersNP.setWrapSelectorWheel(false);
+        fullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_alikhwa_alashika(newVal);
+            }
+        });
+
+        fullSistersNP = findViewById(R.id.fullSistersNumberPicker);
+        fullSistersNP.setMinValue(0);
+        fullSistersNP.setMaxValue(50);
+        fullSistersNP.setValue(mInput.get_alakhawat_ashakikat());
+        fullSistersNP.setWrapSelectorWheel(false);
+        fullSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_alakhawat_ashakikat(newVal);
+            }
+        });
+
+        paternalBrothersNP = findViewById(R.id.paternalBrothersNumberPicker);
+        paternalBrothersNP.setMinValue(0);
+        paternalBrothersNP.setMaxValue(50);
+        paternalBrothersNP.setValue(mInput.get_alikhwa_li_ab());
+        paternalBrothersNP.setWrapSelectorWheel(false);
+        paternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_alikhwa_li_ab(newVal);
+            }
+        });
+
+        paternalSistersNP = findViewById(R.id.paternalSistersNumberPicker);
+        paternalSistersNP.setMinValue(0);
+        paternalSistersNP.setMaxValue(50);
+        paternalSistersNP.setValue(mInput.get_alakhawat_li_ab());
+        paternalSistersNP.setWrapSelectorWheel(false);
+        paternalSistersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mInput.set_alakhawat_li_ab(newVal);
             }
         });
     }

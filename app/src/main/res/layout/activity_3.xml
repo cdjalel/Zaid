@@ -17,96 +17,189 @@
   ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".Activity3">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Activity3">
 
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:id="@+id/alikhwa_li_om_linearLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/alikhwa_alashika_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alakhawat_li_om_linearLayout"
+        app:layout_constraintTop_toTopOf="parent">
 
         <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/daughtersOfSonsNumberPicker"
-            android:layout_marginRight="0dp" />
+            android:id="@+id/maternalBrothersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
 
         <TextView
+            android:id="@+id/maternalBrothersTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="بنات الأبناء:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/daughtersOfSonsTextView"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="3dp" />
+            android:text="الإخوة\nلأم:"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/alakhawat_li_om_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/alakhawat_ashakikat_linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/alikhwa_li_om_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sonsOfSonsNumberPicker"
-            android:layout_marginRight="1dp"/>
+            android:id="@+id/maternalSistersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
 
         <TextView
+            android:id="@+id/maternalSistersTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="أبناء الأبناء:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sonsOfSonsTextView"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:text="الأخوات\nلأم:"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/alikhwa_alashika_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/alikhwa_li_ab_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alakhawat_ashakikat_linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/alikhwa_li_om_linearLayout">
+
+        <NumberPicker
+            android:id="@+id/fullBrothersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/fullBrothersTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="الإخوة\nالأشقاء:"
+            android:textAlignment="center" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:id="@+id/alakhawat_ashakikat_linearLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/alakhawat_li_ab_linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/alikhwa_alashika_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alakhawat_li_om_linearLayout">
 
         <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/maternalSistersNumberPicker"
+            android:id="@+id/fullSistersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
             android:layout_marginRight="5dp" />
 
         <TextView
+            android:id="@+id/fullSistersTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="أخوات لأم:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maternalSistersTextView"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="30dp"/>
+            android:text="الأخوات\nالشقيقات:"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/alikhwa_li_ab_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alakhawat_li_ab_linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/alikhwa_alashika_linearLayout">
 
         <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/maternalBrothersNumberPicker"
+            android:id="@+id/paternalBrothersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
             android:layout_marginRight="5dp" />
 
         <TextView
+            android:id="@+id/paternalBrothersTextView"
             style="@style/TextAppearance.AppCompat.Large"
-            android:text="إخوة لأم:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/maternalBrothersTextView"
-            android:layout_gravity="center_vertical" />
+            android:layout_gravity="center_vertical"
+            android:text="الإخوة\nلأب:"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/alakhawat_li_ab_linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNext1"
+        app:layout_constraintEnd_toStartOf="@+id/alikhwa_li_ab_linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alakhawat_ashakikat_linearLayout">
+
+        <NumberPicker
+            android:id="@+id/paternalSistersNumberPicker"
+            android:layout_width="45dp"
+            android:layout_height="120dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:id="@+id/paternalSistersTextView"
+            style="@style/TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="الأخوات\nلأب:"
+            android:textAlignment="center" />
+
     </LinearLayout>
 
     <Button
-        android:layout_width="216dp"
-        android:layout_height="wrap_content"
-        android:text="التالي"
         android:id="@+id/buttonNext1"
         style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:background="#cc98ff8d"
         android:onClick="onNextClicked"
-        android:layout_marginLeft="91dp"
-        android:layout_marginStart="91dp"
-        android:background="#cc98ff8d" />
+        android:text="التالي"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alikhwa_li_ab_linearLayout" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

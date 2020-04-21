@@ -18,54 +18,179 @@
 
 package com.djalel.android.zaid;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.NumberPicker;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class Activity5 extends AppCompatActivity {
-    WarathaInput mInput;
-    NumberPicker sonsOfFullBrothersNP;
-    NumberPicker sonsOfPaternalBrothersNP;
+
+    private LinearLayout mPrincipalLayout;
+    private LinearLayout mButtonsLayout;
+    private TextView mResultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_5);
 
-        ZaidApplication app = (ZaidApplication) this.getApplication();
-        mInput = app.getWarathaInput();
-
-        sonsOfFullBrothersNP = findViewById(R.id.sonsOfFullBrothersNumberPicker);
-        sonsOfFullBrothersNP.setMinValue(0);
-        sonsOfFullBrothersNP.setMaxValue(50);
-        sonsOfFullBrothersNP.setValue(mInput.get_abna_alikhwa_alashika());
-        sonsOfFullBrothersNP.setWrapSelectorWheel(false);
-        sonsOfFullBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_abna_alikhwa_alashika(newVal);
-            }
-        });
-
-        sonsOfPaternalBrothersNP = findViewById(R.id.sonsOfPaternalBrothersNumberPicker);
-        sonsOfPaternalBrothersNP.setMinValue(0);
-        sonsOfPaternalBrothersNP.setMaxValue(50);
-        sonsOfPaternalBrothersNP.setValue(mInput.get_abna_alikhwa_li_ab());
-        sonsOfPaternalBrothersNP.setWrapSelectorWheel(false);
-        sonsOfPaternalBrothersNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mInput.set_abna_alikhwa_li_ab(newVal);
-            }
-        });
+        mResultTextView = (TextView) findViewById(R.id.resultTextView);
+        mResultTextView.setMovementMethod(new ScrollingMovementMethod());
+        mPrincipalLayout = (LinearLayout) findViewById(R.id.principalLayout);
+        mButtonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+//        resultTextView.setTypeface(Typeface.MONOSPACE);
     }
 
-    public void onNextClicked(View view) {
-        // start next activity
-        Intent intent = new Intent(this, Activity6.class);
-        startActivity(intent);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //reinitialisation
+        mPrincipalLayout.removeAllViews();
+        mPrincipalLayout.addView(mResultTextView);
+
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        mResultTextView.setText(app.hissabMawarith());
+        mPrincipalLayout.addView(printTable(app));
+
+        mPrincipalLayout.addView(mButtonsLayout);
+    }
+
+    public void onRestartClicked(View view) {
+        ZaidApplication app = (ZaidApplication) this.getApplication();
+        app.getWarathaInput().resetWarathahInput();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+    }
+
+    public void onChangeMassalaClicked(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        this.startActivity(intent);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public TableLayout printTable(ZaidApplication app){
+        TableLayout mawarithTable = new TableLayout(this);
+        mawarithTable.setStretchAllColumns(true);
+        mawarithTable.setShrinkAllColumns(true);
+
+        TableLayout.LayoutParams lp = new TableLayout.LayoutParams();
+        lp.setMargins(30,0,30, 60);
+        mawarithTable.setLayoutParams(lp);
+
+        TableRow r;
+        Massala massala = app.getMassala();
+        if (massala.getAwl() != 0) {
+            //row of awl
+            r = new TableRow(this);
+            r.addView(createHeadTextView(String.valueOf(massala.getAwl())),0);
+            r.addView(createHeadTextView(""),0);
+            mawarithTable.addView(r);
+
+            //row of asl
+            r = new TableRow(this);
+            r.addView(createHeadTextView(massala.getAsl() + " عول"),0);
+            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
+            mawarithTable.addView(r);
+        } else {
+            r = new TableRow(this);
+            r.addView(createHeadTextView(String.valueOf(massala.getAsl())),0);
+            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
+            mawarithTable.addView(r);
+        }
+
+        boolean jadaFirst = true;
+        boolean shirkatTa3seebFirst = true;
+        boolean last_row = false;
+        int i = 0;
+        for (Mirath m : massala.getMawarith()) {
+            if (++i == massala.getMawarith().size()) { last_row = true; } /* last iteration */
+            r = new TableRow(this);
+            r.addView(createCellTextView(String.valueOf(m.getNassib()), true, last_row));
+            if (m.isShirka() && m.isFardh() && m.isJadah() ) {
+                if (jadaFirst) {
+                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
+                    jadaFirst = false;
+                } else {
+                    r.addView(createCellTextView("", false, last_row, true));
+                }
+            } else if (m.isShirka() && m.isTa3seeb() && massala.isShirkaTa3seeb()) {
+                if (shirkatTa3seebFirst) {
+                    r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
+                    shirkatTa3seebFirst = false;
+                } else {
+                    r.addView(createCellTextView("", false, last_row, true));
+                }
+            } else {
+                r.addView(createCellTextView(m.getNassibMojmal(), false, last_row));
+            }
+            r.addView(createCellTextView(m.getIsm(), false, last_row));
+            r.addView(createCellTextView(m.getHokom(), false, last_row));
+            mawarithTable.addView(r);
+        }
+
+        return mawarithTable;
+    }
+
+    private TextView createHeadTextView(CharSequence txt) {
+        TextView head = new TextView(this);
+
+        head.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
+        head.setTextColor(Color.BLACK);
+        head.setGravity(Gravity.RIGHT);
+        head.setBackgroundColor(Color.rgb(177, 177, 177));
+        head.setTextDirection(View.TEXT_DIRECTION_RTL);
+        head.setText(txt);
+
+        return head;
+    }
+
+    private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row) {
+        TextView cell = new TextView(this);
+
+        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
+        cell.setTextColor(Color.BLACK);
+        cell.setGravity(Gravity.RIGHT);
+        if (last_row) {
+            cell.setBackgroundResource((last_column)? R.drawable.last_row_and_column_borders : R.drawable.last_row_borders);
+        } else {
+            cell.setBackgroundResource((last_column)? R.drawable.last_column_borders : R.drawable.cell_borders);
+        }
+
+        cell.setTextDirection(View.TEXT_DIRECTION_RTL);
+        cell.setText(txt);
+
+        return cell;
+    }
+
+    private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row, boolean is_shirka) {
+        TextView cell = new TextView(this);
+
+        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
+        cell.setTextColor(Color.BLACK);
+        cell.setGravity(Gravity.RIGHT);
+        if (last_row) {
+            cell.setBackgroundResource((is_shirka)? R.drawable.last_row_shirka_borders : R.drawable.last_row_borders);
+        } else {
+            cell.setBackgroundResource((is_shirka)? R.drawable.shirka_cell_borders : R.drawable.cell_borders);
+        }
+
+        cell.setTextDirection(View.TEXT_DIRECTION_RTL);
+        cell.setText(txt);
+
+        return cell;
     }
 }
