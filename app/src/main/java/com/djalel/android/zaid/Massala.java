@@ -218,7 +218,7 @@ public class Massala {
             ro2os = 1;
             ta3seeb = false;
         } else if (far3_warith_ontha) {
-            sharh += "السدس 1\\6 فرضا + الباقي تعصيبا بالنفس";
+            sharh += "السدس 1\\6 فرضا والباقي تعصيبا بالنفس";
             bast = 1;
             maqam = 6;
             ro2os = 1;
@@ -310,7 +310,7 @@ public class Massala {
                 ta3seeb = true;
                 if (far3_warith_ontha) {
                     sharh = Warith.ALJAD.getSharhPrefix();
-                    sharh += "السدس 1\\6 فرضا + ";
+                    sharh += "السدس 1\\6 فرضا و";
                     bast = 1;
                     maqam = 6;
                 } else {             // الجد يرث بالتعصيب فقط
@@ -588,6 +588,7 @@ public class Massala {
         else { // presence of far3_warith_ontha
             int ro2os = nbr;
             if (mInput.aljad()) {
+                moveAljadBeforeAlikhaw();
                 mShirkaTa3seeb = true;
                 mTassawi = false;
                 ro2os += 2;
@@ -658,6 +659,7 @@ public class Massala {
         } else { // far3_warith_ontha
             int ro2os = nbr;
             if (mInput.aljad()) {
+                moveAljadBeforeAlikhaw();
                 mShirkaTa3seeb = true;
                 mTassawi = false;
                 ro2os += 2;
@@ -845,10 +847,10 @@ public class Massala {
         if (nbr_b == 0) {
             ro2os = nbr_a;
             if (mInput.aljad()) {
+                moveAljadBeforeAlikhaw();
                 mShirkaTa3seeb = true;
                 ro2os++;
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a, Warith.ALJAD, 1, true);
-                moveAljadBeforeAlikhaw();
             }
             else {
                 sharh = Warith.ALIKHWA_ALASHIKA.getSharhPrefix(nbr_a);
@@ -913,10 +915,10 @@ public class Massala {
         if (nbr_b == 0) {
             ro2os = nbr_a;
             if (mInput.aljad()) {
+                moveAljadBeforeAlikhaw();
                 mShirkaTa3seeb = true;
                 ro2os++;
                 sharh = Warith.ALIKHWA_LI_AB.getSharhPrefix(nbr_a, Warith.ALJAD, 1, true);
-                moveAljadBeforeAlikhaw();
             }
             else {
                 sharh = Warith.ALIKHWA_LI_AB.getSharhPrefix(nbr_a);

@@ -53,8 +53,8 @@
         </activity>
 
         <activity
-            android:name=".Activity5"
-            android:label="@string/title_activity8" >
+            android:name=".ActivityResult"
+            android:label="@string/title_activity_result" >
         </activity>
     </application>
 

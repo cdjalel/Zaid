@@ -34,7 +34,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class Activity5 extends AppCompatActivity {
+public class ActivityResult extends AppCompatActivity {
 
     private LinearLayout mPrincipalLayout;
     private LinearLayout mButtonsLayout;
@@ -43,7 +43,7 @@ public class Activity5 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_5);
+        setContentView(R.layout.activity_result);
 
         mResultTextView = (TextView) findViewById(R.id.resultTextView);
         mResultTextView.setMovementMethod(new ScrollingMovementMethod());
@@ -88,7 +88,7 @@ public class Activity5 extends AppCompatActivity {
         mawarithTable.setShrinkAllColumns(true);
 
         TableLayout.LayoutParams lp = new TableLayout.LayoutParams();
-        lp.setMargins(30,0,30, 60);
+        lp.setMargins(10,10,10, 10);
         mawarithTable.setLayoutParams(lp);
 
         TableRow r;
@@ -103,27 +103,27 @@ public class Activity5 extends AppCompatActivity {
             //row of asl
             r = new TableRow(this);
             r.addView(createHeadTextView(massala.getAsl() + " عول"),0);
-            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
+            r.addView(createHeadTextView(massala.getMissah() + "" /*+ "، للفرد ↓"*/),0);
             mawarithTable.addView(r);
         } else {
             r = new TableRow(this);
             r.addView(createHeadTextView(String.valueOf(massala.getAsl())),0);
-            r.addView(createHeadTextView(massala.getMissah() + "، للفرد ↓"),0);
+            r.addView(createHeadTextView(massala.getMissah() + ""  /* + "، للفرد ↓"*/),0);
             mawarithTable.addView(r);
         }
 
-        boolean jadaFirst = true;
+        boolean jadahFirst = true;
         boolean shirkatTa3seebFirst = true;
         boolean last_row = false;
         int i = 0;
         for (Mirath m : massala.getMawarith()) {
             if (++i == massala.getMawarith().size()) { last_row = true; } /* last iteration */
             r = new TableRow(this);
-            r.addView(createCellTextView(String.valueOf(m.getNassib()), true, last_row));
+            r.addView(createCellTextView(m.getNassibFardi(), true, last_row));
             if (m.isShirka() && m.isFardh() && m.isJadah() ) {
-                if (jadaFirst) {
+                if (jadahFirst) {
                     r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
-                    jadaFirst = false;
+                    jadahFirst = false;
                 } else {
                     r.addView(createCellTextView("", false, last_row, true));
                 }
@@ -146,51 +146,47 @@ public class Activity5 extends AppCompatActivity {
     }
 
     private TextView createHeadTextView(CharSequence txt) {
-        TextView head = new TextView(this);
+        TextView head = prepareTextView();
 
-        head.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
-        head.setTextColor(Color.BLACK);
-        head.setGravity(Gravity.RIGHT);
         head.setBackgroundColor(Color.rgb(177, 177, 177));
-        head.setTextDirection(View.TEXT_DIRECTION_RTL);
         head.setText(txt);
 
         return head;
     }
 
     private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row) {
-        TextView cell = new TextView(this);
+        TextView cell = prepareTextView();
 
-        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
-        cell.setTextColor(Color.BLACK);
-        cell.setGravity(Gravity.RIGHT);
         if (last_row) {
             cell.setBackgroundResource((last_column)? R.drawable.last_row_and_column_borders : R.drawable.last_row_borders);
         } else {
             cell.setBackgroundResource((last_column)? R.drawable.last_column_borders : R.drawable.cell_borders);
         }
-
-        cell.setTextDirection(View.TEXT_DIRECTION_RTL);
         cell.setText(txt);
 
         return cell;
     }
 
     private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row, boolean is_shirka) {
-        TextView cell = new TextView(this);
+        TextView cell = prepareTextView();
 
-        cell.setTextSize(TypedValue.COMPLEX_UNIT_PX, mResultTextView.getTextSize());
-        cell.setTextColor(Color.BLACK);
-        cell.setGravity(Gravity.RIGHT);
         if (last_row) {
             cell.setBackgroundResource((is_shirka)? R.drawable.last_row_shirka_borders : R.drawable.last_row_borders);
         } else {
             cell.setBackgroundResource((is_shirka)? R.drawable.shirka_cell_borders : R.drawable.cell_borders);
         }
-
-        cell.setTextDirection(View.TEXT_DIRECTION_RTL);
         cell.setText(txt);
 
         return cell;
+    }
+
+    private TextView prepareTextView() {
+        TextView tv = new TextView(this);
+
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_size));
+        tv.setTextColor(Color.BLACK);
+        tv.setGravity(Gravity.RIGHT);
+        tv.setTextDirection(View.TEXT_DIRECTION_RTL);
+        return tv;
     }
 }
