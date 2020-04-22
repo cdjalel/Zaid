@@ -21,7 +21,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".Activity5"
+    android:layout_height="match_parent"  tools:context=".ActivityResult"
     android:background="@android:color/white">
 
 
@@ -42,14 +42,13 @@
 
             <TextView
                 android:id="@+id/resultTextView"
-                style="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:gravity="right|center_vertical"
-                android:text="@string/title_activity8" />
+                android:text="@string/title_activity_result"/>
 
             <LinearLayout
                 android:id="@+id/buttonsLayout"
@@ -69,7 +68,7 @@
                     android:background="#cc98ff8d"
                     android:onClick="onChangeMassalaClicked"
                     android:text="تغيير المسألة"
-                    android:textSize="30sp" />
+                    android:textSize="@dimen/btn_font_size" />
 
                 <Button
                     android:id="@+id/restartBtn"
@@ -83,7 +82,7 @@
                     android:background="#cc98ff8d"
                     android:onClick="onRestartClicked"
                     android:text="مسألة جديدة"
-                    android:textSize="30sp" />
+                    android:textSize="@dimen/btn_font_size" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
