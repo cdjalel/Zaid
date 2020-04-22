@@ -174,6 +174,7 @@ public enum Warith {
         }
         return fa3el + maf3oul;
     }
+
     public final String getSharhPrefix(int n, Warith ma3a, int n2, boolean tassawi) {
         StringBuilder prefix = new StringBuilder();
 
@@ -184,6 +185,21 @@ public enum Warith {
         prefix.append(ma3a.getName(n2));
         prefix.append(tassawi ? " (بالتساوي)" : " (للذكر مثل حظ الأنثيين)");
         prefix.append(" في ");
+
+        return prefix.toString();
+    }
+
+    public final String getSharhPrefix(int n, Warith ma3a, int n2, Warith ma3a2, int n3) {
+        StringBuilder prefix = new StringBuilder();
+
+        prefix.append(getName(n));
+        prefix.append(" ");
+        prefix.append(getVerb(n, true));
+        prefix.append(" مع ");
+        prefix.append(ma3a.getName(n2));
+        prefix.append(" و");
+        prefix.append(ma3a2.getName(n3));
+        prefix.append(" (للذكر مثل حظ الأنثيين) في ");
 
         return prefix.toString();
     }
