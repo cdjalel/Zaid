@@ -45,10 +45,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_margin="5dp"
                 android:gravity="right|center_vertical"
-                android:text="@string/title_activity_result"/>
+                android:text="@string/title_activity_result" />
 
             <LinearLayout
                 android:id="@+id/buttonsLayout"
