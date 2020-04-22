@@ -1139,7 +1139,7 @@ public class Massala {
                         nassibFardi.append(factor);
                         nassibFardi.append("\\").append(m.getRo2os());
 
-                        int bast = mBaqi * factor * m.getNbr();
+                        int bast = mBaqi * factor;
                         if (bast % m.getRo2os() == 0) {
                             nassib += bast / m.getRo2os();
                             nassibFardi.append(" = ").append(nassib);
@@ -1183,7 +1183,7 @@ public class Massala {
                     nassibFardi.append(factor);
                     nassibFardi.append("\\").append(m.getRo2os());
 
-                    int bast = mBaqi * factor * m.getNbr();
+                    int bast = mBaqi * factor;
                     if (bast % m.getRo2os() == 0) {
                         nassib = bast / m.getRo2os();
                         nassibFardi.append(" = ").append(nassib);
