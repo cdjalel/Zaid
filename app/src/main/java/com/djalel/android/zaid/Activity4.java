@@ -118,7 +118,7 @@ public class Activity4 extends AppCompatActivity {
 
     public void onNextClicked(View view) {
         // start next activity
-        Intent intent = new Intent(this, Activity5.class);
+        Intent intent = new Intent(this, ActivityResult.class);
         startActivity(intent);
     }
 }

@@ -87,7 +87,7 @@ public class Mirath {
         StringBuilder tmp = new StringBuilder();
         tmp.append(warith.getName());
         if (nbr > 1) {
-            tmp.append("*").append(nbr);
+            tmp.append("(*").append(nbr).append(")");
         }
         ism = tmp.toString();
 
@@ -196,7 +196,19 @@ public class Mirath {
 
     public void setNassibMojmal(String nassibMojmal) { this.nassibMojmal = nassibMojmal; }
 
-    public String getNassibFardi() { return this.nassibFardi; }
+    public String getNassibFardi(boolean verbose) {
+        if (verbose) {
+            return this.nassibFardi;
+        }
+        StringBuilder tmp = new StringBuilder();
+        tmp.append(nassib);
+        if (nbr > 1) {
+            tmp.append("(*").append(nbr).append(")");
+        }
+        return tmp.toString();
+    }
+
+    public String getNassibFardi() { return getNassibFardi(false); }
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
 

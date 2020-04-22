@@ -27,6 +27,6 @@
     <string name="title_activity2">الأبناء والأحفاد</string>
     <string name="title_activity3">الإخوة</string>
     <string name="title_activity4">أبناء الإخوة، الأعمام وأبناء الأعمام</string>
-    <string name="title_activity8">حل المسألة</string>
+    <string name="title_activity_result">حل المسألة</string>
 
 </resources>
