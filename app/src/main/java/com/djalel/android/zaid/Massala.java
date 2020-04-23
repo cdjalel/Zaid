@@ -459,7 +459,7 @@ public class Massala {
         String sharh;
         int ro2os;
 
-        if (mInput.aljadah_li_ab() && !mInput.alab()) {
+        if (mInput.aljadah_li_ab() && (!mInput.alab() || mInput.get_madhab() == Madhab.HAMBALI)) {
             sharh = "الجدة لأب ";
             if (mInput.aljadah_li_om()) {
                 sharh += "تشترك بالتساوي مع الجدة لأم في السدس 1\\6 فرضا";
@@ -473,7 +473,7 @@ public class Massala {
 
         if (mInput.aljadah_li_om()) {
             sharh = "الجدة لأم ";
-            if (mInput.aljadah_li_ab() && !mInput.alab()) {
+            if (mInput.aljadah_li_ab() && (!mInput.alab() || mInput.get_madhab() == Madhab.HAMBALI)) {
                 sharh += "تشترك بالتساوي مع الجدة لأب في السدس 1\\6 فرضا";
                 ro2os = 2;
             } else {
