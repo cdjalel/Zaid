@@ -86,17 +86,12 @@ public class Massala {
 
         void copyHal(WarathaOuput from) {
             // except Aljad and ikhwa, shallow copy of waratah as they are the same in all cases
-            try {
-                ArrayList<Mirath> tmp = (ArrayList<Mirath>)mWarathah.clone();
-                mWarathah = (ArrayList<Mirath>)from.clone();
-                // replace aljad & ikhwa
-                for (int i = 0; i < tmp.size(); i++) {
-                    mWarathah.remove(from.mNbrFurudh + i - 1);
-                    mWarathah.add(from.mNbrFurudh + i - 1, tmp.get(i));
-                }
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-                return;
+            ArrayList<Mirath> tmp = (ArrayList<Mirath>)mWarathah.clone();
+            mWarathah = (ArrayList<Mirath>)from.mWarathah.clone();
+            // replace aljad & ikhwa
+            for (int i = 0; i < tmp.size(); i++) {
+                mWarathah.remove(from.mNbrFurudh + i - 1);
+                mWarathah.add(from.mNbrFurudh + i - 1, tmp.get(i));
             }
             mMahjoobin = from.mMahjoobin;    // reference copy as hajb is the same for all cases
 
