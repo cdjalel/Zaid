@@ -33,7 +33,6 @@ public class ZaidApplication extends Application {
     public String hissabMawarith() {
         massala = new Massala();
         massala.hissabMawarith(mInput);
-        massala.printTable();
         return massala.getSharh();
     }
 

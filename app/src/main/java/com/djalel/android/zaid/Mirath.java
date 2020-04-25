@@ -160,6 +160,8 @@ public class Mirath {
 
     public String getSharh() { return sharh; }
 
+    public void setSharh(String sharh) { this.sharh = sharh; }
+
     public int getNbr() { return  nbr; }
 
     public int getBast() { return bast; }
@@ -212,5 +214,7 @@ public class Mirath {
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
 
-    public boolean isJadah(){ return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
+    public boolean isJadah() { return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
+
+    public boolean isWaladAlom() { return (this.warith == Warith.ALIKHWA_LI_OM) || (this.warith == Warith.ALAKHAWAT_LI_OM); }
 }

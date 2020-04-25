@@ -188,6 +188,9 @@ public enum Warith {
 
         return prefix.toString();
     }
+    public final String getSharhPrefix(int n, Warith ma3a, int n2) {
+        return getSharhPrefix(n, ma3a, n2, false);
+    }
 
     public final String getSharhPrefix(int n, Warith ma3a, int n2, Warith ma3a2, int n3) {
         StringBuilder prefix = new StringBuilder();
@@ -204,29 +207,26 @@ public enum Warith {
         return prefix.toString();
     }
 
-    public final String getSharhPrefix(int n) {
+    public final String getSharhPrefix(int n, boolean tassawi) {
         StringBuilder prefix = new StringBuilder();
 
         prefix.append(getName(n));
         prefix.append(" ");
         prefix.append(getVerb(n, false));
         prefix.append(" ");
-        if (n > 1) {
+        if (n > 1 && tassawi) {
             prefix.append("(بالتساوي) في ");
         }
 
         return prefix.toString();
     }
 
+    public final String getSharhPrefix(int n) {
+        return getSharhPrefix(n, true);
+    }
+
     public final String getSharhPrefix() {
-        StringBuilder prefix = new StringBuilder();
-
-        prefix.append(getName(1));
-        prefix.append(" ");
-        prefix.append(getVerb(1, false));
-        prefix.append(" ");
-
-        return prefix.toString();
+        return getSharhPrefix(1);
     }
 
     public boolean isThakar() {
