@@ -61,7 +61,7 @@ public class ActivityResult extends AppCompatActivity {
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
-        mPrincipalLayout.addView(printTable(app));
+        mPrincipalLayout.addView(printTable(app), 0);
 
         mPrincipalLayout.addView(mButtonsLayout);
     }
@@ -114,20 +114,30 @@ public class ActivityResult extends AppCompatActivity {
 
         boolean jadahFirst = true;
         boolean shirkatTa3seebFirst = true;
+        boolean waladAlomFirst = true;
         boolean last_row = false;
         int i = 0;
         for (Mirath m : massala.getMawarith()) {
-            if (++i == massala.getMawarith().size()) { last_row = true; } /* last iteration */
+            if (++i == massala.getMawarith().size()) {
+                last_row = true;
+            } /* last iteration */
             r = new TableRow(this);
             r.addView(createCellTextView(m.getNassibFardi(), true, last_row));
-            if (m.isShirka() && m.isFardh() && m.isJadah() ) {
+            if (m.isJadah() && m.isShirka()) {
                 if (jadahFirst) {
-                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
+                    r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
                     jadahFirst = false;
                 } else {
                     r.addView(createCellTextView("", false, last_row, true));
                 }
-            } else if (m.isShirka() && m.isTa3seeb() && massala.isShirkaTa3seeb()) {
+            } else if (m.isWaladAlom() && m.isShirka()) {
+                if (waladAlomFirst) {
+                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
+                    waladAlomFirst = false;
+                } else {
+                    r.addView(createCellTextView("", false, last_row, true));
+                }
+            } else if (m.isShirka() && massala.isShirkaTa3seeb()) {
                 if (shirkatTa3seebFirst) {
                     r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
                     shirkatTa3seebFirst = false;
