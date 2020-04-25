@@ -56,9 +56,8 @@ public class Massala {
         int mNbr3assabat;
         int mAsl;
         int mBaqi;
-        int mAdadRo2osAlbaqi;
-        int mBaqiAlbaqi;            // used for jad ma3a ikhwa
-        int mAdadRo2osBaqiAlbaqi;
+        int mRo2osAlbaqi;
+        int mRo2osBaqiAlbaqi;
         int mAwl;
         int mMissah;
 
@@ -77,9 +76,8 @@ public class Massala {
             mNbr3assabat = 0;
             mAsl = 1;
             mBaqi = 0;
-            mAdadRo2osAlbaqi = 1;
-            mBaqiAlbaqi = 0;
-            mAdadRo2osBaqiAlbaqi = 1;
+            mRo2osAlbaqi = 1;
+            mRo2osBaqiAlbaqi = 1;
             mAwl = 0;
             mMissah = 0;
 
@@ -104,19 +102,17 @@ public class Massala {
 
             mNbrFurudh = from.mNbrFurudh - 1;
             mNbr3assabat = from.mNbr3assabat + 1;
+            mTassawi = from.mTassawi;
 
-            // rest is unique to each case
-//            mTassawi = from.mTassawi;
+            // rest is unique to each case DO NOT COPY
 //            mShirkaTa3seeb = from.mShirkaTa3seeb;
 //            mMu3addah = from.mMu3addah;
-
 //            mIstighraq = from.mIstighraq;
 
 //            mAsl = 1;
 //            mBaqi = 0;
-//            mAdadRo2osAlbaqi = 1;
-//            mBaqiAlbaqi = 0;
-//            mAdadRo2osBaqiAlbaqi = 1;
+//            mRo2osAlbaqi = 1;
+//            mRo2osBaqiAlbaqi = 1;
 //            mAwl = 0;
 //            mMissah = 0;
         }
@@ -1244,15 +1240,15 @@ public class Massala {
             }
 
             if (m.isTa3seeb() && (m.getRo2os() != 1)) {
-                if (hal.mAdadRo2osAlbaqi == 1) {
-                    hal.mAdadRo2osAlbaqi = m.getRo2os();            // بالأخص من يأخذ ثلث الباقي أو الجد مقاسمة مع الإخوة بصنفيهم (المعادة)
-                } else if (hal.mAdadRo2osBaqiAlbaqi == 1) {
-                    hal.mAdadRo2osBaqiAlbaqi = m.getRo2os();        // بالأخص من يأخذ الباقي بعد ثلثه أو الإخوة بصنفيهم مع الجد
+                if (hal.mRo2osAlbaqi == 1) {
+                    hal.mRo2osAlbaqi = m.getRo2os();            // بالأخص من يأخذ ثلث الباقي أو الجد مقاسمة مع الإخوة بصنفيهم (المعادة)
+                } else if (hal.mRo2osBaqiAlbaqi == 1) {
+                    hal.mRo2osBaqiAlbaqi = m.getRo2os();        // من يأخذ ثلثي الباقي بعد إعطاء ثلثه أو الإخوة بصنفيهم بعد الجد
                 }
             }
         }
         if ((hal.mNbrFurudh == 0) && (hal.mNbr3assabat > 0)) {
-            hal.mAsl = hal.mAdadRo2osAlbaqi;
+            hal.mAsl = hal.mRo2osAlbaqi;
         }
     }
 
@@ -1416,135 +1412,79 @@ public class Massala {
                 }
             }
             else if (m.isTa3seeb()) {       // وارث بالتعصيب فقط
-                // TODO refactor code below
-                int bast_;
                 int factor1;
                 int ro2os1;
-                int factor2;
-                int ro2os2;
-                boolean shirka = false;
+                boolean qissmatAlikhwa;
 
                 switch (mAljadMa3aAlikhwa) {
                     case THULUTH_ALBAQI:
                         if (m.getWarith() == Warith.ALJAD) {
-                            int bast = mHal.get(0).mBaqi;
-                            nassibMojmal.append(bast).append("ش");
-                            nassibFardi.append(bast).append(" * 1\\3");
-
-                            int ro2os = 3;
-                            if (bast % ro2os == 0) {
-                                nassib = bast / ro2os;
-                                nassibFardi.append(" = ").append(nassib);
-                            }
-                            else { //  إنكسار
-                                int gcd = gcd(bast, ro2os);
-                                missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
-                                nassib = -bast;                         // bast only for now
-                            }
+                            ro2os1 = 3;  // assert m.getRo2os() == mHal.get(0).mAdadRo2osAlbaqi == 3;
+                            factor1 = 1;
+                            qissmatAlikhwa = false;
                         } else {  // ikhwa
-                            int bast = mHal.get(0).mBaqi;
-                            nassibMojmal.append(bast).append("ش");
-                            nassibFardi.append(bast).append(" * 2\\3");
-                            bast *= 2;
-
-                            int ro2os = 3;
-                            if (m.isShirka()) {
-                                int factor = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
-                                bast *= factor;
-                                nassibFardi.append(" * ").append(factor).append("\\").append(m.getRo2os());
-                                ro2os *= m.getRo2os();
-                            }
-
-                            if (bast % ro2os == 0) {
-                                nassib = bast / ro2os;
-                                nassibFardi.append(" = ").append(nassib);
-                            }
-                            else { //  إنكسار
-                                int gcd = gcd(bast, ro2os);
-                                missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
-                                nassib = -bast;                         // bast only for now
-                            }
+                            factor1 = 2;
+                            ro2os1 = 3;
+                            qissmatAlikhwa = true;
                         }
                         break;
 
                     case MUQASSAMA:
                         if (m.getWarith() == Warith.ALJAD) {
-                            int bast = mHal.get(0).mBaqi;
-                            int ro2os = m.getRo2os();
-                            int factor = mHal.get(0).mTassawi ? 1 : 2;
-
-                            nassibMojmal.append(bast).append("ش");
-                            nassibFardi.append(bast).append(" *").append(factor).append("\\").append(ro2os);
-                            bast *= factor;
-
-                            if (bast % ro2os == 0) {
-                                nassib = bast / ro2os;
-                                nassibFardi.append(" = ").append(nassib);
-                            }
-                            else { //  إنكسار
-                                int gcd = gcd(bast, ro2os);
-                                missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
-                                nassib = -bast;                         // bast only for now
-                            }
+                            factor1 = mHal.get(0).mTassawi ? 1 : 2;
+                            ro2os1 = m.getRo2os();
+                            qissmatAlikhwa = false;
                         } else {  // ikhwa
-                            int factor = mHal.get(0).mTassawi ? 1 : 2;
-
-                            int bast = mHal.get(0).mBaqi;
-                            int ro2os = mHal.get(0).mAdadRo2osAlbaqi;
-
-                            nassibMojmal.append(bast).append("ش");
-                            nassibFardi.append(bast).append(" * ((");
-                            nassibFardi.append(ro2os).append("-").append(factor);
-                            nassibFardi.append(")/").append(ro2os).append(")");
-
-                            bast *= (ro2os - factor);
-                            if (m.isShirka()) {
-                                factor = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
-                                bast *= factor;
-                                nassibFardi.append(" * ").append(factor).append("\\").append(m.getRo2os());
-                                ro2os *= m.getRo2os();
-                            }
-
-                            if (bast % ro2os == 0) {
-                                nassib = bast / ro2os;
-                                nassibFardi.append(" = ").append(nassib);
-                            }
-                            else { //  إنكسار
-                                int gcd = gcd(bast, ro2os);
-                                missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
-                                nassib = -bast;                         // bast only for now
-                            }
+                            int ro2os_aljad = mHal.get(0).mTassawi ? 1 : 2;
+                            ro2os1 = mHal.get(0).mRo2osAlbaqi;
+                            factor1 = ro2os1 - ro2os_aljad;
+                            qissmatAlikhwa = true;
                         }
                         break;
 
                     default:
-                        int bast = mHal.get(0).mBaqi;
-                        nassibMojmal.append(bast);
-                        nassibFardi.append(bast);
-
-                        if (m.isShirka()) {
-                            nassibMojmal.append("ش");
-
-                            int ro2os = m.getRo2os();
-                            int factor = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
-                            nassibFardi.append(" * ");
-                            nassibFardi.append(factor);
-                            nassibFardi.append("\\").append(ro2os);
-
-                            bast *= factor;
-                            if (bast % ro2os == 0) {
-                                nassib = bast / ro2os;
-                                nassibFardi.append(" = ").append(nassib);
-                            }
-                            else { //  إنكسار
-                                int gcd = gcd(bast, ro2os);
-                                missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
-                                nassib = -bast;                         // bast only for now
-                            }
-                        }
+                        factor1 = ro2os1 = 0;
+                        qissmatAlikhwa = true;
                         break;
                 }
 
+                int bast = mHal.get(0).mBaqi;
+                int ro2os = 1;
+                boolean shirka = false;
+
+                nassibMojmal.append(bast);
+                nassibFardi.append(bast);
+
+                if (ro2os1 != 0) {
+                    nassibMojmal.append("ش");
+                    shirka = true;
+
+                    nassibFardi.append(" * ");
+                    nassibFardi.append(factor1).append("\\").append(ro2os1);
+                    bast *= factor1;
+                    ro2os *= ro2os1;
+                }
+
+                if (qissmatAlikhwa && m.isShirka()) {
+                    if (!shirka) { nassibMojmal.append("ش"); }
+
+                    int factor2 = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
+                    bast *= factor2;
+
+                    int ro2os2 = m.getRo2os();
+                    nassibFardi.append(" * ").append(factor2).append("\\").append(ro2os2);
+                    ro2os *= ro2os2;
+                }
+
+                if ((bast % ro2os) == 0) {
+                    nassib = bast / ro2os;
+                    nassibFardi.append(" = ").append(nassib);
+                }
+                else { //  إنكسار
+                    int gcd = gcd(bast, ro2os);
+                    missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
+                    nassib = -bast;                         // bast only for now
+                }
             }
             else if (m.isMahjoob()) {
                 nassibMojmal.append("--");
@@ -1553,7 +1493,6 @@ public class Massala {
             }
             else {
                 System.out.println(String.format("BUG! %s خطأ وارث ليس صاحب فرض أو تعصيب أو حجب", m.getWarith().getName()));
-//                nassib = 0;
                 continue;
             }
 
@@ -1572,6 +1511,10 @@ public class Massala {
                     if (m.isFardh() && m.isTa3seeb()) {
                         nassib = m.getFardh() * missahFactor;
                         nassib += -oldNassib * missahFactor / m.getRo2os();
+                    }
+                    else if (m.isTa3seeb() && (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.THULUTH_ALBAQI
+                            || mAljadMa3aAlikhwa == AljadMa3aAlikhwa.MUQASSAMA)) {
+                        nassib = (-oldNassib * missahFactor) / (mHal.get(0).mRo2osAlbaqi * mHal.get(0).mRo2osBaqiAlbaqi);
                     }
                     else {
                         nassib = -oldNassib * missahFactor / m.getRo2os();
@@ -1629,22 +1572,22 @@ public class Massala {
                         case MUQASSAMA:
                             if (hal.mMu3addah) {
                                 sharh.append(String.format("- الباقي %d، يتقاسمه الجد والأخوة بالمُعادّة،", hal.mBaqi));
-                                sharh.append(String.format(" أي يُحسب على الجد كل الإخوة الأشقاء ولأب فيكون سهمه من %d،", hal.mAdadRo2osAlbaqi));
-                                sharh.append(String.format("بعد ذلك يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mAdadRo2osBaqiAlbaqi));
+                                sharh.append(String.format(" أي يُحسب على الجد كل الإخوة الأشقاء ولأب فيكون سهمه من %d،", hal.mRo2osAlbaqi));
+                                sharh.append(String.format("بعد ذلك يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mRo2osBaqiAlbaqi));
                             } else {
-                                sharh.append(String.format("- الباقي %d، يتقاسمه الجد مع الإخوة وعدد رؤوسه %d.\n", hal.mBaqi, hal.mAdadRo2osAlbaqi));
+                                sharh.append(String.format("- الباقي %d، يتقاسمه الجد مع الإخوة وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osAlbaqi));
                             }
                             break;
                         case THULUTH_ALBAQI:
-                            sharh.append(String.format("- الباقي %d، يأخذ منه الجد الثلث ويتقاسم الإخوة ما بقي وعدد رؤوسه %d.\n", hal.mBaqi, hal.mAdadRo2osBaqiAlbaqi));
+                            sharh.append(String.format("- الباقي %d، يأخذ منه الجد الثلث ويتقاسم الإخوة ما بقي وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osBaqiAlbaqi));
                             break;
                         case THULUTH_ALMAL:
                         case SUDUSS:
-                            sharh.append(String.format("- الباقي %d وعدد رؤوسه %d، يتقاسمه الإخوة لأن الجد ورث بالفرض.\n", hal.mBaqi, hal.mAdadRo2osAlbaqi));
+                            sharh.append(String.format("- الباقي %d وعدد رؤوسه %d، يتقاسمه الإخوة لأن الجد ورث بالفرض.\n", hal.mBaqi, hal.mRo2osAlbaqi));
                             break;
                         case LA:
                         default:
-                            sharh.append(String.format("- الباقي %d وعدد رؤوسه %d.\n", hal.mBaqi, hal.mAdadRo2osAlbaqi));
+                            sharh.append(String.format("- الباقي %d وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osAlbaqi));
                             break;
                     }
                 }
@@ -1685,9 +1628,7 @@ public class Massala {
         return all;
     }
 
-    public int getAdadRo2os() { return mHal.get(0).mAdadRo2osAlbaqi; }
-
-    // TODO move to Utilities clas
+    // TODO move to Utilities class
     private int lcm(int a, int b) {
         if (a == 0 || b == 0) { return 0; }
         int aa = Math.abs(a);
