@@ -18,8 +18,6 @@
 
 package com.djalel.android.zaid;
 
-import android.provider.Settings;
-
 public enum Warith {
     // order matters
     ALAB("الأب", "الأب", "الأب", "أب"),
@@ -192,17 +190,30 @@ public enum Warith {
         return getSharhPrefix(n, ma3a, n2, false);
     }
 
-    public final String getSharhPrefix(int n, Warith ma3a, int n2, Warith ma3a2, int n3) {
+    public final String getAlikhwa(WarathaInput input) {
+        int n1 = input.get_alikhwa_alashika();
+        int n2 = input.get_alakhawat_ashakikat();
+        int n3 = input.get_alikhwa_li_ab();
+        int n4 = input.get_alakhawat_li_ab();
+
+        StringBuilder ma3a = new StringBuilder();
+        if (n1 > 0) {  ma3a.append(ALIKHWA_ALASHIKA.getName(n1)); }
+        if (n2 > 0) {  if (n1 > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_ASHAKIKAT.getName(n2)); }
+        if (n3 > 0) {  if ((n1 + n2) > 0) { ma3a.append(" و"); } ma3a.append(ALIKHWA_LI_AB.getName(n3)); }
+        if (n4 > 0) {  if ((n1 + n2 + n3) > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_LI_AB.getName(n4)); }
+
+        return ma3a.toString();
+    }
+
+    public final String getSharhMa3aAlikhwaPrefix(WarathaInput input) {
         StringBuilder prefix = new StringBuilder();
 
-        prefix.append(getName(n));
+        prefix.append(getName(1));
         prefix.append(" ");
-        prefix.append(getVerb(n, true));
+        prefix.append(getVerb(1, false));
         prefix.append(" مع ");
-        prefix.append(ma3a.getName(n2));
-        prefix.append(" و");
-        prefix.append(ma3a2.getName(n3));
-        prefix.append(" (للذكر مثل حظ الأنثيين) في ");
+        prefix.append(getAlikhwa(input));
+        prefix.append(" الأحظ له وهو ");
 
         return prefix.toString();
     }
@@ -215,8 +226,9 @@ public enum Warith {
         prefix.append(getVerb(n, false));
         prefix.append(" ");
         if (n > 1 && tassawi) {
-            prefix.append("(بالتساوي) في ");
+            prefix.append("(بالتساوي) ");
         }
+        prefix.append(" في ");
 
         return prefix.toString();
     }

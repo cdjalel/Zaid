@@ -61,7 +61,7 @@ public class ActivityResult extends AppCompatActivity {
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
-        mPrincipalLayout.addView(printTable(app), 0);
+        mPrincipalLayout.addView(createTable(app), 0);
 
         mPrincipalLayout.addView(mButtonsLayout);
     }
@@ -82,7 +82,7 @@ public class ActivityResult extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public TableLayout printTable(ZaidApplication app){
+    public TableLayout createTable(ZaidApplication app){
         TableLayout mawarithTable = new TableLayout(this);
         mawarithTable.setStretchAllColumns(true);
         mawarithTable.setShrinkAllColumns(true);
@@ -137,7 +137,7 @@ public class ActivityResult extends AppCompatActivity {
                 } else {
                     r.addView(createCellTextView("", false, last_row, true));
                 }
-            } else if (m.isShirka() && massala.isShirkaTa3seeb()) {
+            } else if (m.isTa3seeb() && massala.isShirkaTa3seeb()) {
                 if (shirkatTa3seebFirst) {
                     r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
                     shirkatTa3seebFirst = false;
