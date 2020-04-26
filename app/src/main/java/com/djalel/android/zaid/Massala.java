@@ -1508,6 +1508,8 @@ public class Massala {
         }
 
         for (WarathaOuput hal : mHal) {
+            sharh.append("\n");
+
             if (hal.mWarathah != null) {
                 for (Mirath m : hal.mWarathah) {
                     sharh.append("- " + m.getSharh() + ".\n");
@@ -1548,7 +1550,7 @@ public class Massala {
                             if (hal.mMu3addah) {
                                 sharh.append(String.format("- الباقي %d، يتقاسمه الجد و%s بالمُعادّة،", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput)));
                                 sharh.append(String.format(" أي يُحسب على الجد كل الإخوة الأشقاء ولأب فيكون سهمه من %d،", hal.mRo2osAlbaqi));
-                                sharh.append(String.format("بعد ذلك يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mRo2osBaqiAlbaqi));
+                                sharh.append(String.format(" ثم يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mRo2osBaqiAlbaqi));
                             } else {
                                 sharh.append(String.format("- الباقي %d، يتقاسمه الجد و%s وعدد رؤوسه %d.\n", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osAlbaqi));
                             }
@@ -1566,7 +1568,6 @@ public class Massala {
                 }
             }
         }
-        sharh.append("\n");
 
         mSharh = sharh.toString();
     }
