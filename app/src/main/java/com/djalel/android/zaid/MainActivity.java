@@ -22,16 +22,38 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.NumberPicker;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
     WarathaInput mInput;
-    NumberPicker zawjatNP;
+    CheckBox alabCB;
+    CheckBox alomCB;
+    CheckBox aljadCB;
+    CheckBox aljadahLiAbCB;
+    CheckBox aljadahLiOmCB;
+    CheckBox azawjCB;
+    EditText azawjatET;
+    EditText sonsET;
+    EditText daughtersET;
+    EditText sonsOfSonsET;
+    EditText daughtersOfSonsET;
+    EditText maternalBrothersET;
+    EditText maternalSistersET;
+    EditText fullBrothersET;
+    EditText fullSistersET;
+    EditText paternalBrothersET;
+    EditText paternalSistersET;
+    EditText sonsOfFullBrothersET;
+    EditText sonsOfPaternalBrothersET;
+    EditText fullUnclesET;
+    EditText paternalUnclesET;
+    EditText sonsOfFullUnclesET;
+    EditText sonsOfPaternalUnclesET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,63 +78,88 @@ public class MainActivity extends AppCompatActivity {
         ((RadioButton)findViewById(mInput.is_male() ?
                 R.id.radioButtonMale : R.id.radioButtonFemale)).setChecked(true);
 
-        ((RadioButton)findViewById(mInput.alab() ?
-                R.id.radioButtonFatherYes : R.id.radioButtonFatherNo)).setChecked(true);
+        alabCB = findViewById(R.id.fatherCheckBox);
+        alabCB.setChecked(mInput.alab());
+        alomCB = findViewById(R.id.motherCheckBox);
+        alomCB.setChecked(mInput.alom());
+        aljadCB = findViewById(R.id.aljadCheckBox);
+        aljadCB.setChecked(mInput.aljad());
+        aljadahLiAbCB = findViewById(R.id.aljadahLiAbCheckBox);
+        aljadahLiAbCB.setChecked(mInput.aljadah_li_ab());
+        aljadahLiOmCB = findViewById(R.id.aljadahLiOmCheckBox);
+        aljadahLiOmCB.setChecked(mInput.aljadah_li_om());
+        azawjCB = findViewById(R.id.azawjCheckBox);
+        azawjCB.setChecked(mInput.zawj());
 
-        ((RadioButton)findViewById(mInput.alom() ?
-                R.id.radioButtonMotherYes : R.id.radioButtonMotherNo)).setChecked(true);
-
-        ((RadioButton)findViewById(mInput.aljad() ?
-                R.id.radioButtonGrandFatherYes : R.id.radioButtonGrandFatherNo)).setChecked(true);
-
-        ((RadioButton)findViewById(mInput.aljadah_li_ab() ?
-                R.id.radioButtonPaternalGrandMotherYes : R.id.radioButtonPaternalGrandMotherNo)).setChecked(true);
-
-        ((RadioButton)findViewById(mInput.aljadah_li_om() ?
-                R.id.radioButtonMaternalGrandMotherYes : R.id.radioButtonMaternalGrandMotherNo)).setChecked(true);
-
-        RadioGroup radioGroup;
-        radioGroup = findViewById(R.id.radioGroupZawj);
-
-        zawjatNP = findViewById(R.id.zawjatNumberPicker);
+        azawjatET = findViewById(R.id.zawjatEditText);
+        azawjatET.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "4")});
 
         if (mInput.is_male()) {
             mInput.set_zawj(false);
-            radioGroup.setEnabled(false);
-            for(int i = 0; i < radioGroup.getChildCount(); i++) {
-                radioGroup.getChildAt(i).setEnabled(false);
-               // ((RadioButton)radioGroup.getChildAt(i)).setChecked(false);
-            }
-            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true); //check "no" for repaint case (when switching beetween male and female)
-            findViewById(R.id.zawjTextView).setEnabled(false);
+            azawjCB.setEnabled(false);
+            azawjCB.setChecked(false);
 
             findViewById(R.id.zawjatTextView).setEnabled(true);
-            zawjatNP.setEnabled(true);
-            zawjatNP.setMinValue(0);
-            zawjatNP.setMaxValue(4);
-            zawjatNP.setValue(mInput.get_azawjat());
-            zawjatNP.setWrapSelectorWheel(false);
-            zawjatNP.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    mInput.set_azawjat(newVal);
-                }
-            });
+            azawjatET.setEnabled(true);
+            azawjatET.setText("" + mInput.get_azawjat());
         }
         else {
             mInput.set_azawjat(0);
-            zawjatNP.setValue(0);
-            zawjatNP.setEnabled(false);
+            azawjatET.setText("0");
+            azawjatET.setEnabled(false);
             findViewById(R.id.zawjatTextView).setEnabled(false);
 
-            findViewById(R.id.zawjTextView).setEnabled(true);
-            radioGroup.setEnabled(true);
-            for(int i = 0; i < radioGroup.getChildCount(); i++) {
-                radioGroup.getChildAt(i).setEnabled(true);
-            }
-            ((RadioButton)findViewById(mInput.zawj() ?
-                    R.id.radioButtonZawjYes : R.id.radioButtonZawjNo)).setChecked(true);
+            azawjCB.setEnabled(true);
+            azawjCB.setChecked(mInput.zawj());
         }
+
+        sonsET = findViewById(R.id.sonsEditText);
+        sonsET.setText("" + mInput.get_alabna());
+
+        daughtersET = findViewById(R.id.daughtersEditText);
+        daughtersET.setText("" + mInput.get_albanat());
+
+        sonsOfSonsET = findViewById(R.id.sonsOfSonsEditText);
+        sonsOfSonsET.setText("" + mInput.get_abna_alabna());
+
+        daughtersOfSonsET = findViewById(R.id.daughtersOfSonsEditText);
+        daughtersOfSonsET.setText("" + mInput.get_banat_alabna());
+
+        maternalBrothersET = findViewById(R.id.maternalBrothersEditText);
+        maternalBrothersET.setText("" + mInput.get_alikhwa_li_om());
+
+        maternalSistersET = findViewById(R.id.maternalSistersEditText);
+        maternalSistersET.setText("" + mInput.get_alakhawat_li_om());
+
+        fullBrothersET = findViewById(R.id.fullBrothersEditText);
+        fullBrothersET.setText("" + mInput.get_alikhwa_alashika());
+
+        fullSistersET = findViewById(R.id.fullSistersEditText);
+        fullSistersET.setText("" + mInput.get_alakhawat_ashakikat());
+
+        paternalBrothersET = findViewById(R.id.paternalBrothersEditText);
+        paternalBrothersET.setText("" + mInput.get_alikhwa_li_ab());
+
+        paternalSistersET = findViewById(R.id.paternalSistersEditText);
+        paternalSistersET.setText("" + mInput.get_alakhawat_li_ab());
+
+        sonsOfFullBrothersET = findViewById(R.id.sonsOfFullBrothersEditText);
+        sonsOfFullBrothersET.setText("" + mInput.get_abna_alikhwa_alashika());
+
+        sonsOfPaternalBrothersET = findViewById(R.id.sonsOfPaternalBrothersEditText);
+        sonsOfPaternalBrothersET.setText("" + mInput.get_abna_alikhwa_li_ab());
+
+        fullUnclesET = findViewById(R.id.fullUnclesEditText);
+        fullUnclesET.setText("" + mInput.get_ala3mam_alashika());
+
+        paternalUnclesET = findViewById(R.id.paternalUnclesEditText);
+        paternalUnclesET.setText("" + mInput.get_ala3mam_li_ab());
+
+        sonsOfFullUnclesET = findViewById(R.id.sonsOfFullUnclesEditText);
+        sonsOfFullUnclesET.setText("" + mInput.get_abna_ala3mam_alashika());
+
+        sonsOfPaternalUnclesET = findViewById(R.id.sonsOfPaternalUnclesEditText);
+        sonsOfPaternalUnclesET.setText("" + mInput.get_abna_ala3mam_li_ab());
     }
 
     public void onMadhabButtonClicked(View view) {
@@ -158,99 +205,33 @@ public class MainActivity extends AppCompatActivity {
         updateLayout();
     }
 
-    public void onFatherButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonFatherYes:
-                if (checked)
-                    mInput.set_alab(true);
-                break;
-
-            case R.id.radioButtonFatherNo:
-                if (checked)
-                    mInput.set_alab(false);
-                break;
-        }
-    }
-
-    public void onMotherButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonMotherYes:
-                if (checked)
-                    mInput.set_alom(true);
-                break;
-
-            case R.id.radioButtonMotherNo:
-                if (checked)
-                    mInput.set_alom(false);
-                break;
-        }
-    }
-
-    public void onGrandFatherButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonGrandFatherYes:
-                if (checked)
-                    mInput.set_aljad(true);
-                break;
-
-            case R.id.radioButtonGrandFatherNo:
-                if (checked)
-                    mInput.set_aljad(false);
-                break;
-        }
-    }
-
-    public void onPaternalGrandMotherButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonPaternalGrandMotherYes:
-                if (checked)
-                    mInput.set_aljadah_li_ab(true);
-                break;
-
-            case R.id.radioButtonPaternalGrandMotherNo:
-                if (checked)
-                    mInput.set_aljadah_li_ab(false);
-                break;
-        }
-    }
-
-    public void onMaternalGrandMotherButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonMaternalGrandMotherYes:
-                if (checked)
-                    mInput.set_aljadah_li_om(true);
-                break;
-
-            case R.id.radioButtonMaternalGrandMotherNo:
-                if (checked)
-                    mInput.set_aljadah_li_om(false);
-                break;
-        }
-    }
-
-    public void onZawjButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        switch (view.getId()) {
-            case R.id.radioButtonZawjYes:
-                if (checked)
-                    mInput.set_zawj(true);
-                break;
-
-            case R.id.radioButtonZawjNo:
-                if (checked)
-                    mInput.set_zawj(false);
-                break;
-        }
-    }
-
     public void onNextClicked(View view) {
+        mInput.set_alab(alabCB.isChecked());
+        mInput.set_alom(alomCB.isChecked());
+        mInput.set_aljad(aljadCB.isChecked());
+        mInput.set_aljadah_li_ab(aljadahLiAbCB.isChecked());
+        mInput.set_aljadah_li_om(aljadahLiOmCB.isChecked());
+        mInput.set_zawj(azawjCB.isChecked());
+        mInput.set_azawjat(Integer.parseInt(azawjatET.getText().toString()));
+        mInput.set_alabna(Integer.parseInt(sonsET.getText().toString()));
+        mInput.set_albanat(Integer.parseInt(daughtersET.getText().toString()));
+        mInput.set_abna_alabna(Integer.parseInt(sonsOfSonsET.getText().toString()));
+        mInput.set_banat_alabna(Integer.parseInt(daughtersOfSonsET.getText().toString()));
+        mInput.set_alikhwa_li_om(Integer.parseInt(maternalBrothersET.getText().toString()));
+        mInput.set_alakhawat_li_om(Integer.parseInt(maternalSistersET.getText().toString()));
+        mInput.set_alikhwa_alashika(Integer.parseInt(fullBrothersET.getText().toString()));
+        mInput.set_alakhawat_ashakikat(Integer.parseInt(fullSistersET.getText().toString()));
+        mInput.set_alikhwa_li_ab(Integer.parseInt(paternalBrothersET.getText().toString()));
+        mInput.set_alakhawat_li_ab(Integer.parseInt(paternalSistersET.getText().toString()));
+        mInput.set_abna_alikhwa_alashika(Integer.parseInt(sonsOfFullBrothersET.getText().toString()));
+        mInput.set_abna_alikhwa_li_ab(Integer.parseInt(sonsOfPaternalBrothersET.getText().toString()));
+        mInput.set_ala3mam_alashika(Integer.parseInt(fullUnclesET.getText().toString()));
+        mInput.set_ala3mam_li_ab(Integer.parseInt(paternalUnclesET.getText().toString()));
+        mInput.set_abna_ala3mam_alashika(Integer.parseInt(sonsOfFullUnclesET.getText().toString()));
+        mInput.set_abna_ala3mam_li_ab(Integer.parseInt(sonsOfPaternalUnclesET.getText().toString()));
+
         // start next activity
-        Intent intent = new Intent(this, Activity2.class);
+        Intent intent = new Intent(this, ActivityResult.class);
         startActivity(intent);
     }
 }

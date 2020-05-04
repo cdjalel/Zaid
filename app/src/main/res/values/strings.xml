@@ -18,15 +18,13 @@
     <string name="father">الأب:</string>
     <string name="grand_father">الجد:</string>
     <string name="maternal_grand_mother">الجدة لأم:</string>
-    <string name="paternal_grand_father">الجدة لأب:</string>
+    <string name="paternal_grand_mother">الجدة لأب:</string>
     <string name="next">التالي</string>
     <string name="wives">الزوجات:</string>
     <string name="husband">الزوج:</string>
     <string name="daughters">البنات:</string>
     <string name="sons">الأبناء:</string>
-    <string name="title_activity2">الأبناء والأحفاد</string>
-    <string name="title_activity3">الإخوة</string>
-    <string name="title_activity4">أبناء الإخوة، الأعمام وأبناء الأعمام</string>
+    <string name="title_activity2">الحواشي</string>
     <string name="title_activity_result">حل المسألة</string>
 
 </resources>
