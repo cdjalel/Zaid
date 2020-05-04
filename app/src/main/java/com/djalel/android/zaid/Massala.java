@@ -1525,8 +1525,8 @@ public class Massala {
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
                     break;
                 case NAW3_RAD:
-                    sharh.append(String.format("، وهي ناقصة (أسهمها أقل من أصلها) فيُرد الباقي %d على أصحاب الفروض ما عدى الزوجين.", hal.mBaqi));
-                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض دون أحد الزوجين.\n");
+                    sharh.append(String.format("، وهي ناقصة (أسهمها أقل من أصلها)، الباقي %d يُرد على أصحاب الفروض (إن وجدوا) ما عدى الزوجين.", hal.mBaqi));
+                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض (إن وجدوا) دون أحد الزوجين.\n");
                     // TODO. Ethier implement Rad and remove the previous line
                     // TODO. or add Rad buttong which is like 'change' button and eliminates zawj
                     // TODO. or keep it like that

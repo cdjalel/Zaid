@@ -225,10 +225,12 @@ public enum Warith {
         prefix.append(" ");
         prefix.append(getVerb(n, false));
         prefix.append(" ");
-        if (n > 1 && tassawi) {
-            prefix.append("(بالتساوي) ");
+        if (n > 1) {
+            if (tassawi) {
+                prefix.append("(بالتساوي) ");
+            }
+            prefix.append(" في ");
         }
-        prefix.append(" في ");
 
         return prefix.toString();
     }
