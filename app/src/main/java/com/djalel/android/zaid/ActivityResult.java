@@ -20,6 +20,7 @@ package com.djalel.android.zaid;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -36,8 +37,7 @@ import android.widget.TextView;
 
 public class ActivityResult extends AppCompatActivity {
 
-    private LinearLayout mPrincipalLayout;
-    private LinearLayout mButtonsLayout;
+    private LinearLayout mResultTableLayout;
     private TextView mResultTextView;
 
     @Override
@@ -45,25 +45,20 @@ public class ActivityResult extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        mResultTextView = (TextView) findViewById(R.id.resultTextView);
+        mResultTextView = findViewById(R.id.resultTextView);
         mResultTextView.setMovementMethod(new ScrollingMovementMethod());
-        mPrincipalLayout = (LinearLayout) findViewById(R.id.principalLayout);
-        mButtonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
-//        resultTextView.setTypeface(Typeface.MONOSPACE);
+        mResultTableLayout = findViewById(R.id.resultTableLayout);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //reinitialisation
-        mPrincipalLayout.removeAllViews();
-        mPrincipalLayout.addView(mResultTextView);
+        mResultTableLayout.removeAllViews();
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
-        mPrincipalLayout.addView(createTable(app), 0);
-
-        mPrincipalLayout.addView(mButtonsLayout);
+        mResultTableLayout.addView(createTable(app), 0);
     }
 
     public void onRestartClicked(View view) {
