@@ -1355,8 +1355,7 @@ public class Massala {
                             nassibFardi.append(" = ").append(nassib);
                         }
                         else { // إنكسار
-                            int gcd = gcd(bast, m.getRo2os());
-                            missahFactor = lcm(missahFactor, gcd == 1 ? m.getRo2os() : gcd);
+                            missahFactor = lcm(missahFactor, m.getRo2os() / gcd(bast, m.getRo2os()));
                             nassib = -bast;                 // bast only for now
                         }
                     } else {
@@ -1373,8 +1372,7 @@ public class Massala {
                             nassibFardi.append(" = ").append(nassib);
                         }
                         else {  // إنكسار
-                            int gcd = gcd(m.getFardh(), m.getRo2os());
-                            missahFactor = lcm(missahFactor, gcd == 1 ? m.getRo2os() : gcd);
+                            missahFactor = lcm(missahFactor, m.getRo2os() / gcd(m.getFardh(), m.getRo2os()));
                             nassib = -m.getFardh();         // bast only for now
                         }
                     }
@@ -1450,8 +1448,7 @@ public class Massala {
                     nassibFardi.append(" = ").append(nassib);
                 }
                 else { //  إنكسار
-                    int gcd = gcd(bast, ro2os);
-                    missahFactor = lcm(missahFactor, gcd == 1 ? ro2os : gcd);
+                    missahFactor = lcm(missahFactor, ro2os / gcd(bast, ro2os));
                     nassib = -bast;                         // bast only for now
                 }
             }
