@@ -5,12 +5,9 @@
     <string name="hambali">حنبلي</string>
     <string name="hanafi">حنفي</string>
     <string name="chafi3i">شافعي</string>
-    <string name="maliki">مالكي</string>
+    <string name="maliki">المذهب:  مالكي</string>
     <string name="deceased">المتوفى:</string>
-    <string name="mother_alive">هل الأم حية؟</string>
-    <string name="gender">هل الميت ذكر أم أنثى؟</string>
-    <string name="father_alive">هل الأب حي؟</string>
-    <string name="male">ذكر</string>
+    <string name="male">المتوفى:  ذكر</string>
     <string name="female">أنثى</string>
     <string name="no">لا</string>
     <string name="yes">نعم</string>
@@ -19,7 +16,7 @@
     <string name="grand_father">الجد:</string>
     <string name="maternal_grand_mother">الجدة لأم:</string>
     <string name="paternal_grand_mother">الجدة لأب:</string>
-    <string name="next">التالي</string>
+    <string name="alhal">الحل</string>
     <string name="wives">الزوجات:</string>
     <string name="husband">الزوج:</string>
     <string name="daughters">البنات:</string>
