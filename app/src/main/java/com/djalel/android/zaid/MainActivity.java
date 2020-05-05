@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         updateLayout();
     }
 
-    public void onNextClicked(View view) {
+    public void onHalClicked(View view) {
         mInput.set_alab(alabCB.isChecked());
         mInput.set_alom(alomCB.isChecked());
         mInput.set_aljad(aljadCB.isChecked());
