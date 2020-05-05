@@ -161,7 +161,7 @@ public class Massala {
         } else {
             hajb += warith.getDhamirHajaba(nw, hajib2) + " " + hajib2.getName(nh);
         }
-        mHal.get(0).mMahjoobin.add(new Mirath(warith, hajb));
+        mHal.get(0).mMahjoobin.add(new Mirath(warith, hajb, nw));
     }
 
     private void addHajb(Warith warith, int nw, Warith hajib2, int nh)
@@ -1525,14 +1525,15 @@ public class Massala {
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
                     break;
                 case NAW3_RAD:
-                    sharh.append(String.format("، وهي ناقصة (أسهمها أقل من أصلها)، الباقي %d يُرد على أصحاب الفروض (إن وجدوا) ما عدى الزوجين.", hal.mBaqi));
-                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض (إن وجدوا) دون أحد الزوجين.\n");
+                    sharh.append(" وهي ناقصة (أسهمها أقل من أصلها).\n");
+                    sharh.append(String.format("- الباقي من الأصل %d يُرد على أصحاب الفروض ما عدا الزوجين (إن وجدوا).", hal.mBaqi));
+                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض  دون أحد الزوجين (إن وجدوا).\n");
                     // TODO. Ethier implement Rad and remove the previous line
                     // TODO. or add Rad buttong which is like 'change' button and eliminates zawj
                     // TODO. or keep it like that
                     break;
                 case NAW3_AWL:
-                    sharh.append(String.format("، وهي عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", hal.mAwl));
+                    sharh.append(String.format(" وهي عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", hal.mAwl));
                     break;
                 default:
                     sharh.append(".\n");
@@ -1543,24 +1544,25 @@ public class Massala {
                 if (hal.mIstighraq) {
                     sharh.append("- استغرق أصحاب الفروض الأسهم ولم يبق للورثة بالتعصيب شيء.\n");
                 } else {
+                    sharh.append(String.format("- الباقي من الأصل %d", hal.mBaqi));
                     switch (mAljadMa3aAlikhwa) {
                         case MUQASSAMA:
                             if (hal.mMu3addah) {
-                                sharh.append(String.format("- الباقي %d، يتقاسمه الجد و%s بالمُعادّة،", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput)));
+                                sharh.append(String.format("، يتقاسمه الجد و%s بالمُعادّة.", Warith.ALJAD.getAlikhwa(mInput)));
                                 sharh.append(String.format(" أي يُحسب على الجد كل الإخوة الأشقاء ولأب فيكون سهمه من %d،", hal.mRo2osAlbaqi));
                                 sharh.append(String.format(" ثم يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mRo2osBaqiAlbaqi));
                             } else {
-                                sharh.append(String.format("- الباقي %d، يتقاسمه الجد و%s وعدد رؤوسه %d.\n", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osAlbaqi));
+                                sharh.append(String.format("، يتقاسمه الجد و%s وعدد رؤوسه %d.\n", Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osAlbaqi));
                             }
                             break;
                         case THULUTH_ALBAQI:
-                            sharh.append(String.format("- الباقي %d، يأخذ منه الجد الثلث ويتقاسم %s ما بقي وعدد رؤوسه %d.\n", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osBaqiAlbaqi));
+                            sharh.append(String.format("، يأخذ منه الجد الثلث ويتقاسم %s ما بقي وعدد رؤوسه %d.\n", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osBaqiAlbaqi));
                             break;
                         case THULUTH_ALMAL:
                         case SUDUSS:
                         case LA:
                         default:
-                            sharh.append(String.format("- الباقي %d وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osAlbaqi));
+                            sharh.append(String.format(" وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osAlbaqi));
                             break;
                     }
                 }
@@ -1581,6 +1583,8 @@ public class Massala {
     public boolean isShirkaTa3seeb() { return mHal.get(0).mShirkaTa3seeb; }
 
     public boolean isInkissar() { return mHal.get(0).isInkissar();}
+
+    public boolean isJinsayAwladAlom() { return (mInput.get_alikhwa_li_om() > 0) && (mInput.get_alakhawat_li_om() > 0);}
 
     public int getAsl() { return mHal.get(0).mAsl; }
 
