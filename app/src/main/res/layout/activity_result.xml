@@ -20,101 +20,104 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"  tools:context=".ActivityResult"
-    android:background="@android:color/white">
+    android:id="@+id/result"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".ActivityResult">
 
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/yellowFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        android:background="@color/colorSecondary"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/restartBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/principalLayout"
+            android:id="@+id/blackBg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:id="@+id/resultTableLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/resultTextView"
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/resultTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="right|center_vertical"
-                android:padding="10dp"
-                android:text="@string/title_activity_result"
-                app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/resultTableLayout"
-                tools:layout_conversion_absoluteHeight="27dp"
-                tools:layout_conversion_absoluteWidth="402dp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/buttonsLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/changeMassalaBtn"
-                app:layout_constraintTop_toBottomOf="@id/resultTextView"
-                tools:layout_conversion_absoluteHeight="95dp"
-                tools:layout_conversion_absoluteWidth="411dp">
-
-                <Button
-                    android:id="@+id/changeMassalaBtn"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/principalLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#cc98ff8d"
-                    android:onClick="onChangeMassalaClicked"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="تغيير المسألة"
-                    android:textSize="@dimen/btn_font_size"
-                    app:layout_constraintEnd_toStartOf="@+id/restartBtn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_conversion_absoluteHeight="48dp"
-                    tools:layout_conversion_absoluteWidth="96dp" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/restartBtn"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#cc98ff8d"
-                    android:onClick="onRestartClicked"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:text="مسألة جديدة"
-                    android:textSize="@dimen/btn_font_size"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/changeMassalaBtn"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_conversion_absoluteHeight="48dp"
-                    tools:layout_conversion_absoluteWidth="100dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:id="@+id/resultTableLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal"
+                        android:padding="4dp"
+                        app:layout_constraintBottom_toTopOf="@+id/resultTextView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/resultTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|start"
+                        android:padding="4dp"
+                        android:text="@string/title_activity_result"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/resultTableLayout"
+                        tools:layout_conversion_absoluteHeight="27dp"
+                        tools:layout_conversion_absoluteWidth="402dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/restartBtn"
+        style="@style/ZaidAppTheme.btnStyle"
+        android:layout_marginBottom="8dp"
+        android:onClick="onRestartClicked"
+        android:text="مسألة جديدة"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/changeMassalaBtn"
+        app:layout_constraintTop_toBottomOf="@id/yellowFrame" />
+
+    <Button
+        android:id="@+id/changeMassalaBtn"
+        style="@style/ZaidAppTheme.btnStyle"
+        android:layout_marginBottom="8dp"
+        android:onClick="onChangeMassalaClicked"
+        android:text="تغيير المسألة"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/restartBtn"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

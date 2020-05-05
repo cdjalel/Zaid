@@ -5,9 +5,41 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/colorText </item>>
-        <item name="android:textSize">@dimen/font_size</item>>
+        <item name="android:textColorSecondary">@color/colorSecondary</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="android:textColor">@color/colorText </item>
+        <item name="android:textSize">@dimen/font_size</item>
+
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    </style>
+
+    <style name="ZaidAppTheme.editTextStyle">
+        <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorSecondary </item>
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+<!--        <item name="android:autofillHints" />-->
+        <item name="android:inputType">number</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
+    <style name="ZaidAppTheme.btnStyle">
+<!--        <item name="android:layout_width">140dp</item>-->
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">28dp</item>
+<!--        <item name="android:layout_height">wrap_content</item>-->
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:background">@color/colorSecondary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/btn_font_size</item>
+        <item name="android:textStyle">bold</item>
+
     </style>
 
 </resources>

@@ -22,759 +22,567 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@android:color/black"
     android:orientation="vertical"
-    android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:padding="8dp"
+    style="@style/ZaidAppTheme"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
-
-    <ScrollView
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/yellowFrame"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        android:background="@color/colorSecondary"
+        android:padding="3dp"
+        app:layout_constraintBottom_toTopOf="@id/buttonAlhal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout0"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/guideline9"
+            android:id="@+id/blackBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:id="@+id/radioGroupMadhab"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            <ScrollView
+                android:id="@+id/scrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:fadeScrollbars="false"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_conversion_absoluteHeight="32dp"
-                tools:layout_conversion_absoluteWidth="360dp">
+                app:layout_constraintTop_toTopOf="parent">
 
-                <RadioButton
-                    android:id="@+id/radioButtonHambali"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout0"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:onClick="onMadhabButtonClicked"
-                    android:text="@string/hambali" />
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0">
 
-                <RadioButton
-                    android:id="@+id/radioButtonHanafi"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:onClick="onMadhabButtonClicked"
-                    android:text="@string/hanafi" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonChafi3i"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:onClick="onMadhabButtonClicked"
-                    android:text="@string/chafi3i" />
-
-                <RadioButton
-                    android:id="@+id/radioButtonMaliki"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:onClick="onMadhabButtonClicked"
-                    android:text="@string/maliki" />
-
-                <TextView
-                    android:id="@+id/madhabTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/madhab" />
-
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/radioGroupMadhab"
-                tools:layout_conversion_absoluteHeight="32dp"
-                tools:layout_conversion_absoluteWidth="363dp">
-
-                <RadioGroup
-                    android:id="@+id/radioGroupGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/radioButtonMale"
-                        style="@style/ZaidAppTheme"
+                    <RadioGroup
+                        android:id="@+id/radioGroupMadhab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:onClick="onGenderButtonClicked"
-                        android:text="@string/male" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_horizontal"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_conversion_absoluteHeight="32dp"
+                        tools:layout_conversion_absoluteWidth="360dp">
 
-                    <RadioButton
-                        android:id="@+id/radioButtonFemale"
-                        style="@style/ZaidAppTheme"
+                        <RadioButton
+                            android:id="@+id/radioButtonMaliki"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:layoutDirection="ltr"
+                            android:onClick="onMadhabButtonClicked"
+                            android:text="@string/maliki" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonChafi3i"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:layoutDirection="ltr"
+                            android:onClick="onMadhabButtonClicked"
+                            android:text="@string/chafi3i" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonHanafi"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:layoutDirection="ltr"
+                            android:onClick="onMadhabButtonClicked"
+                            android:text="@string/hanafi" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonHambali"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:layoutDirection="ltr"
+                            android:onClick="onMadhabButtonClicked"
+                            android:text="@string/hambali" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="false"
-                        android:onClick="onGenderButtonClicked"
-                        android:text="@string/female" />
-                </RadioGroup>
-
-                <TextView
-                    android:id="@+id/genderTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/deceased" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <CheckBox
-                    android:id="@+id/fatherCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/father" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <CheckBox
-                    android:id="@+id/motherCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/mother" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout2"
-                tools:layout_conversion_absoluteHeight="32dp"
-                tools:layout_conversion_absoluteWidth="332dp">
-
-                <CheckBox
-                    android:id="@+id/aljadCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/grand_father" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <CheckBox
-                    android:id="@+id/aljadahLiAbCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/paternal_grand_mother" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <CheckBox
-                    android:id="@+id/aljadahLiOmCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/maternal_grand_mother" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout3"
-                tools:layout_conversion_absoluteHeight="wrap_content"
-                tools:layout_conversion_absoluteWidth="344dp">
-
-                <CheckBox
-                    android:id="@+id/azawjCheckBox"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layoutDirection="ltr"
-                    android:text="@string/husband" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/zawjatTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/zawjatEditText"
-                    android:text="@string/wives"
-                    android:theme="@style/ZaidAppTheme" />
-
-                <EditText
-                    android:id="@+id/zawjatEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/sonsTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsEditText"
-                    android:text="@string/sons" />
-
-                <EditText
-                    android:id="@+id/sonsEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/daughtersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/daughtersEditText"
-                    android:text="@string/daughters" />
-
-                <EditText
-                    android:id="@+id/daughtersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/alikhwa_li_om_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout4"
-                tools:layout_conversion_absoluteHeight="wrap_content"
-                tools:layout_conversion_absoluteWidth="226dp">
-
-                <TextView
-                    android:id="@+id/sonsOfSonsTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsOfSonsEditText"
-                    android:text="أبناء الأبناء:" />
-
-                <EditText
-                    android:id="@+id/sonsOfSonsEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/daughtersOfSonsTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/daughtersOfSonsEditText"
-                    android:text="بنات الأبناء:" />
-
-                <EditText
-                    android:id="@+id/daughtersOfSonsEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/alikhwa_li_om_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/alikhwa_alashika_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayout5">
-
-                <TextView
-                    android:id="@+id/maternalBrothersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/maternalBrothersEditText"
-                    android:text="الإخوة لأم:" />
-
-                <EditText
-                    android:id="@+id/maternalBrothersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/maternalSistersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/maternalSistersEditText"
-                    android:text="الأخوات لأم:" />
-
-                <EditText
-                    android:id="@+id/maternalSistersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/alikhwa_alashika_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/alikhwa_li_ab_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/alikhwa_li_om_linearLayout">
-
-                <TextView
-                    android:id="@+id/fullBrothersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/fullBrothersEditText"
-                    android:text="الإخوة الأشقاء:" />
-
-                <EditText
-                    android:id="@+id/fullBrothersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/fullSistersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/fullSistersEditText"
-                    android:text="الأخوات الشقيقات:" />
-
-                <EditText
-                    android:id="@+id/fullSistersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/alikhwa_li_ab_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/abna_alikhwa_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/alikhwa_alashika_linearLayout">
-
-                <TextView
-                    android:id="@+id/paternalBrothersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/paternalBrothersEditText"
-                    android:text="الإخوة لأب:" />
-
-                <EditText
-                    android:id="@+id/paternalBrothersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/paternalSistersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/paternalSistersEditText"
-                    android:text="الأخوات لأب:" />
-
-                <EditText
-                    android:id="@+id/paternalSistersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/abna_alikhwa_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/ala3mam_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/alikhwa_li_ab_linearLayout">
-
-                <TextView
-                    android:id="@+id/SonsOfFullBrothersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsOfFullBrothersEditText"
-                    android:text="أبناء الإخوة الأشقاء:" />
-
-                <EditText
-                    android:id="@+id/sonsOfFullBrothersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/sonsOfPaternalBrothersTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsOfPaternalBrothersEditText"
-                    android:text="أبناء الإخوة لأب:" />
-
-                <EditText
-                    android:id="@+id/sonsOfPaternalBrothersEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ala3mam_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@id/abna_ala3mam_linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/abna_alikhwa_linearLayout">
-
-                <TextView
-                    android:id="@+id/fullUnclesTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/fullUnclesEditText"
-                    android:text="الأعمام الأشقاء:" />
-
-                <EditText
-                    android:id="@+id/fullUnclesEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/paternalUnclesTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/paternalUnclesEditText"
-                    android:text="الأعمام لأب:" />
-
-                <EditText
-                    android:id="@+id/paternalUnclesEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/abna_ala3mam_linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ala3mam_linearLayout">
-
-                <TextView
-                    android:id="@+id/sonsOfFullUnclesTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsOfFullUnclesEditText"
-                    android:text="أبناء الأعمام الأشقاء:" />
-
-                <EditText
-                    android:id="@+id/sonsOfFullUnclesEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/sonsOfPaternalUnclesTextView"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:labelFor="@id/sonsOfPaternalUnclesEditText"
-                    android:text="أبناء الأعمام لأب:" />
-
-                <EditText
-                    android:id="@+id/sonsOfPaternalUnclesEditText"
-                    style="@style/ZaidAppTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="number"
-                    android:selectAllOnFocus="true" />
-            </LinearLayout>
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/radioGroupMadhab"
+                        tools:layout_conversion_absoluteHeight="32dp"
+                        tools:layout_conversion_absoluteWidth="363dp">
+
+                        <RadioGroup
+                            android:id="@+id/radioGroupGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioButtonMale"
+                                style="@style/ZaidAppTheme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:layoutDirection="ltr"
+                                android:onClick="onGenderButtonClicked"
+                                android:text="@string/male" />
+
+                            <RadioButton
+                                android:id="@+id/radioButtonFemale"
+                                style="@style/ZaidAppTheme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="15dp"
+                                android:checked="false"
+                                android:onClick="onGenderButtonClicked"
+                                android:text="@string/female" />
+                        </RadioGroup>
+
+                        <CheckBox
+                            android:id="@+id/fatherCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layoutDirection="ltr"
+                            android:text="@string/father" />
+
+                        <CheckBox
+                            android:id="@+id/motherCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:layoutDirection="ltr"
+                            android:text="@string/mother" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+                        tools:layout_conversion_absoluteHeight="32dp"
+                        tools:layout_conversion_absoluteWidth="332dp">
+
+                        <CheckBox
+                            android:id="@+id/aljadCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layoutDirection="ltr"
+                            android:text="@string/grand_father" />
+
+                        <CheckBox
+                            android:id="@+id/aljadahLiAbCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layoutDirection="ltr"
+                            android:text="@string/paternal_grand_mother" />
+
+                        <CheckBox
+                            android:id="@+id/aljadahLiOmCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layoutDirection="ltr"
+                            android:text="@string/maternal_grand_mother" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_horizontal"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout3"
+                        tools:layout_conversion_absoluteHeight="wrap_content"
+                        tools:layout_conversion_absoluteWidth="344dp">
+
+                        <CheckBox
+                            android:id="@+id/azawjCheckBox"
+                            style="@style/ZaidAppTheme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layoutDirection="ltr"
+                            android:text="@string/husband" />
+
+                        <TextView
+                            android:id="@+id/zawjatTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/zawjatEditText"
+                            android:text="@string/wives"
+                            android:theme="@style/ZaidAppTheme" />
+
+                        <EditText
+                            android:id="@+id/zawjatEditText"
+                            style="@style/ZaidAppTheme.editTextStyle"
+                            android:layout_marginEnd="15dp" />
+
+                        <TextView
+                            android:id="@+id/sonsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsEditText"
+                            android:text="@string/sons" />
+
+                        <EditText
+                            android:id="@+id/sonsEditText"
+                            style="@style/ZaidAppTheme.editTextStyle"
+                            android:layout_marginEnd="15dp" />
+
+                        <TextView
+                            android:id="@+id/daughtersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/daughtersEditText"
+                            android:text="@string/daughters" />
+
+                        <EditText
+                            android:id="@+id/daughtersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/alikhwa_li_om_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout4"
+                        tools:layout_conversion_absoluteHeight="wrap_content"
+                        tools:layout_conversion_absoluteWidth="226dp">
+
+                        <TextView
+                            android:id="@+id/sonsOfSonsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsOfSonsEditText"
+                            android:text="أبناء الأبناء:" />
+
+                        <EditText
+                            android:id="@+id/sonsOfSonsEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/daughtersOfSonsTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/daughtersOfSonsEditText"
+                            android:text="بنات الأبناء:" />
+
+                        <EditText
+                            android:id="@+id/daughtersOfSonsEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/alikhwa_li_om_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/alikhwa_alashika_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout5">
+
+                        <TextView
+                            android:id="@+id/maternalBrothersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/maternalBrothersEditText"
+                            android:text="الإخوة لأم:" />
+
+                        <EditText
+                            android:id="@+id/maternalBrothersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/maternalSistersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/maternalSistersEditText"
+                            android:text="الأخوات لأم:" />
+
+                        <EditText
+                            android:id="@+id/maternalSistersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/alikhwa_alashika_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/alikhwa_li_ab_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/alikhwa_li_om_linearLayout">
+
+                        <TextView
+                            android:id="@+id/fullBrothersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/fullBrothersEditText"
+                            android:text="الإخوة الأشقاء:" />
+
+                        <EditText
+                            android:id="@+id/fullBrothersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/fullSistersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/fullSistersEditText"
+                            android:text="الأخوات الشقيقات:" />
+
+                        <EditText
+                            android:id="@+id/fullSistersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/alikhwa_li_ab_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/abna_alikhwa_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/alikhwa_alashika_linearLayout">
+
+                        <TextView
+                            android:id="@+id/paternalBrothersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/paternalBrothersEditText"
+                            android:text="الإخوة لأب:" />
+
+                        <EditText
+                            android:id="@+id/paternalBrothersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/paternalSistersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/paternalSistersEditText"
+                            android:text="الأخوات لأب:" />
+
+                        <EditText
+                            android:id="@+id/paternalSistersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/abna_alikhwa_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/ala3mam_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/alikhwa_li_ab_linearLayout">
+
+                        <TextView
+                            android:id="@+id/SonsOfFullBrothersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsOfFullBrothersEditText"
+                            android:text="أبناء الإخوة الأشقاء:" />
+
+                        <EditText
+                            android:id="@+id/sonsOfFullBrothersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/sonsOfPaternalBrothersTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsOfPaternalBrothersEditText"
+                            android:text="أبناء الإخوة لأب:" />
+
+                        <EditText
+                            android:id="@+id/sonsOfPaternalBrothersEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ala3mam_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@id/abna_ala3mam_linearLayout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/abna_alikhwa_linearLayout">
+
+                        <TextView
+                            android:id="@+id/fullUnclesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/fullUnclesEditText"
+                            android:text="الأعمام الأشقاء:" />
+
+                        <EditText
+                            android:id="@+id/fullUnclesEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/paternalUnclesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/paternalUnclesEditText"
+                            android:text="الأعمام لأب:" />
+
+                        <EditText
+                            android:id="@+id/paternalUnclesEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/abna_ala3mam_linearLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="end"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ala3mam_linearLayout">
+
+                        <TextView
+                            android:id="@+id/sonsOfFullUnclesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsOfFullUnclesEditText"
+                            android:text="أبناء الأعمام الأشقاء:" />
+
+                        <EditText
+                            android:id="@+id/sonsOfFullUnclesEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+
+                        <TextView
+                            android:id="@+id/sonsOfPaternalUnclesTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:labelFor="@id/sonsOfPaternalUnclesEditText"
+                            android:text="أبناء الأعمام لأب:" />
+
+                        <EditText
+                            android:id="@+id/sonsOfPaternalUnclesEditText"
+                            style="@style/ZaidAppTheme.editTextStyle" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/buttonNext1"
-        style="@style/ZaidAppTheme"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:background="#cc98ff8d"
-        android:onClick="onNextClicked"
-        android:text="@string/next"
-        android:textSize="@dimen/btn_font_size"
+        android:id="@+id/buttonAlhal"
+        style="@style/ZaidAppTheme.btnStyle"
+        android:onClick="onHalClicked"
+        android:text="@string/alhal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        app:layout_constraintTop_toBottomOf="@id/yellowFrame" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
