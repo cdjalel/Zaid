@@ -90,19 +90,19 @@ public class ActivityResult extends AppCompatActivity {
         if (massala.getAwl() != 0) {
             //row of awl
             r = new TableRow(this);
-            r.addView(createHeadTextView(String.valueOf(massala.getAwl())),0);
-            r.addView(createHeadTextView(""),0);
+            r.addView(createHeadTextView(String.valueOf(massala.getAwl()), false),0);
+            r.addView(createHeadTextView("", false),0);
             mawarithTable.addView(r);
 
             //row of asl
             r = new TableRow(this);
-            r.addView(createHeadTextView(massala.getAsl() + " عول"),0);
-            r.addView(createHeadTextView(massala.getMissah() + "" /*+ "، للفرد ↓"*/),0);
+            r.addView(createHeadTextView(massala.getAsl() + " عول", false),0);
+            r.addView(createHeadTextView(massala.getMissah() + "" /*+ "، للفرد ↓"*/, true),0);
             mawarithTable.addView(r);
         } else {
             r = new TableRow(this);
-            r.addView(createHeadTextView(String.valueOf(massala.getAsl())),0);
-            r.addView(createHeadTextView(massala.getMissah() + ""  /* + "، للفرد ↓"*/),0);
+            r.addView(createHeadTextView(String.valueOf(massala.getAsl()), false),0);
+            r.addView(createHeadTextView(massala.getMissah() + ""  /* + "، للفرد ↓"*/, true),0);
             mawarithTable.addView(r);
         }
 
@@ -149,10 +149,11 @@ public class ActivityResult extends AppCompatActivity {
         return mawarithTable;
     }
 
-    private TextView createHeadTextView(CharSequence txt) {
+    private TextView createHeadTextView(CharSequence txt, boolean last_column) {
         TextView head = prepareTextView();
 
-        head.setBackgroundColor(Color.rgb(177, 177, 177));
+//        head.setBackgroundColor(Color.rgb(177, 177, 177));
+        head.setBackgroundResource((last_column)? R.drawable.last_head_borders : R.drawable.head_borders);
         head.setText(txt);
 
         return head;
