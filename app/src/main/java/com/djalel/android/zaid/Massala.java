@@ -130,7 +130,7 @@ public class Massala {
         mHal.add(new WarathaOuput());
 
         mSpecialCase = null;
-        mSharh = "لم يتم إدخال أية ورثة\n";
+        mSharh = "لم يتم إدخال أية ورثة.\n";
 
         m_alakhawat_ashakikat_3assabat_ma3a_lghayr = false;
         m_alakhawat_3assabat_ma3a_lghayr = false;
@@ -1342,7 +1342,7 @@ public class Massala {
                     nassibFardi.append(" + ").append(mHal.get(0).mBaqi);
 
                     if (m.isShirka()) {                 // assert Aljada
-                        nassibMojmal.append("ش");
+//                        nassibMojmal.append("ش");
 
                         int factor = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
                         nassibFardi.append(" * ");
@@ -1363,7 +1363,7 @@ public class Massala {
                     }
                 } else {              // وارث بالفرض فقط
                     if (m.isShirka()) {
-                        nassibMojmal.append("ش");
+//                        nassibMojmal.append("ش");
 
                         nassibFardi.append(" * 1\\");
                         nassibFardi.append(m.getRo2os());
@@ -1423,7 +1423,7 @@ public class Massala {
                 nassibFardi.append(bast);
 
                 if (ro2os1 != 0) {
-                    nassibMojmal.append("ش");
+//                    nassibMojmal.append("ش");
                     shirka = true;
 
                     nassibFardi.append(" * ");
@@ -1433,7 +1433,7 @@ public class Massala {
                 }
 
                 if (qissmatAlikhwa && m.isShirka()) {
-                    if (!shirka) { nassibMojmal.append("ش"); }
+//                    if (!shirka) { nassibMojmal.append("ش"); }
 
                     int factor2 = mHal.get(0).mTassawi || m.getWarith().isOntha() ? 1 : 2;
                     bast *= factor2;
@@ -1533,6 +1533,7 @@ public class Massala {
                     break;
                 case NAW3_AWL:
                     sharh.append(String.format("، وهي عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", hal.mAwl));
+                    break;
                 default:
                     sharh.append(".\n");
                     break;

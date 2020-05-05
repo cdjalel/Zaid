@@ -20,13 +20,11 @@ package com.djalel.android.zaid;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -46,7 +44,6 @@ public class ActivityResult extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         mResultTextView = findViewById(R.id.resultTextView);
-        mResultTextView.setMovementMethod(new ScrollingMovementMethod());
         mResultTableLayout = findViewById(R.id.resultTableLayout);
     }
 
@@ -58,7 +55,9 @@ public class ActivityResult extends AppCompatActivity {
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
-        mResultTableLayout.addView(createTable(app), 0);
+        if (app.getMassala().getMawarith().size() != 0) {
+            mResultTableLayout.addView(createTable(app));
+        }
     }
 
     public void onRestartClicked(View view) {
