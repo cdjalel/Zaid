@@ -124,9 +124,9 @@ public class ActivityResult extends AppCompatActivity {
                 } else {
                     r.addView(createCellTextView("", false, last_row, true));
                 }
-            } else if (m.isWaladAlom() && m.isShirka()) {
+            } else if (m.isWaladAlom() && massala.isJinsayAwladAlom()) {
                 if (waladAlomFirst) {
-                    r.addView(createCellTextView(m.getNassibMojmal()+" ↓", false, last_row));
+                    r.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
                     waladAlomFirst = false;
                 } else {
                     r.addView(createCellTextView("", false, last_row, true));

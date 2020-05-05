@@ -142,8 +142,8 @@ public class Mirath {
         this(warith, 1, sharh, bast, maqam, ta3seeb, ro2os);
     }
 
-    public Mirath(Warith warith, String hajb) {
-        this(warith, hajb, 0, 1);
+    public Mirath(Warith warith, String hajb, int nbr) {
+        this(warith, nbr, hajb, 0, 1);
         // TODO assert hajb != null
     }
 
