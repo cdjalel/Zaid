@@ -3,6 +3,7 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#444444</color>
     <color name="colorSecondary">#f0c900</color>
+    <color name="colorSecondaryDark">#393100</color>
     <color name="colorAccent">#FFEB3B</color>
     <color name="colorText">#FFFFFF</color>>
     <color name="head_cell_color">#757575</color>

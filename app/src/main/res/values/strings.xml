@@ -5,10 +5,11 @@
     <string name="hambali">حنبلي</string>
     <string name="hanafi">حنفي</string>
     <string name="chafi3i">شافعي</string>
-    <string name="maliki">المذهب:  مالكي</string>
-    <string name="deceased">المتوفى:</string>
-    <string name="male">المتوفى:  ذكر</string>
+    <string name="maliki">المذهب:   مالكي</string>
+    <string name="deceased">معلومات المتوفى</string>
+    <string name="male">ذكر</string>
     <string name="female">أنثى</string>
+    <string name="tarika">مبلغ التركة:</string>
     <string name="no">لا</string>
     <string name="yes">نعم</string>
     <string name="mother">الأم:</string>
