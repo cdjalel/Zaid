@@ -1,6 +1,6 @@
 /*
- * Copyright © 2019-2020 Djalel Chefrour
- * This file is part of Zaid.
+ * Copyright © 2019-2020 Djalel Chefrour and the Zaid project contributors.
+ * This file is part of Zaid project.
  *
  * Zaid is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

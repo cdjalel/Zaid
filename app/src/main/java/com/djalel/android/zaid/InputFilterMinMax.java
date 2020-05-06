@@ -1,6 +1,7 @@
 /*
- * This file is part of Zaid.
+ * This file is part of Zaid project.
  * Credit goes to https://stackoverflow.com/questions/14212518/is-there-a-way-to-define-a-min-and-max-value-for-edittext-in-android
+ * Accessed on: May 6th, 2020
  *
  * Zaid is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
