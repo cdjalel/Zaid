@@ -9,26 +9,22 @@
         <item name="colorAccent">@color/colorSecondary</item>
         <item name="android:textColor">@color/colorText </item>
         <item name="android:textSize">@dimen/font_size</item>
-
-        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
     </style>
 
     <style name="ZaidAppTheme.editTextStyle">
         <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
-        <item name="android:textColor">@color/colorSecondary </item>
-
+        <item name="android:textColor">@drawable/edit_text_color</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-<!--        <item name="android:autofillHints" />-->
+        <item name="android:scaleX">1.1</item>
+        <item name="android:scaleY">1.1</item>
         <item name="android:inputType">number</item>
         <item name="android:selectAllOnFocus">true</item>
     </style>
 
-    <style name="ZaidAppTheme.btnStyle">
-<!--        <item name="android:layout_width">140dp</item>-->
+    <style name="ZaidAppTheme.btnStyle" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">28dp</item>
-<!--        <item name="android:layout_height">wrap_content</item>-->
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:paddingStart">4dp</item>
@@ -39,7 +35,44 @@
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/btn_font_size</item>
         <item name="android:textStyle">bold</item>
-
     </style>
 
+    <style name="ZaidAppTheme.Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/colorSecondary</item>
+    </style>
+
+    <style name="ZaidAppTheme.textViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="ZaidAppTheme.textViewLabelStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
+    <style name="ZaidAppTheme.linearLayoutStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ZaidAppTheme.checkBoxStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layoutDirection">ltr</item>
+    </style>
+
+    <style name="ZaidAppTheme.radioButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layoutDirection">ltr</item>
+    </style>
 </resources>
