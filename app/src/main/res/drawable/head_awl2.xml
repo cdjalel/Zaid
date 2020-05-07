@@ -2,8 +2,6 @@
 <!--
   ~ Copyright © 2019-2020 Djalel Chefrour and the Zaid project contributors.
   ~ This file is part of Zaid project.
-  ~ Copyright © 2019 Djalel Chefrour
-  ~ This file is part of Zaid.
   ~
   ~ Zaid is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -26,12 +24,19 @@
             <stroke android:color="@android:color/black" android:width="1dp"/>
         </shape>
     </item>
-    <!-- Hide bottom side of rectangle with border using a solid color by padding left, right and top 1 dp -->
-    <item android:left="1dp" android:right="1dp" android:top="1dp">
+
+    <!-- Hide left and bottom side of rectangle with border using a solid color by padding right and top 1 dp -->
+    <item android:right="1dp" android:top="1dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/head_cell_color"/>
-            <padding android:right="4dp"/> <!-- keep the writing away from the border a little-->
+            <padding android:right="4dp"/>  <!-- keep the writing away from the border a little-->
         </shape>
     </item>
-
+    <item android:gravity="end|center_vertical" android:width="18sp">
+<!--        <rotate android:fromDegrees="180" android:toDegrees="0">-->
+            <shape android:shape="line" android:top="1dp" >
+                <stroke android:width="2dp" android:color="@android:color/black"/>
+            </shape>
+<!--        </rotate>-->
+    </item>
 </layer-list>
