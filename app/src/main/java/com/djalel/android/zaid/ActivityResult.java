@@ -80,10 +80,11 @@ public class ActivityResult extends AppCompatActivity {
         double tarika = app.getWarathaInput().getTarika();
         Massala massala = app.getMassala();
         TableRow row = new TableRow(this);
+        int col = 2;
         TextView tvAsl;
         if (massala.getAwl() != 0) {
             //row of awl
-            row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(2));
+            row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(col));
             mResultTableLayout.addView(row);
 
             //row of asl
@@ -92,9 +93,13 @@ public class ActivityResult extends AppCompatActivity {
         } else {
             tvAsl = createHeadTextView(String.valueOf(massala.getAsl()), false);
         }
-        row.addView(tvAsl, new TableRow.LayoutParams(2));
-        row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(3));
-        row.addView(createHeadTextView(String.format("%.2f", tarika), true), new TableRow.LayoutParams(4));
+        row.addView(tvAsl, new TableRow.LayoutParams(col++));
+
+        boolean hissabFardiColumn = massala.isHissabFardi();
+        if (hissabFardiColumn) {
+            row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(col++));
+        }
+        row.addView(createHeadTextView(String.format("%.2f", tarika), true), new TableRow.LayoutParams(col));
         mResultTableLayout.addView(row);
 
         // table body
@@ -138,7 +143,9 @@ public class ActivityResult extends AppCompatActivity {
             }
 
             // column 4: nassib fardi
-            row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
+            if (hissabFardiColumn) {
+                row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
+            }
 
             // column 5: nassib fardi mina tarika
             StringBuilder nassibTarikaStr = new StringBuilder();
