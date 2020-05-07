@@ -32,7 +32,7 @@
             <padding android:right="4dp"/>  <!-- keep the writing away from the border a little-->
         </shape>
     </item>
-    <item android:gravity="end|center_vertical" android:width="12sp">
+    <item android:gravity="start|center_vertical" android:width="12sp">
         <shape android:shape="line" android:top="1dp" >
             <stroke android:width="2dp" android:color="@android:color/black"/>
         </shape>

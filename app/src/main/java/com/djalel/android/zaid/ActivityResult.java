@@ -28,14 +28,13 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 public class ActivityResult extends AppCompatActivity {
 
-    private LinearLayout mResultTableLayout;
+    private TableLayout mResultTableLayout;
     private TextView mResultTextView;
 
     @Override
@@ -77,6 +76,7 @@ public class ActivityResult extends AppCompatActivity {
     public void createTable(ZaidApplication app) {
         if (app.getMassala().getMawarith().isEmpty()) { return; }
 
+        // table head
         double tarika = app.getWarathaInput().getTarika();
         Massala massala = app.getMassala();
         TableRow row = new TableRow(this);
@@ -92,26 +92,26 @@ public class ActivityResult extends AppCompatActivity {
         } else {
             tvAsl = createHeadTextView(String.valueOf(massala.getAsl()), false);
         }
-        row.addView(tvAsl, 0);
-        row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false),0);
-        row.addView(createHeadTextView(String.format("%.2f", tarika), true),0);
+        row.addView(tvAsl, new TableRow.LayoutParams(2));
+        row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(3));
+        row.addView(createHeadTextView(String.format("%.2f", tarika), true), new TableRow.LayoutParams(4));
         mResultTableLayout.addView(row);
 
+        // table body
         boolean jadahFirst = true;
         boolean shirkatTa3seebFirst = true;
         boolean waladAlomFirst = true;
         boolean last_row = false;
         int i = 0;
         for (Mirath m : massala.getMawarith()) {
+            row = new TableRow(this);
             if (++i == massala.getMawarith().size()) { last_row = true; }
 
-            StringBuilder partStr = new StringBuilder();
-            partStr.append(String.format("%.2f", m.getNassib() * tarika / massala.getMissah()));
-            if (m.getNbr() > 1) { partStr.append("(*").append(m.getNbr()).append(")");}
+            // columns 1 & 2
+            row.addView(createCellTextView(m.getHokom(), false, last_row));
+            row.addView(createCellTextView(m.getIsm(), false, last_row));
 
-            row = new TableRow(this);
-            row.addView(createCellTextView(partStr, true, last_row));
-            row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
+            // column 3: nassib mojmal
             if (m.isJadah() && m.isShirka()) {
                 if (jadahFirst) {
                     row.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
@@ -136,8 +136,16 @@ public class ActivityResult extends AppCompatActivity {
             } else {
                 row.addView(createCellTextView(m.getNassibMojmal(), false, last_row));
             }
-            row.addView(createCellTextView(m.getIsm(), false, last_row));
-            row.addView(createCellTextView(m.getHokom(), false, last_row));
+
+            // column 4: nassib fardi
+            row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
+
+            // column 5: nassib fardi mina tarika
+            StringBuilder nassibTarikaStr = new StringBuilder();
+            nassibTarikaStr.append(String.format("%.2f", m.getNassib() * tarika / massala.getMissah()));
+            if (m.getNbr() > 1) { nassibTarikaStr.append("(*").append(m.getNbr()).append(")");}
+            row.addView(createCellTextView(nassibTarikaStr, true, last_row));
+
             mResultTableLayout.addView(row);
         }
     }
