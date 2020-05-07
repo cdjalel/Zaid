@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         updateLayout();
     }
 
-    public void updateLayout(){
+    public void updateLayout() {
         switch (mInput.get_madhab()) {
             case MALIKI: ((RadioButton)findViewById(R.id.radioButtonMaliki)).setChecked(true); break;
             case CHAFI3I: ((RadioButton)findViewById(R.id.radioButtonChafi3i)).setChecked(true); break;
