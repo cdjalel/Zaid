@@ -190,7 +190,7 @@ public enum Warith {
         return getSharhPrefix(n, ma3a, n2, false);
     }
 
-    public final String getAlikhwa(WarathaInput input) {
+    public final String getAlikhwa(WarathahInput input) {
         int n1 = input.get_alikhwa_alashika();
         int n2 = input.get_alakhawat_ashakikat();
         int n3 = input.get_alikhwa_li_ab();
@@ -205,7 +205,7 @@ public enum Warith {
         return ma3a.toString();
     }
 
-    public final String getSharhMa3aAlikhwaPrefix(WarathaInput input) {
+    public final String getSharhMa3aAlikhwaPrefix(WarathahInput input) {
         StringBuilder prefix = new StringBuilder();
 
         prefix.append(getName(1));

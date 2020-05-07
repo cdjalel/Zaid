@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Massala {
-    WarathaInput mInput;
+    WarathahInput mInput;
 
     private enum AljadMa3aAlikhwa {
         LA,
@@ -37,7 +37,7 @@ public class Massala {
 
     ;
 
-    private List<WarathaOuput> mHal;
+    private List<WarathahOutput> mHal;
 
     private boolean m_alakhawat_ashakikat_3assabat_ma3a_lghayr;
     private boolean m_alakhawat_3assabat_ma3a_lghayr;
@@ -49,7 +49,7 @@ public class Massala {
         mInput = null;
 
         mHal = new ArrayList<>();
-        mHal.add(new WarathaOuput());
+        mHal.add(new WarathahOutput());
 
         mSpecialCase = null;
         mSharh = "لم يتم إدخال أية ورثة.\n";
@@ -106,7 +106,7 @@ public class Massala {
         addHajb(warith, 1, hajib, 1);
     }
 
-    public void hissabMawarith(WarathaInput in) {
+    public void hissabMawarith(WarathahInput in) {
         mInput = in;
 
         boolean far3_warith_dhakar = (mInput.get_alabna() + mInput.get_abna_alabna()) > 0;
@@ -162,7 +162,7 @@ public class Massala {
             mHal.get(2).copyHal(mHal.get(0));
         }
 
-        for (WarathaOuput hal : mHal) {
+        for (WarathahOutput hal : mHal) {
             hissabAlaslWaRo2os(hal);
             hissabAlashomWaAlbaqi(hal);
         }
@@ -994,8 +994,8 @@ public class Massala {
 
             //  موقتا نحسب ثلاث مسائل حيث يأخذ الجد في الأولى السدس فرضا وفي الثانية ثلث الباقي
             // وفي الثالثة يقاسم الإخوة، ثم عند الحساب بعد إكمال كل الورثة نختار له الأحظ
-            mHal.add(new WarathaOuput());
-            mHal.add(new WarathaOuput());
+            mHal.add(new WarathahOutput());
+            mHal.add(new WarathahOutput());
 
             // 1
             mHal.get(0).mNbrFurudh++;
@@ -1130,7 +1130,7 @@ public class Massala {
         addMirath(new Mirath(Warith.ABNA_ALA3MAM_LI_AB, nbr, sharh));
     }
 
-    private void hissabAlaslWaRo2os(WarathaOuput hal) {
+    private void hissabAlaslWaRo2os(WarathahOutput hal) {
         // استخراج أصل المسألة (ص 40 من كتاب "الفرائض المُيسر) وعدد رؤوس ورثة الباقي"
         hal.mAsl = 1;
         for (Mirath m : hal.mWarathah) {
@@ -1151,7 +1151,7 @@ public class Massala {
         }
     }
 
-    private void hissabAlashomWaAlbaqi(WarathaOuput hal) {
+    private void hissabAlashomWaAlbaqi(WarathahOutput hal) {
         // حساب مجموع أسهم أصحاب الفروض وباقي المسألة
         int ashom = 0;
         boolean jadahCounted = false;
@@ -1426,7 +1426,7 @@ public class Massala {
             sharh.append(mSpecialCase + "\n");
         }
 
-        for (WarathaOuput hal : mHal) {
+        for (WarathahOutput hal : mHal) {
             sharh.append("\n");
 
             if (hal.mWarathah != null) {

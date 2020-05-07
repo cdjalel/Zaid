@@ -20,16 +20,16 @@ package com.djalel.android.zaid;
 
 import android.app.Application;
 
-import com.djalel.libjfarayid.WarathaInput;
+import com.djalel.libjfarayid.WarathahInput;
 import com.djalel.libjfarayid.Massala;
 
 public class ZaidApplication extends Application {
-    WarathaInput mInput = new WarathaInput();
+    WarathahInput mInput = new WarathahInput();
     Massala massala;
 
     // THIS IS A SINGLETON
 
-    public WarathaInput getWarathaInput() { return mInput; }
+    public WarathahInput getWarathaInput() { return mInput; }
 
     public Massala getMassala() { return massala; }
 
