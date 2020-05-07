@@ -16,27 +16,11 @@
  *  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.djalel.android.zaid;
+package com.djalel.libjfarayid;
 
-import android.app.Application;
-
-import com.djalel.libjfarayid.WarathaInput;
-import com.djalel.libjfarayid.Massala;
-
-public class ZaidApplication extends Application {
-    WarathaInput mInput = new WarathaInput();
-    Massala massala;
-
-    // THIS IS A SINGLETON
-
-    public WarathaInput getWarathaInput() { return mInput; }
-
-    public Massala getMassala() { return massala; }
-
-    public String hissabMawarith() {
-        massala = new Massala();
-        massala.hissabMawarith(mInput);
-        return massala.getSharh();
-    }
-
+enum Naw3 {
+    NAW3_NONE,
+    NAW3_ADILA,
+    NAW3_RAD,
+    NAW3_AWL,
 }

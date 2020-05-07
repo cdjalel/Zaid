@@ -26,7 +26,7 @@
     android:orientation="vertical"
     android:padding="8dp"
     style="@style/ZaidAppTheme"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/yellowFrame"
