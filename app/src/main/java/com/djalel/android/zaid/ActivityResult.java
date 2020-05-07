@@ -83,9 +83,7 @@ public class ActivityResult extends AppCompatActivity {
         TextView tvAsl;
         if (massala.getAwl() != 0) {
             //row of awl
-            row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false),0);
-            row.addView(createHeadTextView("", false),0);
-            row.addView(createHeadTextView("", true),0);
+            row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(2));
             mResultTableLayout.addView(row);
 
             //row of asl
