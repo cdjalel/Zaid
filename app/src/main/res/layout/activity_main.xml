@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ScrollView
-                android:id="@+id/scrollView"
+                android:id="@+id/scrollView1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:fadeScrollbars="false"
