@@ -31,7 +31,7 @@
     <item android:right="1dp" android:bottom="1dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/cell_color"/>
-            <padding android:right="5dp"/>  <!-- keep the writing away from the border a little-->
+            <padding android:right="4dp"/>  <!-- keep the writing away from the border a little-->
         </shape>
     </item>
 
