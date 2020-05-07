@@ -55,9 +55,7 @@ public class ActivityResult extends AppCompatActivity {
 
         ZaidApplication app = (ZaidApplication) this.getApplication();
         mResultTextView.setText(app.hissabMawarith());
-        if (app.getMassala().getMawarith().size() != 0) {
-            mResultTableLayout.addView(createTable(app));
-        }
+        createTable(app);
     }
 
     public void onRestartClicked(View view) {
@@ -76,14 +74,8 @@ public class ActivityResult extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public TableLayout createTable(ZaidApplication app){
-        TableLayout mawarithTable = new TableLayout(this);
-        mawarithTable.setStretchAllColumns(true);
-        mawarithTable.setShrinkAllColumns(true);
-
-        TableLayout.LayoutParams lp = new TableLayout.LayoutParams();
-        lp.setMargins(10,10,10, 10);
-        mawarithTable.setLayoutParams(lp);
+    public void createTable(ZaidApplication app) {
+        if (app.getMassala().getMawarith().isEmpty()) { return; }
 
         double tarika = app.getWarathaInput().getTarika();
         Massala massala = app.getMassala();
@@ -94,7 +86,7 @@ public class ActivityResult extends AppCompatActivity {
             row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false),0);
             row.addView(createHeadTextView("", false),0);
             row.addView(createHeadTextView("", true),0);
-            mawarithTable.addView(row);
+            mResultTableLayout.addView(row);
 
             //row of asl
             row = new TableRow(this);
@@ -104,8 +96,8 @@ public class ActivityResult extends AppCompatActivity {
         }
         row.addView(tvAsl, 0);
         row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false),0);
-        row.addView(createHeadTextView(String.valueOf(tarika), true),0);
-        mawarithTable.addView(row);
+        row.addView(createHeadTextView(String.format("%.2f", tarika), true),0);
+        mResultTableLayout.addView(row);
 
         boolean jadahFirst = true;
         boolean shirkatTa3seebFirst = true;
@@ -148,10 +140,8 @@ public class ActivityResult extends AppCompatActivity {
             }
             row.addView(createCellTextView(m.getIsm(), false, last_row));
             row.addView(createCellTextView(m.getHokom(), false, last_row));
-            mawarithTable.addView(row);
+            mResultTableLayout.addView(row);
         }
-
-        return mawarithTable;
     }
 
     private TextView createHeadTextView(CharSequence txt, boolean last_column) {
@@ -159,7 +149,6 @@ public class ActivityResult extends AppCompatActivity {
 
         head.setBackgroundResource((last_column)? R.drawable.last_head_borders : R.drawable.head_borders);
         head.setText(txt);
-
         return head;
     }
 
@@ -168,7 +157,6 @@ public class ActivityResult extends AppCompatActivity {
 
         head.setBackgroundResource((awl < 10) ? R.drawable.head_awl1 : R.drawable.head_awl2);
         head.setText(String.valueOf(awl));
-
         return head;
     }
 
@@ -181,7 +169,6 @@ public class ActivityResult extends AppCompatActivity {
             cell.setBackgroundResource((last_column)? R.drawable.last_column_borders : R.drawable.cell_borders);
         }
         cell.setText(txt);
-
         return cell;
     }
 
@@ -194,7 +181,6 @@ public class ActivityResult extends AppCompatActivity {
             cell.setBackgroundResource((is_shirka)? R.drawable.shirka_cell_borders : R.drawable.cell_borders);
         }
         cell.setText(txt);
-
         return cell;
     }
 

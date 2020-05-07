@@ -84,6 +84,7 @@
                             android:id="@+id/resultTableLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:stretchColumns="*"
                             android:layout_marginBottom="8dp"
                             android:padding="4dp"
                             app:layout_constraintBottom_toTopOf="@+id/resultTextView"
