@@ -64,10 +64,6 @@ public class MainActivity extends AppCompatActivity {
         mInput = app.getWarathaInput();
 
         // update layout
-        updateLayout();
-    }
-
-    public void updateLayout() {
         switch (mInput.get_madhab()) {
             case MALIKI: ((RadioButton)findViewById(R.id.radioButtonMaliki)).setChecked(true); break;
             case CHAFI3I: ((RadioButton)findViewById(R.id.radioButtonChafi3i)).setChecked(true); break;
@@ -97,24 +93,7 @@ public class MainActivity extends AppCompatActivity {
         azawjatET = findViewById(R.id.zawjatEditText);
         azawjatET.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "4")});
 
-        if (mInput.is_male()) {
-            mInput.set_zawj(false);
-            azawjCB.setEnabled(false);
-            azawjCB.setChecked(false);
-
-            findViewById(R.id.zawjatTextView).setEnabled(true);
-            azawjatET.setEnabled(true);
-            azawjatET.setText(String.valueOf(mInput.get_azawjat()));
-        }
-        else {
-            mInput.set_azawjat(0);
-            azawjatET.setText("0");
-            azawjatET.setEnabled(false);
-            findViewById(R.id.zawjatTextView).setEnabled(false);
-
-            azawjCB.setEnabled(true);
-            azawjCB.setChecked(mInput.zawj());
-        }
+        updateAzwaj();
 
         sonsET = findViewById(R.id.sonsEditText);
         sonsET.setText(String.valueOf(mInput.get_alabna()));
@@ -165,6 +144,27 @@ public class MainActivity extends AppCompatActivity {
         sonsOfPaternalUnclesET.setText(String.valueOf(mInput.get_abna_ala3mam_li_ab()));
     }
 
+    public void updateAzwaj() {
+        if (mInput.is_male()) {
+            mInput.set_zawj(false);
+            azawjCB.setEnabled(false);
+            azawjCB.setChecked(false);
+
+            findViewById(R.id.zawjatTextView).setEnabled(true);
+            azawjatET.setEnabled(true);
+            azawjatET.setText(String.valueOf(mInput.get_azawjat()));
+        }
+        else {
+            mInput.set_azawjat(0);
+            azawjatET.setText("0");
+            azawjatET.setEnabled(false);
+            findViewById(R.id.zawjatTextView).setEnabled(false);
+
+            azawjCB.setEnabled(true);
+            azawjCB.setChecked(mInput.zawj());
+        }
+    }
+
     public void onMadhabButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
         switch (view.getId()) {
@@ -194,18 +194,14 @@ public class MainActivity extends AppCompatActivity {
         boolean checked = ((RadioButton) view).isChecked();
         switch (view.getId()) {
             case R.id.radioButtonMale:
-                if (checked)
-                    mInput.set_male(true);
-                    mInput.set_zawj(false);
+                if (checked) { mInput.set_male(true); }
                 break;
 
             case R.id.radioButtonFemale:
-                if (checked)
-                    mInput.set_male(false);
-                    mInput.set_azawjat(0);
+                if (checked) { mInput.set_male(false); }
                 break;
         }
-        updateLayout();
+        updateAzwaj();
     }
 
     public void onHalClicked(View view) {
