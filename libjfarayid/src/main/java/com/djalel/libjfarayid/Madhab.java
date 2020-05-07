@@ -16,7 +16,7 @@
  *  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.djalel.android.zaid;
+package com.djalel.libjfarayid;
 
 public enum Madhab {
     MALIKI,

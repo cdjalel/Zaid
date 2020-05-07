@@ -16,14 +16,12 @@
  *  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.djalel.android.zaid;
+package com.djalel.android.zaid.activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -32,7 +30,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ActivityResult extends AppCompatActivity {
+import com.djalel.libjfarayid.Massala;
+import com.djalel.libjfarayid.Mirath;
+import com.djalel.android.zaid.R;
+import com.djalel.android.zaid.ZaidApplication;
+
+public class ResultActivity extends AppCompatActivity {
 
     private TableLayout mResultTableLayout;
     private TextView mResultTextView;
@@ -72,7 +75,6 @@ public class ActivityResult extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void createTable(ZaidApplication app) {
         if (app.getMassala().getMawarith().isEmpty()) { return; }
 

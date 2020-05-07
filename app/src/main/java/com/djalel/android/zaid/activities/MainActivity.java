@@ -16,9 +16,7 @@
  *  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.djalel.android.zaid;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.djalel.android.zaid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +25,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.djalel.libjfarayid.Madhab;
+import com.djalel.android.zaid.R;
+import com.djalel.libjfarayid.WarathaInput;
+import com.djalel.android.zaid.ZaidApplication;
 
 public class MainActivity extends AppCompatActivity {
     WarathaInput mInput;
@@ -231,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         mInput.set_abna_ala3mam_li_ab(Integer.parseInt(sonsOfPaternalUnclesET.getText().toString()));
 
         // start next activity
-        Intent intent = new Intent(this, ActivityResult.class);
+        Intent intent = new Intent(this, ResultActivity.class);
         startActivity(intent);
     }
 }

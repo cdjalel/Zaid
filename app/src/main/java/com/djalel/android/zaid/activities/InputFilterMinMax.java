@@ -17,7 +17,7 @@
  *  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.djalel.android.zaid;
+package com.djalel.android.zaid.activities;
 
 import android.text.InputFilter;
 import android.text.Spanned;
