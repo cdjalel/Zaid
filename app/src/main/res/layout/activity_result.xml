@@ -55,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scrollbars="vertical"
+                android:fadeScrollbars="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,25 +67,30 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <ScrollView
+                    <HorizontalScrollView
                         android:id="@+id/scrollView2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:fadeScrollbars="false"
                         android:padding="4dp"
+                        android:scrollbars="horizontal"
                         app:layout_constraintBottom_toTopOf="@+id/resultTextView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:scrollbars="horizontal">
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <LinearLayout
+                        <TableLayout
                             android:id="@+id/resultTableLayout"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal" />
-
-                    </ScrollView>
+                            android:layout_marginBottom="8dp"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toTopOf="@+id/resultTextView"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </HorizontalScrollView>
 
                     <TextView
                         android:id="@+id/resultTextView"
@@ -95,8 +101,7 @@
                         android:text="@string/title_activity_result"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/scrollView2"
-                         />
+                        app:layout_constraintTop_toBottomOf="@id/scrollView2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </ScrollView>
