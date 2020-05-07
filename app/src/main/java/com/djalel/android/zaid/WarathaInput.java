@@ -46,6 +46,8 @@ public class WarathaInput {
     private int abna_ala3mam_alashika;
     private int abna_ala3mam_li_ab;
 
+    private double tarika;
+
     public  WarathaInput () {
         resetWarathahInput();
     }
@@ -77,6 +79,8 @@ public class WarathaInput {
         ala3mam_li_ab = 0;
         abna_ala3mam_alashika = 0;
         abna_ala3mam_li_ab = 0;
+
+        tarika = 0.0;
     }
 
     public void set_madhab(Madhab m) {
@@ -274,4 +278,8 @@ public class WarathaInput {
     }
 
     public int get_abna_ala3mam_li_ab() { return abna_ala3mam_li_ab; }
+
+    public double getTarika() { return tarika; }
+
+    public void setTarika(double tarika) { this.tarika = tarika; }
 }

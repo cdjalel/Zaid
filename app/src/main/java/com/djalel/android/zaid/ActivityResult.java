@@ -85,12 +85,14 @@ public class ActivityResult extends AppCompatActivity {
         lp.setMargins(10,10,10, 10);
         mawarithTable.setLayoutParams(lp);
 
+        double tarika = app.getWarathaInput().getTarika();
         Massala massala = app.getMassala();
         TableRow row = new TableRow(this);
         TextView tvAsl;
         if (massala.getAwl() != 0) {
             //row of awl
             row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false),0);
+            row.addView(createHeadTextView("", false),0);
             row.addView(createHeadTextView("", true),0);
             mawarithTable.addView(row);
 
@@ -101,7 +103,8 @@ public class ActivityResult extends AppCompatActivity {
             tvAsl = createHeadTextView(String.valueOf(massala.getAsl()), false);
         }
         row.addView(tvAsl, 0);
-        row.addView(createHeadTextView(String.valueOf(massala.getMissah()), true),0);
+        row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false),0);
+        row.addView(createHeadTextView(String.valueOf(tarika), true),0);
         mawarithTable.addView(row);
 
         boolean jadahFirst = true;
@@ -112,7 +115,12 @@ public class ActivityResult extends AppCompatActivity {
         for (Mirath m : massala.getMawarith()) {
             if (++i == massala.getMawarith().size()) { last_row = true; }
 
+            StringBuilder partStr = new StringBuilder();
+            partStr.append(String.format("%.2f", m.getNassib() * tarika / massala.getMissah()));
+            if (m.getNbr() > 1) { partStr.append("(*").append(m.getNbr()).append(")");}
+
             row = new TableRow(this);
+            row.addView(createCellTextView(partStr, true, last_row));
             row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
             if (m.isJadah() && m.isShirka()) {
                 if (jadahFirst) {

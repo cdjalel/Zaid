@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
     WarathaInput mInput;
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox aljadahLiAbCB;
     CheckBox aljadahLiOmCB;
     CheckBox azawjCB;
+    EditText tarikaET;
     EditText azawjatET;
     EditText sonsET;
     EditText daughtersET;
@@ -91,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         azawjCB = findViewById(R.id.azawjCheckBox);
         azawjCB.setChecked(mInput.zawj());
 
+        tarikaET = findViewById(R.id.tarikaEditText);
+        tarikaET.setText(String.valueOf(mInput.getTarika()));
+
         azawjatET = findViewById(R.id.zawjatEditText);
         azawjatET.setFilters(new InputFilter[]{ new InputFilterMinMax("0", "4")});
 
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             findViewById(R.id.zawjatTextView).setEnabled(true);
             azawjatET.setEnabled(true);
-            azawjatET.setText("" + mInput.get_azawjat());
+            azawjatET.setText(String.valueOf(mInput.get_azawjat()));
         }
         else {
             mInput.set_azawjat(0);
@@ -114,52 +117,52 @@ public class MainActivity extends AppCompatActivity {
         }
 
         sonsET = findViewById(R.id.sonsEditText);
-        sonsET.setText("" + mInput.get_alabna());
+        sonsET.setText(String.valueOf(mInput.get_alabna()));
 
         daughtersET = findViewById(R.id.daughtersEditText);
-        daughtersET.setText("" + mInput.get_albanat());
+        daughtersET.setText(String.valueOf(mInput.get_albanat()));
 
         sonsOfSonsET = findViewById(R.id.sonsOfSonsEditText);
-        sonsOfSonsET.setText("" + mInput.get_abna_alabna());
+        sonsOfSonsET.setText(String.valueOf(mInput.get_abna_alabna()));
 
         daughtersOfSonsET = findViewById(R.id.daughtersOfSonsEditText);
-        daughtersOfSonsET.setText("" + mInput.get_banat_alabna());
+        daughtersOfSonsET.setText(String.valueOf(mInput.get_banat_alabna()));
 
         maternalBrothersET = findViewById(R.id.maternalBrothersEditText);
-        maternalBrothersET.setText("" + mInput.get_alikhwa_li_om());
+        maternalBrothersET.setText(String.valueOf(mInput.get_alikhwa_li_om()));
 
         maternalSistersET = findViewById(R.id.maternalSistersEditText);
-        maternalSistersET.setText("" + mInput.get_alakhawat_li_om());
+        maternalSistersET.setText(String.valueOf(mInput.get_alakhawat_li_om()));
 
         fullBrothersET = findViewById(R.id.fullBrothersEditText);
-        fullBrothersET.setText("" + mInput.get_alikhwa_alashika());
+        fullBrothersET.setText(String.valueOf(mInput.get_alikhwa_alashika()));
 
         fullSistersET = findViewById(R.id.fullSistersEditText);
-        fullSistersET.setText("" + mInput.get_alakhawat_ashakikat());
+        fullSistersET.setText(String.valueOf(mInput.get_alakhawat_ashakikat()));
 
         paternalBrothersET = findViewById(R.id.paternalBrothersEditText);
-        paternalBrothersET.setText("" + mInput.get_alikhwa_li_ab());
+        paternalBrothersET.setText(String.valueOf(mInput.get_alikhwa_li_ab()));
 
         paternalSistersET = findViewById(R.id.paternalSistersEditText);
-        paternalSistersET.setText("" + mInput.get_alakhawat_li_ab());
+        paternalSistersET.setText(String.valueOf(mInput.get_alakhawat_li_ab()));
 
         sonsOfFullBrothersET = findViewById(R.id.sonsOfFullBrothersEditText);
-        sonsOfFullBrothersET.setText("" + mInput.get_abna_alikhwa_alashika());
+        sonsOfFullBrothersET.setText(String.valueOf(mInput.get_abna_alikhwa_alashika()));
 
         sonsOfPaternalBrothersET = findViewById(R.id.sonsOfPaternalBrothersEditText);
-        sonsOfPaternalBrothersET.setText("" + mInput.get_abna_alikhwa_li_ab());
+        sonsOfPaternalBrothersET.setText(String.valueOf(mInput.get_abna_alikhwa_li_ab()));
 
         fullUnclesET = findViewById(R.id.fullUnclesEditText);
-        fullUnclesET.setText("" + mInput.get_ala3mam_alashika());
+        fullUnclesET.setText(String.valueOf(mInput.get_ala3mam_alashika()));
 
         paternalUnclesET = findViewById(R.id.paternalUnclesEditText);
-        paternalUnclesET.setText("" + mInput.get_ala3mam_li_ab());
+        paternalUnclesET.setText(String.valueOf(mInput.get_ala3mam_li_ab()));
 
         sonsOfFullUnclesET = findViewById(R.id.sonsOfFullUnclesEditText);
-        sonsOfFullUnclesET.setText("" + mInput.get_abna_ala3mam_alashika());
+        sonsOfFullUnclesET.setText(String.valueOf(mInput.get_abna_ala3mam_alashika()));
 
         sonsOfPaternalUnclesET = findViewById(R.id.sonsOfPaternalUnclesEditText);
-        sonsOfPaternalUnclesET.setText("" + mInput.get_abna_ala3mam_li_ab());
+        sonsOfPaternalUnclesET.setText(String.valueOf(mInput.get_abna_ala3mam_li_ab()));
     }
 
     public void onMadhabButtonClicked(View view) {
@@ -212,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
         mInput.set_aljadah_li_ab(aljadahLiAbCB.isChecked());
         mInput.set_aljadah_li_om(aljadahLiOmCB.isChecked());
         mInput.set_zawj(azawjCB.isChecked());
+        mInput.setTarika(Double.parseDouble(tarikaET.getText().toString()));
         mInput.set_azawjat(Integer.parseInt(azawjatET.getText().toString()));
         mInput.set_alabna(Integer.parseInt(sonsET.getText().toString()));
         mInput.set_albanat(Integer.parseInt(daughtersET.getText().toString()));
