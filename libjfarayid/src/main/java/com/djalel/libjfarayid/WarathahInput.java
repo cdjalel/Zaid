@@ -18,7 +18,7 @@
 
 package com.djalel.libjfarayid;
 
-public class WarathaInput {
+public class WarathahInput {
     private Madhab madhab;
     private boolean male;
     private boolean alab;
@@ -48,7 +48,7 @@ public class WarathaInput {
 
     private double tarika;
 
-    public  WarathaInput () {
+    public WarathahInput() {
         resetWarathahInput();
     }
 

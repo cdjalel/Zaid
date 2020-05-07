@@ -30,11 +30,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.djalel.libjfarayid.Madhab;
 import com.djalel.android.zaid.R;
-import com.djalel.libjfarayid.WarathaInput;
+import com.djalel.libjfarayid.WarathahInput;
 import com.djalel.android.zaid.ZaidApplication;
 
 public class MainActivity extends AppCompatActivity {
-    WarathaInput mInput;
+    WarathahInput mInput;
     CheckBox alabCB;
     CheckBox alomCB;
     CheckBox aljadCB;

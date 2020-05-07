@@ -20,7 +20,7 @@ package com.djalel.libjfarayid;
 
 import java.util.ArrayList;
 
-class WarathaOuput {
+class WarathahOutput {
     ArrayList<Mirath> mWarathah;
     ArrayList<Mirath> mMahjoobin;
 
@@ -40,7 +40,7 @@ class WarathaOuput {
 
     Naw3 mNaw3;
 
-    public WarathaOuput() {
+    public WarathahOutput() {
         mWarathah = new ArrayList<>();
         mMahjoobin = new ArrayList<>();
 
@@ -61,15 +61,17 @@ class WarathaOuput {
         mNaw3 = Naw3.NAW3_NONE;
     }
 
-    void copyHal(WarathaOuput from) {
-        // except Aljad and ikhwa, shallow copy of waratah as they are the same in all cases
-        ArrayList<Mirath> tmp = (ArrayList<Mirath>)mWarathah.clone();
-        mWarathah = (ArrayList<Mirath>)from.mWarathah.clone();
-        // replace aljad & ikhwa
-        for (int i = 0; i < tmp.size(); i++) {
-            mWarathah.remove(from.mNbrFurudh + i - 1);
-            mWarathah.add(from.mNbrFurudh + i - 1, tmp.get(i));
-        }
+    void copyHal(WarathahOutput from) {
+        // from is the complete Massala where aljad is the last Sahib Fard in the list with 1/6
+        // mWarathah contains only aljad + ikhwa for the other two cases where aljad part != 1/6
+        ArrayList<Mirath> tmp = mWarathah;
+        mWarathah = new ArrayList<>();
+        int i;
+        // Shallow copy of warathah as they are the same in all 3 cases (except Aljad and Ikhwa)
+        for (i = 0; i < (from.mNbrFurudh - 1); i++) { mWarathah.add(from.mWarathah.get(i)); }
+        // Preserve aljad and alikhwa from current massalal
+        for (i = 0; i < tmp.size(); i++) { mWarathah.add(tmp.get(i)); }
+
         mMahjoobin = from.mMahjoobin;    // reference copy as hajb is the same for all cases
 
         mNbrFurudh = from.mNbrFurudh - 1;
