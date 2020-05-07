@@ -1583,7 +1583,29 @@ public class Massala {
 
     public boolean isInkissar() { return mHal.get(0).isInkissar();}
 
-    public boolean isJinsayAwladAlom() { return (mInput.get_alikhwa_li_om() > 0) && (mInput.get_alakhawat_li_om() > 0);}
+    public boolean isJinsayAwladAlom() { return (mInput.get_alikhwa_li_om() > 0) && (mInput.get_alakhawat_li_om() > 0); }
+
+    public boolean isHissabFardi() {
+        return isInkissar() || isShirkaTa3seeb() || isJinsayAwladAlom() ||
+                (mInput.aljadah_li_om() && mInput.aljadah_li_ab()) ||
+                mInput.get_azawjat() > 1 ||
+                mInput.get_alabna() > 1 ||
+                mInput.get_albanat() > 1 ||
+                mInput.get_abna_alabna() > 1 ||
+                mInput.get_banat_alabna() > 1 ||
+                mInput.get_alikhwa_li_om() > 1 ||
+                mInput.get_alakhawat_li_om() > 1 ||
+                mInput.get_alikhwa_alashika() > 1 ||
+                mInput.get_alakhawat_ashakikat() > 1 ||
+                mInput.get_alikhwa_li_ab() > 1 ||
+                mInput.get_alakhawat_li_ab() > 1 ||
+                mInput.get_abna_alikhwa_alashika() > 1 ||
+                mInput.get_abna_alikhwa_li_ab() > 1 ||
+                mInput.get_ala3mam_alashika() > 1 ||
+                mInput.get_ala3mam_li_ab() > 1 ||
+                mInput.get_abna_ala3mam_alashika() > 1 ||
+                mInput.get_abna_ala3mam_li_ab() > 1;
+    }
 
     public int getAsl() { return mHal.get(0).mAsl; }
 
