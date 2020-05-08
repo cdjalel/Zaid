@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright © 2019-2020 Djalel Chefrour and the Zaid project contributors.
   ~ This file is part of Zaid project.
@@ -17,9 +16,12 @@
   ~  along with Zaid.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="font_size">15sp</dimen>
-    <dimen name="btn_font_size">16sp</dimen>
-
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activities.MainActivity">
+    <item android:id="@+id/action_about"
+        android:title="@string/action_about"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

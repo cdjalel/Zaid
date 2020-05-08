@@ -18,12 +18,19 @@
 
 <resources>
     <string name="app_name">زيد الفرضي</string>
+    <string name="action_about">حول</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="input_fragment_label">جزء معطيات المسألة</string>
+    <string name="output_fragment_label">جزء حل المسألة</string>
+    <string name="hal">حل المسألة</string>
+    <string name="change">تغيير المسألة</string>
+    <string name="restart">مسألة جديدة</string>
 
-    <string name="madhab">المذهب:</string>>
+    <string name="madhab">المذهب الفقهي:</string>>
     <string name="hambali">حنبلي</string>
     <string name="hanafi">حنفي</string>
     <string name="chafi3i">شافعي</string>
-    <string name="maliki">المذهب:   مالكي</string>
+    <string name="maliki">مالكي</string>
     <string name="deceased">معلومات المتوفى</string>
     <string name="male">ذكر</string>
     <string name="female">أنثى</string>
@@ -35,12 +42,48 @@
     <string name="grand_father">الجد:</string>
     <string name="maternal_grand_mother">الجدة لأم:</string>
     <string name="paternal_grand_mother">الجدة لأب:</string>
-    <string name="alhal">الحل</string>
+    <string name="alhal">حل المسألة</string>
     <string name="wives">الزوجات:</string>
     <string name="husband">الزوج:</string>
     <string name="daughters">البنات:</string>
     <string name="sons">الأبناء:</string>
-    <string name="title_activity2">الحواشي</string>
     <string name="title_activity_result">حل المسألة</string>
+
+    <string name="about"><![CDATA[
+<html>
+<head></head>
+<body style="text-align:justify;color:white;background-color:black;" dir="rtl" lang="ar">
+"زيد الفرضي" هو برنامج لحساب الفرائض وفق الشريعة الإسلامية السمحاء. أخذ اسمه من اسم الصحابي الجليل زيد بن حارثة رضي الله عنه، الذي قال فيه رسول الله صلى الله عليه وآله وسلم "أفرضكم زيد".
+تم تطوير هذا البرنامج باعتماد كتاب … من تأليف، مع شرحه في دروس المعهد الإسلامي الأوروبي ببروكسل التابع لرابطة العالم الإسلامي وكتاب "الفرائض المُيسََّر" من تأليف عبد الشكور معلم عبد فارح.
+<br/>
+للتبليغ عن أية أخطاء في البرنامج، لا سيما في حساب الفروض، يُرجى مراسلة المطور على البريد الإلكتروني
+<a href="mailto:cdjalel@gmail.com" style="color:yellow">cdjalel@gmail.com</a>
+<br/>
+هذا البرنامج حر، مفتوح المصدر، مجاني ومتوفر تحت رخصة غنو العمومية إصدار 3.0، حيث يمكن الحصول على مصدره من الموقع:
+<a href="https://github.com/cdjalel/Zaid" style="color:yellow">https://github.com/cdjalel/Zaid</a>
+</body>
+</html>
+]]></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ma3lumat">معلومات المتوفى</string>
+    <string name="ussol">الأصول الأحياء</string>
+    <string name="azwaj_foro3">الأزواج والفروع الأحياء</string>
+    <string name="hawashi">الحواشي الأحياء</string>
+    <string name="alikhwa_li_om">الإخوة لأم:</string>
+    <string name="alakhawat_li_om">الأخوات لأم:</string>
+    <string name="alikhwa_alashika">الإخوة الأشقاء:</string>
+    <string name="alakhawat_ashakikat">الأخوات الشقيقات:</string>
+    <string name="alikhwa_li_ab">الإخوة لأب:</string>
+    <string name="alakhawat_li_ab">الأخوات لأب:</string>
+    <string name="abna_alikhwa_ashika">أبناء الإخوة الأشقاء:</string>
+    <string name="abna_alikhwa_li_ab">أبناء الإخوة لأب:</string>
+    <string name="ala3mam_alashika">الأعمام الأشقاء:</string>
+    <string name="ala3mam_li_ab">الأعمام لأب:</string>
+    <string name="abna_ala3mam_alashika">أبناء الأعمام الأشقاء:</string>
+    <string name="abna_ala3mam_li_ab">أبناء الأعمام لأب:</string>
+    <string name="banat_alabna">بنات الأبناء:</string>
+    <string name="abna_alabna">أبناء الأبناء:</string>
 
 </resources>

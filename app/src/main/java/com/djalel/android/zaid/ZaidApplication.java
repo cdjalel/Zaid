@@ -24,19 +24,28 @@ import com.djalel.libjfarayid.WarathahInput;
 import com.djalel.libjfarayid.Massala;
 
 public class ZaidApplication extends Application {
-    WarathahInput mInput = new WarathahInput();
-    Massala massala;
+    private WarathahInput mInput = new WarathahInput();
+    private Massala mMassala;
 
     // THIS IS A SINGLETON
+    static private ZaidApplication mContext;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mContext = this;
+    }
+
+    static public ZaidApplication getApplication() { return mContext; }
 
     public WarathahInput getWarathaInput() { return mInput; }
 
-    public Massala getMassala() { return massala; }
+    public Massala getMassala() { return mMassala; }
 
     public String hissabMawarith() {
-        massala = new Massala();
-        massala.hissabMawarith(mInput);
-        return massala.getSharh();
+        mMassala = new Massala();
+        mMassala.hissabMawarith(mInput);
+        return mMassala.getSharh();
     }
 
 }

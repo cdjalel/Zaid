@@ -29,6 +29,19 @@
         <item name="android:textSize">@dimen/font_size</item>
     </style>
 
+    <style name="ZaidAppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="ZaidAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="ZaidAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="ZaidAppTheme.editTextStyle">
         <item name="android:textColorHighlight">@color/colorPrimaryDark</item>
         <item name="android:textColor">@drawable/edit_text_color</item>
@@ -69,6 +82,7 @@
     <style name="ZaidAppTheme.textViewLabelStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:textColor">@color/colorSecondary</item>
     </style>
 
