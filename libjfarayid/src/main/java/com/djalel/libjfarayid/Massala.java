@@ -1491,13 +1491,13 @@ public class Massala {
                             }
                             break;
                         case THULUTH_ALBAQI:
-                            sharh.append(String.format("، يأخذ منه الجد الثلث ويتقاسم %s ما بقي وعدد رؤوسه %d.\n", hal.mBaqi, Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osBaqiAlbaqi));
+                            sharh.append(String.format("، يأخذ منه الجد الثلث ويتقاسم %s ما بقي وعدد رؤوسه %d.\n", Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osBaqiAlbaqi));
                             break;
                         case THULUTH_ALMAL:
                         case SUDUSS:
                         case LA:
                         default:
-                            sharh.append(String.format(" وعدد رؤوسه %d.\n", hal.mBaqi, hal.mRo2osAlbaqi));
+                            sharh.append(String.format(" وعدد رؤوسه %d.\n", hal.mRo2osAlbaqi));
                             break;
                     }
                 }
