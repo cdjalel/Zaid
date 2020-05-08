@@ -783,7 +783,7 @@ public class Massala {
     }
 
     private void mirathAlashikaWaAshakikatBita3seeb(int halIdx, boolean far3_warith_dhakar, boolean muqassamaMa3aAljad, boolean ta3seebBiljad) {
-        // Here be dragons, يعُامل الجد كأن لم يكن
+        // Here be dragons
         if (far3_warith_dhakar || mInput.alab()) return;
         // assert(halIdx < 0 || halIdx >= mHal.size());
 
@@ -842,12 +842,12 @@ public class Massala {
                 }
             }
         }
-        else if ((nbr_b > 0) && (ta3seebBiljad || ta3seebBiljad)) {
+        else if ((nbr_b > 0) && ta3seebBiljad) {
             // الأخت دون الأخ مع الجد تصبح عصبة به فتقاسمه وتحجب من يحجبه الأخ
             mHal.get(halIdx).mTassawi = false;
             sharh = Warith.ALAKHAWAT_ASHAKIKAT.getSharhPrefix(nbr_b, false);
-            sharh += "الباقي تعصيبا بالغير";
-            if (muqassamaMa3aAljad) { sharh += " ومقاسمة مع الجد"; }
+            sharh += "الباقي تعصيبا بالجد";
+            if (muqassamaMa3aAljad) { sharh += " ومقاسمة معه"; }
             addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_ASHAKIKAT, nbr_b, sharh));
 
 
@@ -883,7 +883,7 @@ public class Massala {
     }
 
     private void mirathAlikhwaWaAlakhawatLiAbBita3seeb(int halIdx, boolean far3_warith_dhakar, boolean muqassamaMa3aAljad, boolean ta3seebBiljad) {
-        if (far3_warith_dhakar || mInput.alab() || (mInput.get_alikhwa_alashika() > 0) || m_alakhawat_ashakikat_3assabat_ma3a_lghayr || (mInput.get_alakhawat_ashakikat() > 0 && muqassamaMa3aAljad)) return;
+        if (far3_warith_dhakar || mInput.alab() || (mInput.get_alikhwa_alashika() > 0) || m_alakhawat_ashakikat_3assabat_ma3a_lghayr || (mInput.get_alakhawat_ashakikat() > 0 && ta3seebBiljad)) return;
         // assert(halIdx < 0 || halIdx >= mHal.size());
 
         String sharh;
@@ -934,12 +934,12 @@ public class Massala {
                     addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
                 }
             }
-        } else if ((nbr_b > 0) && (ta3seebBiljad || muqassamaMa3aAljad)) {
+        } else if ((nbr_b > 0) && ta3seebBiljad) {
             // الأخت دون الأخ مع الجد تصبح عصبة به فتقاسمه وتحجب من يحجبه الأخ
             mHal.get(halIdx).mTassawi = false;
             sharh = Warith.ALAKHAWAT_ASHAKIKAT.getSharhPrefix(nbr_b, false);
-            sharh += "الباقي تعصيبا بالغير";
-            if (muqassamaMa3aAljad) { sharh += " ومقاسمة مع الجد"; }
+            sharh += "الباقي تعصيبا بالجد";
+            if (muqassamaMa3aAljad) { sharh += " ومقاسمة معه"; }
             addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh));
 
             // Hajb bi alakhawat is the same for all Jad & Ikhwa cases. So we do it only once.
@@ -1484,8 +1484,8 @@ public class Massala {
                         case MUQASSAMA:
                             if (hal.mMu3addah) {
                                 sharh.append(String.format("، يتقاسمه الجد و%s بالمُعادّة.", Warith.ALJAD.getAlikhwa(mInput)));
-                                sharh.append(String.format(" أي يُحسب على الجد كل الإخوة الأشقاء ولأب فيكون سهمه من %d،", hal.mRo2osAlbaqi));
-                                sharh.append(String.format(" ثم يحجب الأشقاءُ الإخوة لأب ويشتركون في ما بقي وعدد رؤوسه %d.\n", hal.mRo2osBaqiAlbaqi));
+                                sharh.append(String.format(" أي يُحسب على الجد جميع الإخوة الأشقاء ولأب فيكون سهمه هنا من %d،", hal.mRo2osAlbaqi));
+                                sharh.append(String.format(" ثم يشترك الأشقاء (و\\أو الشقيقات) في ما بقي، وعدد رؤوسهم هنا %d، ويحجبون الإخوة (و\\أو الأخوات) لأب.\n", hal.mRo2osBaqiAlbaqi));
                             } else {
                                 sharh.append(String.format("، يتقاسمه الجد و%s وعدد رؤوسه %d.\n", Warith.ALJAD.getAlikhwa(mInput), hal.mRo2osAlbaqi));
                             }
