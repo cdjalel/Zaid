@@ -239,7 +239,7 @@ public class Massala {
                 mHal.get(0).mShirkaTa3seeb = true;
                 ro2os = 3;
                 sharh += "ثلثي 2\\3 الباقي تعصيبا بالنفس";
-                mSpecialCase = "هذه مسألة الغرّاوين"; // TODO make it an enum type
+                mSpecialCase = "هذه مسألة الغرّاوين."; // TODO make it an enum type
             } else {
                 ro2os = 1;
                 sharh += "الباقي تعصيبا بالنفس";
@@ -1436,7 +1436,7 @@ public class Massala {
         StringBuilder sharh = new StringBuilder();
 
         if (mSpecialCase != null /* TODO غراوين */) {
-            sharh.append(mSpecialCase + "\n");
+            sharh.append("- " + mSpecialCase + "\n");
         }
 
         for (WarathahOutput hal : mHal) {
@@ -1461,8 +1461,8 @@ public class Massala {
                     break;
                 case NAW3_RAD:
                     sharh.append(" وهي ناقصة (أسهمها أقل من أصلها).\n");
-                    sharh.append(String.format("- الباقي من الأصل %d يُرد على أصحاب الفروض ما عدا الزوجين (إن وجدوا).", hal.mBaqi));
-                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض  دون أحد الزوجين (إن وجدوا).\n");
+                    sharh.append(String.format("- الباقي من الأصل %d يُرد على أصحاب الفروض (إن وجدوا) ما عدا الزوجين.", hal.mBaqi));
+                    sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض (إن وجدوا) دون أحد الزوجين.\n");
                     // TODO. Ethier implement Rad and remove the previous line
                     // TODO. or add Rad buttong which is like 'change' button and eliminates zawj
                     // TODO. or keep it like that
