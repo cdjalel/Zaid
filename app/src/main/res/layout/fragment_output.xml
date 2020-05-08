@@ -20,14 +20,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/result"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".activities.ResultActivity">
-
+    tools:context=".activities.OutputFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/yellowFrame"
@@ -35,7 +33,7 @@
         android:layout_height="0dp"
         android:background="@color/colorSecondary"
         android:padding="3dp"
-        app:layout_constraintBottom_toTopOf="@+id/restartBtn"
+        app:layout_constraintBottom_toTopOf="@+id/button_restart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -112,24 +110,22 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/restartBtn"
+        android:id="@+id/button_restart"
         style="@style/ZaidAppTheme.btnStyle"
         android:layout_marginBottom="8dp"
-        android:onClick="onRestartClicked"
-        android:text="مسألة جديدة"
+        android:text="@string/restart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/changeMassalaBtn"
+        app:layout_constraintStart_toEndOf="@+id/button_change"
         app:layout_constraintTop_toBottomOf="@id/yellowFrame" />
 
     <Button
-        android:id="@+id/changeMassalaBtn"
+        android:id="@+id/button_change"
         style="@style/ZaidAppTheme.btnStyle"
         android:layout_marginBottom="8dp"
-        android:onClick="onChangeMassalaClicked"
-        android:text="تغيير المسألة"
+        android:text="@string/change"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/restartBtn"
+        app:layout_constraintEnd_toStartOf="@id/button_restart"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

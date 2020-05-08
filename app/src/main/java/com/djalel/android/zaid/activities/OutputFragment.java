@@ -18,90 +18,105 @@
 
 package com.djalel.android.zaid.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.djalel.libjfarayid.Massala;
-import com.djalel.libjfarayid.Mirath;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.djalel.android.zaid.R;
 import com.djalel.android.zaid.ZaidApplication;
+import com.djalel.libjfarayid.Massala;
+import com.djalel.libjfarayid.Mirath;
 
-public class ResultActivity extends AppCompatActivity {
+import java.util.Locale;
+
+public class OutputFragment extends Fragment {
 
     private TableLayout mResultTableLayout;
     private TextView mResultTextView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_output, container, false);
+    }
 
-        mResultTextView = findViewById(R.id.resultTextView);
-        mResultTableLayout = findViewById(R.id.resultTableLayout);
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mResultTextView = view.findViewById(R.id.resultTextView);
+        mResultTableLayout = view.findViewById(R.id.resultTableLayout);
+
+        view.findViewById(R.id.button_restart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ZaidApplication app = ZaidApplication.getApplication();
+                app.getWarathaInput().resetWarathahInput();
+
+                NavHostFragment.findNavController(OutputFragment.this)
+                        .navigate(R.id.action_OutputFragment_to_InputFragment);
+            }
+        });
+
+        view.findViewById(R.id.button_change).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(OutputFragment.this)
+                        .navigate(R.id.action_OutputFragment_to_InputFragment);
+            }
+        });
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
+
         //reinitialisation
         mResultTableLayout.removeAllViews();
 
-        ZaidApplication app = (ZaidApplication) this.getApplication();
+        ZaidApplication app = ZaidApplication.getApplication();
         mResultTextView.setText(app.hissabMawarith());
         createTable(app);
     }
 
-    public void onRestartClicked(View view) {
-        ZaidApplication app = (ZaidApplication) this.getApplication();
-        app.getWarathaInput().resetWarathahInput();
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
-    }
-
-    public void onChangeMassalaClicked(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        this.startActivity(intent);
-    }
-
-    public void createTable(ZaidApplication app) {
+    private void createTable(ZaidApplication app) {
         if (app.getMassala().getMawarith().isEmpty()) { return; }
 
         // table head
         double tarika = app.getWarathaInput().getTarika();
         Massala massala = app.getMassala();
-        TableRow row = new TableRow(this);
+        TableRow row = new TableRow(getActivity());
         int col = 2;
         TextView tvAsl;
         if (massala.getAwl() != 0) {
             //row of awl
-            row.addView(createHeadTextView(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(col));
+            row.addView(createHeadCell(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(col));
             mResultTableLayout.addView(row);
 
             //row of asl
-            row = new TableRow(this);
-            tvAsl = createHeadAwlTextView(massala.getAsl());
+            row = new TableRow(getActivity());
+            tvAsl = createHeadAwlCell(massala.getAsl());
         } else {
-            tvAsl = createHeadTextView(String.valueOf(massala.getAsl()), false);
+            tvAsl = createHeadCell(String.valueOf(massala.getAsl()), false);
         }
         row.addView(tvAsl, new TableRow.LayoutParams(col++));
 
         boolean hissabFardiColumn = massala.isHissabFardi();
         if (hissabFardiColumn) {
-            row.addView(createHeadTextView(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(col++));
+            row.addView(createHeadCell(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(col++));
         }
-        row.addView(createHeadTextView(String.format("%.2f", tarika), true), new TableRow.LayoutParams(col));
+        row.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
         mResultTableLayout.addView(row);
 
         // table body
@@ -111,55 +126,55 @@ public class ResultActivity extends AppCompatActivity {
         boolean last_row = false;
         int i = 0;
         for (Mirath m : massala.getMawarith()) {
-            row = new TableRow(this);
+            row = new TableRow(getActivity());
             if (++i == massala.getMawarith().size()) { last_row = true; }
 
             // columns 1 & 2
-            row.addView(createCellTextView(m.getHokom(), false, last_row));
-            row.addView(createCellTextView(m.getIsm(), false, last_row));
+            row.addView(createCell(m.getHokom(), false, last_row));
+            row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 3: nassib mojmal
             if (m.isJadah() && m.isShirka()) {
                 if (jadahFirst) {
-                    row.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
+                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
                     jadahFirst = false;
                 } else {
-                    row.addView(createCellTextView("", false, last_row, true));
+                    row.addView(createEmptyCell(last_row));
                 }
             } else if (m.isWaladAlom() && massala.isJinsayAwladAlom()) {
                 if (waladAlomFirst) {
-                    row.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
+                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
                     waladAlomFirst = false;
                 } else {
-                    row.addView(createCellTextView("", false, last_row, true));
+                    row.addView(createEmptyCell(last_row));
                 }
             } else if (m.isTa3seeb() && massala.isShirkaTa3seeb()) {
                 if (shirkatTa3seebFirst) {
-                    row.addView(createCellTextView(m.getNassibMojmal() + " ↓", false, last_row));
+                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
                     shirkatTa3seebFirst = false;
                 } else {
-                    row.addView(createCellTextView("", false, last_row, true));
+                    row.addView(createEmptyCell(last_row));
                 }
             } else {
-                row.addView(createCellTextView(m.getNassibMojmal(), false, last_row));
+                row.addView(createCell(m.getNassibMojmal(), false, last_row));
             }
 
             // column 4: nassib fardi
             if (hissabFardiColumn) {
-                row.addView(createCellTextView(m.getNassibFardi(), false, last_row));
+                row.addView(createCell(m.getNassibFardi(), false, last_row));
             }
 
             // column 5: nassib fardi mina tarika
             StringBuilder nassibTarikaStr = new StringBuilder();
-            nassibTarikaStr.append(String.format("%.2f", m.getNassib() * tarika / massala.getMissah()));
+            nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / massala.getMissah()));
             if (m.getNbr() > 1) { nassibTarikaStr.append("(*").append(m.getNbr()).append(")");}
-            row.addView(createCellTextView(nassibTarikaStr, true, last_row));
+            row.addView(createCell(nassibTarikaStr, true, last_row));
 
             mResultTableLayout.addView(row);
         }
     }
 
-    private TextView createHeadTextView(CharSequence txt, boolean last_column) {
+    private TextView createHeadCell(CharSequence txt, boolean last_column) {
         TextView head = prepareTextView();
 
         head.setBackgroundResource((last_column)? R.drawable.last_head_borders : R.drawable.head_borders);
@@ -167,7 +182,7 @@ public class ResultActivity extends AppCompatActivity {
         return head;
     }
 
-    private TextView createHeadAwlTextView(int awl) {
+    private TextView createHeadAwlCell(int awl) {
         TextView head = prepareTextView();
 
         head.setBackgroundResource((awl < 10) ? R.drawable.head_awl1 : R.drawable.head_awl2);
@@ -175,7 +190,7 @@ public class ResultActivity extends AppCompatActivity {
         return head;
     }
 
-    private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row) {
+    private TextView createCell(CharSequence txt, boolean last_column, boolean last_row) {
         TextView cell = prepareTextView();
 
         if (last_row) {
@@ -187,25 +202,21 @@ public class ResultActivity extends AppCompatActivity {
         return cell;
     }
 
-    private TextView createCellTextView(CharSequence txt, boolean last_column, boolean last_row, boolean is_shirka) {
+    private TextView createEmptyCell(boolean last_row) {
         TextView cell = prepareTextView();
 
-        if (last_row) {
-            cell.setBackgroundResource((is_shirka)? R.drawable.last_row_shirka_borders : R.drawable.last_row_borders);
-        } else {
-            cell.setBackgroundResource((is_shirka)? R.drawable.shirka_cell_borders : R.drawable.cell_borders);
-        }
-        cell.setText(txt);
+        cell.setBackgroundResource(last_row ? R.drawable.last_row_shirka_borders : R.drawable.shirka_cell_borders);
+        cell.setText("");
         return cell;
     }
 
     private TextView prepareTextView() {
-        TextView tv = new TextView(this);
+        TextView tv = new TextView(getActivity());
 
         tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_size));
         tv.setTextColor(Color.BLACK);
-        tv.setGravity(Gravity.RIGHT);
         tv.setTextDirection(View.TEXT_DIRECTION_RTL);
+        tv.setGravity(Gravity.START);
         return tv;
     }
 }
