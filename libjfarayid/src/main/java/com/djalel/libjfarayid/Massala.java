@@ -813,30 +813,33 @@ public class Massala {
                 addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_ASHAKIKAT, nbr_b, sharh2, 2 * nbr_a + nbr_b));
             }
 
-            // الحجب بالإخوة الأشقاء
-            if (mInput.get_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_alakhawat_li_ab() > 0) {
-                addHajb(Warith.ALAKHAWAT_LI_AB, mInput.get_alakhawat_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_abna_alikhwa_alashika() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_abna_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_ala3mam_alashika() > 0) {
-                addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_abna_ala3mam_alashika() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
-            }
-            if (mInput.get_abna_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+            // Hajb bi alikhwa is the same for all Jad & Ikhwa cases. So we do it only once.
+            if (halIdx == 0) {
+                // الحجب بالإخوة الأشقاء
+                if (mInput.get_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_alakhawat_li_ab() > 0) {
+                    addHajb(Warith.ALAKHAWAT_LI_AB, mInput.get_alakhawat_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_abna_alikhwa_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_abna_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_abna_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
+                if (mInput.get_abna_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALIKHWA_ALASHIKA, nbr_a);
+                }
             }
         }
         else if ((nbr_b > 0) && (ta3seebBiljad || ta3seebBiljad)) {
@@ -847,30 +850,34 @@ public class Massala {
             if (muqassamaMa3aAljad) { sharh += " ومقاسمة مع الجد"; }
             addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_ASHAKIKAT, nbr_b, sharh));
 
-            // الحجب بالأخوات الشقيقات في وجود الجد العصاب لهن
-            if (mInput.get_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_alakhawat_li_ab() > 0) {
-                addHajb(Warith.ALAKHAWAT_LI_AB, mInput.get_alakhawat_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_abna_alikhwa_alashika() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_abna_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_ala3mam_alashika() > 0) {
-                addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_abna_ala3mam_alashika() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
-            }
-            if (mInput.get_abna_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+
+            // Hajb bi alakhawat is the same for all Jad & Ikhwa cases. So we do it only once.
+            if (halIdx == 0) {
+                // الحجب بالأخوات الشقيقات في وجود الجد العصاب لهن
+                if (mInput.get_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ALIKHWA_LI_AB, mInput.get_alikhwa_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_alakhawat_li_ab() > 0) {
+                    addHajb(Warith.ALAKHAWAT_LI_AB, mInput.get_alakhawat_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_abna_alikhwa_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_abna_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_abna_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
+                if (mInput.get_abna_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_ASHAKIKAT, nbr_b);
+                }
             }
         }
     }
@@ -905,24 +912,27 @@ public class Massala {
                 addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh2, 2 * nbr_a + nbr_b));
             }
 
-            // alhajb by alikhwa li ab
-            if (mInput.get_abna_alikhwa_alashika() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
-            }
-            if (mInput.get_abna_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
-            }
-            if (mInput.get_ala3mam_alashika() > 0) {
-                addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
-            }
-            if (mInput.get_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
-            }
-            if (mInput.get_abna_ala3mam_alashika() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
-            }
-            if (mInput.get_abna_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
+                        // Hajb bi alikhwa is the same for all Jad & Ikhwa cases. So we do it only once.
+            if (halIdx == 0) {
+                // alhajb by alikhwa li ab
+                if (mInput.get_abna_alikhwa_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
+                if (mInput.get_abna_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
+                if (mInput.get_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
+                if (mInput.get_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
+                if (mInput.get_abna_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
+                if (mInput.get_abna_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALIKHWA_LI_AB, nbr_a);
+                }
             }
         } else if ((nbr_b > 0) && (ta3seebBiljad || muqassamaMa3aAljad)) {
             // الأخت دون الأخ مع الجد تصبح عصبة به فتقاسمه وتحجب من يحجبه الأخ
@@ -932,24 +942,27 @@ public class Massala {
             if (muqassamaMa3aAljad) { sharh += " ومقاسمة مع الجد"; }
             addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh));
 
-            // alhajb by alikhwa li ab
-            if (mInput.get_abna_alikhwa_alashika() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
-            }
-            if (mInput.get_abna_alikhwa_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
-            }
-            if (mInput.get_ala3mam_alashika() > 0) {
-                addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
-            }
-            if (mInput.get_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
-            }
-            if (mInput.get_abna_ala3mam_alashika() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
-            }
-            if (mInput.get_abna_ala3mam_li_ab() > 0) {
-                addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+            // Hajb bi alakhawat is the same for all Jad & Ikhwa cases. So we do it only once.
+            if (halIdx == 0) {
+                // alhajb by alikhwa li ab
+                if (mInput.get_abna_alikhwa_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_ALASHIKA, mInput.get_abna_alikhwa_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
+                if (mInput.get_abna_alikhwa_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALIKHWA_LI_AB, mInput.get_abna_alikhwa_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
+                if (mInput.get_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ALA3MAM_ALASHIKA, mInput.get_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
+                if (mInput.get_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ALA3MAM_LI_AB, mInput.get_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
+                if (mInput.get_abna_ala3mam_alashika() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_ALASHIKA, mInput.get_abna_ala3mam_alashika(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
+                if (mInput.get_abna_ala3mam_li_ab() > 0) {
+                    addHajb(Warith.ABNA_ALA3MAM_LI_AB, mInput.get_abna_ala3mam_li_ab(), Warith.ALAKHAWAT_LI_AB, nbr_b);
+                }
             }
         }
     }
