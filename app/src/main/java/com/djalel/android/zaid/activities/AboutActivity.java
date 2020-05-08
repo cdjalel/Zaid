@@ -20,9 +20,7 @@ package com.djalel.android.zaid.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import com.djalel.android.zaid.R;
 

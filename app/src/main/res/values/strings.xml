@@ -31,43 +31,20 @@
     <string name="hanafi">حنفي</string>
     <string name="chafi3i">شافعي</string>
     <string name="maliki">مالكي</string>
-    <string name="deceased">معلومات المتوفى</string>
-    <string name="male">ذكر</string>
-    <string name="female">أنثى</string>
+    <string name="mutawafa">معلومات المتوفى</string>
+    <string name="dhakar">ذكر</string>
+    <string name="ontha">أنثى</string>
     <string name="tarika">مبلغ التركة:</string>
-    <string name="no">لا</string>
-    <string name="yes">نعم</string>
-    <string name="mother">الأم:</string>
-    <string name="father">الأب:</string>
-    <string name="grand_father">الجد:</string>
-    <string name="maternal_grand_mother">الجدة لأم:</string>
-    <string name="paternal_grand_mother">الجدة لأب:</string>
+    <string name="alom">الأم:</string>
+    <string name="alab">الأب:</string>
+    <string name="aljad">الجد:</string>
+    <string name="aljadah_li_om">الجدة لأم:</string>
+    <string name="aljadah_li_ab">الجدة لأب:</string>
     <string name="alhal">حل المسألة</string>
-    <string name="wives">الزوجات:</string>
-    <string name="husband">الزوج:</string>
-    <string name="daughters">البنات:</string>
-    <string name="sons">الأبناء:</string>
-    <string name="title_activity_result">حل المسألة</string>
-
-    <string name="about"><![CDATA[
-<html>
-<head></head>
-<body style="text-align:justify;color:white;background-color:black;" dir="rtl" lang="ar">
-"زيد الفرضي" هو برنامج لحساب الفرائض وفق الشريعة الإسلامية السمحاء. أخذ اسمه من اسم الصحابي الجليل زيد بن حارثة رضي الله عنه، الذي قال فيه رسول الله صلى الله عليه وآله وسلم "أفرضكم زيد".
-تم تطوير هذا البرنامج باعتماد كتاب "الفرائض المُيسََّر" من تأليف عبد الشكور معلم عبد فارح.
-<br/>
-للتبليغ عن أية أخطاء في البرنامج، لا سيما في حساب الفروض، يُرجى مراسلة المطور على البريد الإلكتروني
-<a href="mailto:cdjalel@gmail.com" style="color:yellow">cdjalel@gmail.com</a>
-<br/>
-هذا البرنامج حر، مفتوح المصدر، مجاني ومتوفر تحت رخصة غنو العمومية إصدار 3.0، حيث يمكن الحصول على مصدره من الموقع:
-<br/>
-<a href="https://github.com/cdjalel/Zaid" style="color:yellow">https://github.com/cdjalel/Zaid</a>
-</body>
-</html>
-]]></string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="azawjat">الزوجات:</string>
+    <string name="azawj">الزوج:</string>
+    <string name="albanat">البنات:</string>
+    <string name="alabna">الأبناء:</string>
     <string name="ma3lumat">معلومات المتوفى</string>
     <string name="ussol">الأصول الأحياء</string>
     <string name="azwaj_foro3">الأزواج والفروع الأحياء</string>
@@ -86,5 +63,24 @@
     <string name="abna_ala3mam_li_ab">أبناء الأعمام لأب:</string>
     <string name="banat_alabna">بنات الأبناء:</string>
     <string name="abna_alabna">أبناء الأبناء:</string>
+
+
+    <string name="about"><![CDATA[
+<html>
+<head></head>
+<body style="text-align:justify;color:white;background-color:black;" dir="rtl" lang="ar">
+«زيدٌ الفرضي»" هو برنامج لحساب الفرائض وفق الشريعة الإسلامية السمحاء. يحمل هذا البرنامج اسم الصحابي الجليل زيد بن ثابت رضي الله عنه،
+ الذي قال فيه رسول الله صلى الله عليه وآله وسلم «أَفْرَضُ أُمَّتي زيد» (رواه الحاكم وقال هذا حديث صحيح على شرط الشيخين).
+تم تطوير هذا البرنامج باعتماد كتاب "الفرائض المُيسََّر" من تأليف عبد الشكور معلم عبد فارح.
+<br/>
+هذا الإصدار من البرنامج لا يزال تجريبيا، لذا يُرجى التبليغ عن أية أخطاء فيه، لا سيما في حساب الفرائض، بمراسلة المطور على البريد الإلكتروني
+<a href="mailto:cdjalel@gmail.com" style="color:gold">cdjalel@gmail.com</a>
+<br/>
+هذا البرنامج حر، مفتوح المصدر، مجاني ومتوفر تحت رخصة غنو العمومية إصدار 3.0 GPL، حيث يمكن الحصول على مصدره من الموقع:
+<br/>
+<a href="https://github.com/cdjalel/Zaid" style="color:gold">https://github.com/cdjalel/Zaid</a>
+</body>
+</html>
+]]></string>
 
 </resources>
