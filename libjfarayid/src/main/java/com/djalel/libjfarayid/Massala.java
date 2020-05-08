@@ -395,7 +395,7 @@ public class Massala {
             ta3seeb = true;
             mHal.get(0).mTassawi = false;
             mHal.get(0).mShirkaTa3seeb = true;
-            mSpecialCase = "هذه مسألة الغرّاوين"; // TODO make it an enum type
+            mSpecialCase = "هذه مسألة الغرّاوين."; // TODO make it an enum type
         } else {
             sharh += "الثلث 1\\3 فرضا";
             maqam = 3;
