@@ -112,13 +112,13 @@
                                 android:id="@+id/radioButtonMale"
                                 style="@style/ZaidAppTheme.radioButtonStyle"
                                 android:checked="true"
-                                android:text="@string/male" />
+                                android:text="@string/dhakar" />
 
                             <RadioButton
                                 android:id="@+id/radioButtonFemale"
                                 style="@style/ZaidAppTheme.radioButtonStyle"
                                 android:checked="false"
-                                android:text="@string/female" />
+                                android:text="@string/ontha" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -222,13 +222,13 @@
                             android:id="@+id/fatherCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
                             android:layout_marginStart="10dp"
-                            android:text="@string/father" />
+                            android:text="@string/alab" />
 
                         <CheckBox
                             android:id="@+id/motherCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
                             android:layout_marginEnd="10dp"
-                            android:text="@string/mother" />
+                            android:text="@string/alom" />
 
                     </LinearLayout>
 
@@ -247,18 +247,18 @@
                             android:id="@+id/aljadCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
                             android:layout_marginStart="20dp"
-                            android:text="@string/grand_father" />
+                            android:text="@string/aljad" />
 
                         <CheckBox
                             android:id="@+id/aljadahLiAbCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
                             android:layout_marginStart="20dp"
-                            android:text="@string/paternal_grand_mother" />
+                            android:text="@string/aljadah_li_ab" />
 
                         <CheckBox
                             android:id="@+id/aljadahLiOmCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:text="@string/maternal_grand_mother" />
+                            android:text="@string/aljadah_li_om" />
                     </LinearLayout>
 
                     <View
@@ -290,13 +290,13 @@
                             android:id="@+id/azawjCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
                             android:layout_marginStart="16dp"
-                            android:text="@string/husband" />
+                            android:text="@string/azawj" />
 
                         <TextView
                             android:id="@+id/zawjatTextView"
                             style="@style/ZaidAppTheme.textViewStyle"
                             android:labelFor="@id/zawjatEditText"
-                            android:text="@string/wives" />
+                            android:text="@string/azawjat" />
 
                         <EditText
                             android:id="@+id/zawjatEditText"
@@ -308,7 +308,7 @@
                             android:id="@+id/sonsTextView"
                             style="@style/ZaidAppTheme.textViewStyle"
                             android:labelFor="@id/sonsEditText"
-                            android:text="@string/sons" />
+                            android:text="@string/alabna" />
 
                         <EditText
                             android:id="@+id/sonsEditText"
@@ -320,7 +320,7 @@
                             android:id="@+id/daughtersTextView"
                             style="@style/ZaidAppTheme.textViewStyle"
                             android:labelFor="@id/daughtersEditText"
-                            android:text="@string/daughters" />
+                            android:text="@string/albanat" />
 
                         <EditText
                             android:id="@+id/daughtersEditText"
