@@ -18,7 +18,24 @@
 
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        zf {
+            storeFile file('/home/dch/.keystore/android.jks')
+            storePassword '^dch@droid1KS&'
+            keyAlias = 'zf'
+            keyPassword '^dch@droid1ZF&'
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -32,8 +49,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.zf
         }
     }
 }
