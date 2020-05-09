@@ -32,10 +32,9 @@ public class Massala {
         MUQASSAMA,
         SUDUSS,
         THULUTH_ALBAQI,
-    };
-    private AljadMa3aAlikhwa mAljadMa3aAlikhwa;
+    }
 
-    ;
+    private AljadMa3aAlikhwa mAljadMa3aAlikhwa;
 
     private List<WarathahOutput> mHal;
 
