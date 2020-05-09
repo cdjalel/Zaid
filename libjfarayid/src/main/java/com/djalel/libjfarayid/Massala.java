@@ -1255,7 +1255,7 @@ public class Massala {
 
     private void hissabAnsiba() {
         // قسمة الأسهم في الجدول
-        int nassib = 0;
+        int nassib;
         int missahFactor = 1;
         ArrayList<Mirath> all = new ArrayList<>();
 
@@ -1351,14 +1351,14 @@ public class Massala {
 
                 int bast = mHal.get(0).mBaqi;
                 int ro2os = 1;
-                boolean shirka = false;
+//                boolean shirka = false;
 
                 nassibMojmal.append(bast);
                 nassibFardi.append(bast);
 
                 if (ro2os1 != 0) {
 //                    nassibMojmal.append("ش");
-                    shirka = true;
+//                    shirka = true;
 
                     nassibFardi.append(" * ");
                     nassibFardi.append(factor1).append("\\").append(ro2os1);
@@ -1435,7 +1435,7 @@ public class Massala {
         StringBuilder sharh = new StringBuilder();
 
         if (mSpecialCase != null /* TODO غراوين */) {
-            sharh.append("- " + mSpecialCase + "\n");
+            sharh.append("- ").append(mSpecialCase).append("\n");
         }
 
         for (WarathahOutput hal : mHal) {
@@ -1443,17 +1443,17 @@ public class Massala {
 
             if (hal.mWarathah != null) {
                 for (Mirath m : hal.mWarathah) {
-                    sharh.append("- " + m.getSharh() + ".\n");
+                    sharh.append("- ").append(m.getSharh()).append(".\n");
                 }
             }
 
             if (hal.mMahjoobin != null) {
                 for (Mirath m : hal.mMahjoobin) {
-                    sharh.append("- " + m.getSharh() + ".\n");
+                    sharh.append("- ").append(m.getSharh()).append(".\n");
                 }
             }
 
-            sharh.append("\n" + "- المسألة أصلها " + hal.mAsl);
+            sharh.append("\n").append("- المسألة أصلها ").append(hal.mAsl);
             switch (hal.mNaw3) {
                 case NAW3_ADILA:
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
