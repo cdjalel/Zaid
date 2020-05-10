@@ -1,8 +1,12 @@
-Overview
+نظرة عامة
 ========
-Zaid Al-faradhi (زيد الفرضي) is a free software that calculates Muslim Fara'idh/Al-mawarith حساب الفرائض\المواريث (heritage distribution) on Android phones and tablets. 
+زيد الفرضي هو برنامج حر ومفتوح المصدر تحت رخصة جنو العمومية الإصدار 3.0، يحسب المواريث )الفرائض(
+ على منصة الأندرويد. حيث يُحدد أسهم أصحاب الفروض والورثة بالتعصيب وأصل المسألة والعول وتصحيح الإنكسار ومسائل الجد مع الأخوة حسب المذاهب الفقهية المُختلفة.
+ 
+  ينقص برمجة المسائل الخاصة في الفرائض مثل الأكدرية والمناسخات والرد وذوي الأرحام والخنثى والمفقود والحمل والغرقى والهدمى، إلخ.
 
-Zaid was initially developed for academic purposes. It was open sourced under __GPLv3__ in the hope that volunteers can contribute changes to improve it.
-
-Currently it calculates only the heritage of Ashab Al-furud (أصحاب الفروض، أي الوارثون بالفرض) and Ashab Ata3seeb (أصحاب التعصيب، أي ورثة الباقي من أصل المسألة بعد أن يأخذ أصحاب الفروض أسهمهم). It lacks the part that computes Tashih (التصحيح في حالة الإنكسار), Arrad (الرد على أصحاب الفروض في حالة وجود باقي مع انعدام أصحابا التعصيب) and the special cases (المسائل الخاصة في الفرائض).
-
+مقتطفات الشاشة
+==============
+||||
+|-|-|-| 
+|<img src="https://user-images.githubusercontent.com/5300525/81501119-7b6ed200-92ce-11ea-815f-c1db659e66e4.jpg" height="500" width="250"/>|<img src="https://user-images.githubusercontent.com/5300525/81501120-7e69c280-92ce-11ea-8647-b2a0d030582c.jpg" height="500" width="250"/>)|<img src="https://user-images.githubusercontent.com/5300525/81501122-80cc1c80-92ce-11ea-9d91-f40733713176.jpg" height="500" width="250"/>| 
