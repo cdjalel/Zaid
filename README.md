@@ -1,6 +1,6 @@
 <h1 dir='rtl' align='right'>
 نظرة عامة
-</h>
+</h1>
 
 <p dir='rtl' align='right'>
 زيد الفرضي هو برنامج يقوم بحساب المواريث )الفرائض ويعمل على منصة الأندرويد.
@@ -17,21 +17,21 @@
 </p>
 
 <h1 dir='rtl' align='right'>تنزيل الإصدار 1.0
-</h>
+</h1>
 <p dir='rtl' align='right'>
 هذا <a href="https://github.com/cdjalel/Zaid/releases/download/v1.0/zaid-alfaradi.apk">رابط الإصدار 1.0</a>
 </p>
 
 <h1 dir='rtl' align='right'>
 عرض فيديو عن البرنامج
- </h>
+ </h1>
 <p dir='rtl' align='right'>
 هذا <a href="https://www.youtube.com/watch?v=GLnQOi1RKBo">رابط الفيديو</a>
 </p>
 
 <h1 dir='rtl' align='right'>
 مقتطفات الشاشة
- </h>
+ </h1>
  
 <br/>
 
