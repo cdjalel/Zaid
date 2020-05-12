@@ -58,7 +58,7 @@ class WarathahOutput {
         mAwl = 0;
         mMissah = 0;
 
-        mNaw3 = Naw3.NAW3_NONE;
+        mNaw3 = Naw3.NAW3_3ADIA;
     }
 
     void copyHal(WarathahOutput from) {

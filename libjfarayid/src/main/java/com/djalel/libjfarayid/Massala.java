@@ -238,7 +238,8 @@ public class Massala {
                 mHal.get(0).mShirkaTa3seeb = true;
                 ro2os = 3;
                 sharh += "ثلثي 2\\3 الباقي تعصيبا بالنفس";
-                mSpecialCase = "هذه مسألة الغرّاوين."; // TODO make it an enum type
+                mSpecialCase = "هذه مسألة الغرّاوين.";
+                mHal.get(0).mNaw3 = Naw3.NAW3_ALGHARRAWAYN;
             } else {
                 ro2os = 1;
                 sharh += "الباقي تعصيبا بالنفس";
@@ -394,8 +395,9 @@ public class Massala {
             ta3seeb = true;
             mHal.get(0).mTassawi = false;
             mHal.get(0).mShirkaTa3seeb = true;
-            mSpecialCase = "هذه مسألة الغرّاوين."; // TODO make it an enum type
-        } else {
+            mSpecialCase = "هذه مسألة الغرّاوين.";
+            mHal.get(0).mNaw3 = Naw3.NAW3_ALGHARRAWAYN;
+     } else {
             sharh += "الثلث 1\\3 فرضا";
             maqam = 3;
             ro2os = 1;
@@ -1187,15 +1189,14 @@ public class Massala {
         hal.mBaqi = hal.mAsl - ashom;
         if (hal.mBaqi == 0) {
             if (hal.mNbrFurudh > 0) {
-                hal.mNaw3 = Naw3.NAW3_ADILA;
+                hal.mNaw3 = Naw3.NAW3_3ADILA;
             }
             if (hal.mNbr3assabat > 0) {
                 hal.mIstighraq = true;
             }
         } else if (hal.mBaqi > 0) { // مسألة فيها باقي
-            if ((hal.mNbr3assabat == 0) && (ashom != 0)) {            // مسألة ناقصة فيها رد
+            if ((hal.mNbr3assabat == 0) && (ashom != 0) && (mSpecialCase == null)) {            // مسألة ناقصة فيها رد
                 hal.mNaw3 = Naw3.NAW3_RAD;
-                // TODO rad albaqi
             }
         } else {                                // مسألة عائلة
             hal.mNaw3 = Naw3.NAW3_AWL;
@@ -1455,7 +1456,7 @@ public class Massala {
 
             sharh.append("\n").append("- المسألة أصلها ").append(hal.mAsl);
             switch (hal.mNaw3) {
-                case NAW3_ADILA:
+                case NAW3_3ADILA:
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
                     break;
                 case NAW3_RAD:
@@ -1474,7 +1475,7 @@ public class Massala {
                     break;
             }
 
-            if (hal.mNbr3assabat > 0) {
+            if ((hal.mNbr3assabat > 0) || (hal.mNaw3 == Naw3.NAW3_ALGHARRAWAYN)) {
                 if (hal.mIstighraq) {
                     sharh.append("- استغرق أصحاب الفروض الأسهم ولم يبق للورثة بالتعصيب شيء.\n");
                 } else {
