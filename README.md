@@ -16,10 +16,11 @@
 وذلك بالمراسلة على الخاص هنا في هذا المنتدى المبارك أو البريد الإلكتروني الموضح داخل البرنامج نفسه.
 </p>
 
-<h1 dir='rtl' align='right'>تنزيل الإصدار 1.0
-</h1>
+<h1 dir='rtl' align='right'>
+متوفر في جوجل بلاي
+ </h1>
 <p dir='rtl' align='right'>
-هذا <a href="https://github.com/cdjalel/Zaid/releases/download/v1.0/zaid-alfaradi.apk">رابط الإصدار 1.0</a>
+<a href='https://play.google.com/store/apps/details?id=com.djalel.android.zaid'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 </p>
 
 <h1 dir='rtl' align='right'>
@@ -35,4 +36,4 @@
  
 <br/>
 
-|<img src="https://user-images.githubusercontent.com/5300525/81501119-7b6ed200-92ce-11ea-815f-c1db659e66e4.jpg" height="500" width="250"/>|<img src="https://user-images.githubusercontent.com/5300525/81501120-7e69c280-92ce-11ea-8647-b2a0d030582c.jpg" height="500" width="250"/>|<img src="https://user-images.githubusercontent.com/5300525/81501122-80cc1c80-92ce-11ea-9d91-f40733713176.jpg" height="500" width="250"/>| 
+<img align='right' src="https://user-images.githubusercontent.com/5300525/81501119-7b6ed200-92ce-11ea-815f-c1db659e66e4.jpg" height="500" width="250"/> <img align='right' src="https://user-images.githubusercontent.com/5300525/81501120-7e69c280-92ce-11ea-8647-b2a0d030582c.jpg" height="500" width="250"/> <img align='right' src="https://user-images.githubusercontent.com/5300525/81501122-80cc1c80-92ce-11ea-9d91-f40733713176.jpg" height="500" width="250"/> 
