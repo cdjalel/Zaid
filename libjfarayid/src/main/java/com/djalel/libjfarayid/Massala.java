@@ -41,7 +41,6 @@ public class Massala {
     private boolean m_alakhawat_ashakikat_3assabat_ma3a_lghayr;
     private boolean m_alakhawat_3assabat_ma3a_lghayr;
 
-    private String mSpecialCase;
     private String mSharh;
 
     public Massala() {
@@ -50,7 +49,6 @@ public class Massala {
         mHal = new ArrayList<>();
         mHal.add(new WarathahOutput());
 
-        mSpecialCase = null;
         mSharh = "لم يتم إدخال أية ورثة.\n";
 
         m_alakhawat_ashakikat_3assabat_ma3a_lghayr = false;
@@ -59,11 +57,17 @@ public class Massala {
         mAljadMa3aAlikhwa = AljadMa3aAlikhwa.LA;
     }
 
-    private void addMirath(Mirath m) { mHal.get(0).mWarathah.add(m); }
+    private void addMirath(Mirath m) { addMirath(0, m); }
 
     private void addMirath(int halIdx, Mirath m) {
-        if (halIdx < mHal.size()) {
+        if ((0 <= halIdx) && (halIdx < mHal.size())) {
             mHal.get(halIdx).mWarathah.add(m);
+            if (m.getBast() != 0) {
+                mHal.get(halIdx).mNbrFurudh++;      // وارث بالفرض (فقط أو مع التعصيب)
+            }
+            if (m.isTa3seeb()){
+                mHal.get(halIdx).mNbr3assabat++;    // وارث بالتعصيب (فقط أو مع الفرض)
+            }
         }
     }
 
@@ -131,7 +135,6 @@ public class Massala {
         mirathAlbanatBiAlfardh();
         mirathAlakhawatAshakikatBiAlfardh(far3_warith_dhakar, far3_warith_ontha);
         mirathAlakhawatLiAbBiAlfardh(far3_warith_dhakar, far3_warith_ontha, alikhwa_alashika_wa_li_ab);
-        mHal.get(0).mNbrFurudh = mHal.get(0).mWarathah.size();
 
         // أصحاب التصعيب
         mirathAlabnaWaAlbanatBita3seeb();
@@ -149,7 +152,6 @@ public class Massala {
         mirathAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa);
         mirathAbnaAla3mamAlashika(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam);
         mirathAbnaAla3mamLiAb(far3_wa_asl_warith_dhaker, alikhwa_wa_abna_alikhwa, ala3mam);
-        mHal.get(0).mNbr3assabat = mHal.get(0).mWarathah.size() - mHal.get(0).mNbrFurudh;
 
         if (mHal.get(0).mWarathah.size() == 0) {
             System.out.println(mSharh);
@@ -231,16 +233,16 @@ public class Massala {
             ta3seeb = true;
         } else {
             bast = 0;
-            maqam = 1;
             ta3seeb = true;
             if (!jam3_alikhwa && mInput.alom() && ((mInput.get_azawjat() > 0) || (mInput.zawj()))) {
+                sharh += "ثلثي 2\\3 الباقي تعصيبا بالنفس";
+                maqam = 3;      // not used anyway
+                ro2os = 3;
                 mHal.get(0).mTassawi = false;
                 mHal.get(0).mShirkaTa3seeb = true;
-                ro2os = 3;
-                sharh += "ثلثي 2\\3 الباقي تعصيبا بالنفس";
-                mSpecialCase = "هذه مسألة الغرّاوين.";
                 mHal.get(0).mNaw3 = Naw3.NAW3_ALGHARRAWAYN;
             } else {
+                maqam = 1;
                 ro2os = 1;
                 sharh += "الباقي تعصيبا بالنفس";
             }
@@ -378,6 +380,7 @@ public class Massala {
     private void mirathAlom(boolean far3_warith, boolean jam3_alikhwa) {
         if (!mInput.alom()) return;
 
+        int bast = 1;
         int maqam;
         int ro2os;
         boolean ta3seeb;
@@ -390,12 +393,12 @@ public class Massala {
             ta3seeb = false;
         } else if ((mInput.alab()) && ((mInput.get_azawjat() > 0) || (mInput.zawj()))) {
             sharh = "الأم ترث ثلث 1\\3 الباقي";
-            maqam = 3;
+            bast = 0;
+            maqam = 3;  // not used anyway
             ro2os = 3;
             ta3seeb = true;
             mHal.get(0).mTassawi = false;
             mHal.get(0).mShirkaTa3seeb = true;
-            mSpecialCase = "هذه مسألة الغرّاوين.";
             mHal.get(0).mNaw3 = Naw3.NAW3_ALGHARRAWAYN;
      } else {
             sharh += "الثلث 1\\3 فرضا";
@@ -403,7 +406,7 @@ public class Massala {
             ro2os = 1;
             ta3seeb = false;
         }
-        addMirath(new Mirath(Warith.ALOM, sharh, 1, maqam, ta3seeb, ro2os));
+        addMirath(new Mirath(Warith.ALOM, sharh, bast, maqam, ta3seeb, ro2os));
 
         // alhajb bi mInput.alom()
         if (mInput.aljadah_li_ab()) {
@@ -1195,7 +1198,7 @@ public class Massala {
                 hal.mIstighraq = true;
             }
         } else if (hal.mBaqi > 0) { // مسألة فيها باقي
-            if ((hal.mNbr3assabat == 0) && (ashom != 0) && (mSpecialCase == null)) {            // مسألة ناقصة فيها رد
+            if ((hal.mNbr3assabat == 0) && (ashom != 0)) {            // مسألة ناقصة فيها رد
                 hal.mNaw3 = Naw3.NAW3_RAD;
             }
         } else {                                // مسألة عائلة
@@ -1435,11 +1438,7 @@ public class Massala {
     private void hissabAsharhPrefix() {
         StringBuilder sharh = new StringBuilder();
 
-        if (mSpecialCase != null /* TODO غراوين */) {
-            sharh.append("- ").append(mSpecialCase).append("\n");
-        }
-
-        for (WarathahOutput hal : mHal) {
+        for (WarathahOutput hal : mHal) {       // loop used for debugging Jad Ma3a Ikhwa
             sharh.append("\n");
 
             if (hal.mWarathah != null) {
@@ -1454,7 +1453,7 @@ public class Massala {
                 }
             }
 
-            sharh.append("\n").append("- المسألة أصلها ").append(hal.mAsl);
+            sharh.append("\n- المسألة أصلها ").append(hal.mAsl);
             switch (hal.mNaw3) {
                 case NAW3_3ADILA:
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
@@ -1470,12 +1469,16 @@ public class Massala {
                 case NAW3_AWL:
                     sharh.append(String.format(" وهي عائلة (أسهمها أكثر من أصلها)، تعول إلى %d.\n", hal.mAwl));
                     break;
+                case NAW3_ALGHARRAWAYN:
+                    sharh.append(" وتسمى الغرّاوين.\n");
+                    break;
+                case NAW3_3ADIA:
                 default:
                     sharh.append(".\n");
                     break;
             }
 
-            if ((hal.mNbr3assabat > 0) || (hal.mNaw3 == Naw3.NAW3_ALGHARRAWAYN)) {
+            if (hal.mNbr3assabat > 0) {
                 if (hal.mIstighraq) {
                     sharh.append("- استغرق أصحاب الفروض الأسهم ولم يبق للورثة بالتعصيب شيء.\n");
                 } else {
@@ -1550,8 +1553,6 @@ public class Massala {
     public int getAwl() { return mHal.get(0).mAwl; }
 
     public int getMissah() { return mHal.get(0).mMissah; }
-
-    public String getSpecialCase() { return mSpecialCase; }
 
     public List<Mirath> getMawarith() {
         ArrayList<Mirath> all = new ArrayList<>();
