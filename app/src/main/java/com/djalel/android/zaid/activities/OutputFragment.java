@@ -38,6 +38,7 @@ import com.djalel.android.zaid.ZaidApplication;
 import com.djalel.libjfarayid.Massala;
 import com.djalel.libjfarayid.Mirath;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class OutputFragment extends Fragment {
@@ -91,11 +92,13 @@ public class OutputFragment extends Fragment {
     }
 
     private void createTable(ZaidApplication app) {
-        if (app.getMassala().getMawarith().isEmpty()) { return; }
+        Massala massala = app.getMassala();
+        ArrayList<Mirath> mawarith = massala.getMawarith();
+
+        if (mawarith.isEmpty()) { return; }
 
         // table head
         double tarika = app.getWarathaInput().getTarika();
-        Massala massala = app.getMassala();
         TableRow row = new TableRow(getActivity());
         int col = 2;
         TextView tvAsl;
@@ -125,9 +128,9 @@ public class OutputFragment extends Fragment {
         boolean waladAlomFirst = true;
         boolean last_row = false;
         int i = 0;
-        for (Mirath m : massala.getMawarith()) {
+        for (Mirath m : mawarith) {
             row = new TableRow(getActivity());
-            if (++i == massala.getMawarith().size()) { last_row = true; }
+            if (++i == mawarith.size()) { last_row = true; }
 
             // columns 1 & 2
             row.addView(createCell(m.getHokom(), false, last_row));
