@@ -1261,10 +1261,8 @@ public class Massala {
         // قسمة الأسهم في الجدول
         int nassib;
         int missahFactor = 1;
-        ArrayList<Mirath> all = new ArrayList<>();
+        ArrayList<Mirath> all = getMawarith();
 
-        all.addAll(mHal.get(0).mWarathah);
-        all.addAll(mHal.get(0).mMahjoobin);
         for (Mirath m : all) {          // Here be dragons
             StringBuilder nassibMojmal = new StringBuilder();
             StringBuilder nassibFardi = new StringBuilder();
@@ -1459,8 +1457,8 @@ public class Massala {
                     sharh.append("، وهي عادلة (تساوى أصلها مع أسهمها).\n");
                     break;
                 case NAW3_RAD:
-                    sharh.append(" وهي ناقصة (أسهمها أقل من أصلها).\n");
-                    sharh.append(String.format("- الباقي من الأصل %d يُرد على أصحاب الفروض (إن وجدوا) ما عدا الزوجين.", hal.mBaqi));
+                    sharh.append(String.format(" وهي ناقصة (أسهمها %d أقل من أصلها).\n", hal.mAsl - hal.mBaqi));
+                    sharh.append(String.format("- الباقي من الأصل %d يُرد على أصحاب الفروض ما عدا من وُجد من الزوجين.", hal.mBaqi));
                     sharh.append(" لقسمة الباقي يُمكن عمل مسألة جديدة فيها أصحاب الفروض (إن وجدوا) دون أحد الزوجين.\n");
                     // TODO. Ethier implement Rad and remove the previous line
                     // TODO. or add Rad buttong which is like 'change' button and eliminates zawj
@@ -1511,7 +1509,7 @@ public class Massala {
     }
 
     private void hissabAsharhSuffix() {
-        if (mHal.get(0).isInkissar()) {
+        if (mHal.get(0).isInkissar() && mHal.get(0).mNaw3 != Naw3.NAW3_RAD) { // TODO remove when RAD implemented
             mSharh += "- المسألة فيها انكسار وتصح من " + mHal.get(0).mMissah + ".\n";
         }
     }
@@ -1554,7 +1552,7 @@ public class Massala {
 
     public int getMissah() { return mHal.get(0).mMissah; }
 
-    public List<Mirath> getMawarith() {
+    public ArrayList<Mirath> getMawarith() {
         ArrayList<Mirath> all = new ArrayList<>();
 
         all.addAll(mHal.get(0).mWarathah);
