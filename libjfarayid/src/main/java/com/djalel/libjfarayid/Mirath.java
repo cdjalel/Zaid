@@ -31,7 +31,9 @@ public class Mirath {
 
     // calculated later
     private int fardh;          // أسهم صاحب الفرض من أصل المسألة
-    private int nassib;    // النصيب الفردي لكل وارث
+    private int rad;            // أسهم الوارث في مسألة الرد دون أحد الزوجين
+    private int sahmJami3a;     // أسهم الوارث في مسألة الرد الجامعة وفيها الفرض زائد الرد لغير الزوجين
+    private int nassib;         // النصيب الفردي لكل وارث
 
     // short textual form of the solution to display in a table
     private String hokom;
@@ -83,15 +85,19 @@ public class Mirath {
                 break;
         }
 
-        StringBuilder tmp = new StringBuilder();
-        tmp.append(warith.getName());
-        if (nbr > 1) {
-            tmp.append("(*").append(nbr).append(")");
+        if (warith != null) {
+            StringBuilder tmp = new StringBuilder();
+            tmp.append(warith.getName());
+            if (nbr > 1) {
+                tmp.append("(*").append(nbr).append(")");
+            }
+            ism = tmp.toString();
         }
-        ism = tmp.toString();
 
         // calculated later
         fardh = 0;
+        rad = 0;
+        sahmJami3a = 0;
         nassib = 0;
         nassibFardi = null;
         nassibMojmal = null;
@@ -151,6 +157,27 @@ public class Mirath {
         this(null, 0, null, 0, 0, false, 0);
     }
 
+    // copy constructor
+    public Mirath(Mirath src) {
+        this.warith = src.warith;
+        this.nbr = src.nbr;
+        this.sharh = src.sharh;
+        this.bast = src.bast;
+        this.maqam = src.maqam;
+        this.ta3seeb = src.ta3seeb;
+        this.ro2os = src.ro2os;
+
+        this.fardh = src.fardh;
+        this.nassib = src.nassib;
+        this.rad = src.rad;
+        this.sahmJami3a = src.sahmJami3a;
+
+        this.sharh = src.sharh;
+        this.ism = src.ism;
+        this.nassibFardi = src.nassibFardi;
+        this.nassibMojmal = src.nassibMojmal;
+    }
+
     public void addHajib(String hajb) {
         // assert sharh != null
         // assert hajb != null
@@ -198,7 +225,7 @@ public class Mirath {
     public void setNassibMojmal(String nassibMojmal) { this.nassibMojmal = nassibMojmal; }
 
     public String getNassibFardi(boolean verbose) {
-        if (verbose) {
+        if (!verbose) {
             return this.nassibFardi;
         }
         StringBuilder tmp = new StringBuilder();
@@ -209,11 +236,29 @@ public class Mirath {
         return tmp.toString();
     }
 
-    public String getNassibFardi() { return getNassibFardi(false); }
+    public String getNassibFardi() { return getNassibFardi(true); }
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
 
     public boolean isJadah() { return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
 
     public boolean isWaladAlom() { return (this.warith == Warith.ALIKHWA_LI_OM) || (this.warith == Warith.ALAKHAWAT_LI_OM); }
+
+    public boolean isAhadZawjain() { return (this.warith == Warith.AZAWJ) || (this.warith == Warith.AZAWJAT); }
+
+    public int getRad() { return rad; }
+
+    public void setRad(int rad) { this.rad = rad; }
+
+    public int getJami3Alfardh() { return sahmJami3a != 0 ? sahmJami3a : fardh; }
+
+    public int getSahmJami3a() { return sahmJami3a; }
+
+    public void setJami3AlfardhWaRad(int sahmJami3a) { this.sahmJami3a = sahmJami3a; }
+
+    public void addSharh(String extra) {
+        sharh = sharh + " " + extra;
+    }
+
+    public final String getDhamir() { return warith != null ? warith.getDhamir(nbr) : ""; }
 }

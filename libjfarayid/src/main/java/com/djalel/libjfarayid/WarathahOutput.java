@@ -20,7 +20,7 @@ package com.djalel.libjfarayid;
 
 import java.util.ArrayList;
 
-class WarathahOutput {
+class WarathahOutput {  // TODO public vs private fields
     ArrayList<Mirath> mWarathah;
     ArrayList<Mirath> mMahjoobin;
 
@@ -32,11 +32,18 @@ class WarathahOutput {
     int mNbrFurudh;
     int mNbr3assabat;
     int mAsl;
+    int mAshom;
     int mBaqi;
     int mRo2osAlbaqi;
     int mRo2osBaqiAlbaqi;
     int mAwl;
     int mMissah;
+
+    int mAslRad;
+    int mAslZawjia;
+    int mAslJami3a;
+    int mBaqiZawjia;
+    int mIndexZawjia;
 
     Naw3 mNaw3;
 
@@ -58,18 +65,25 @@ class WarathahOutput {
         mAwl = 0;
         mMissah = 0;
 
+        mAslRad = 0;
+        mAslJami3a = 0;
+        mAslZawjia = 0;
+        mBaqiZawjia = 0;
+        mIndexZawjia = -1;
+
         mNaw3 = Naw3.NAW3_3ADIA;
     }
 
-    void copyHal(WarathahOutput from) {
-        // from is the complete Massala where aljad is the last Sahib Fard in the list with 1/6
-        // mWarathah contains only aljad + ikhwa for the other two cases where aljad part != 1/6
+    public void copyWarathahExceptAljadWaAlikhwa(WarathahOutput from) {
+        // This is kind of late copy constructor used for Aljad ma3a Alikhwa
+        // 'from' is Hal al-Mas2ala till Aljad who is the last Sahib Fard in the list with 1/6
+        // 'mWarathah' contains only aljad + ikhwa for the other two cases where aljad part != 1/6
         ArrayList<Mirath> tmp = mWarathah;
         mWarathah = new ArrayList<>();
         int i;
         // Shallow copy of warathah as they are the same in all 3 cases (except Aljad and Ikhwa)
         for (i = 0; i < (from.mNbrFurudh - 1); i++) { mWarathah.add(from.mWarathah.get(i)); }
-        // Preserve aljad and alikhwa from current massalal
+        // Preserve already calculated aljad and alikhwa in this hal
         for (i = 0; i < tmp.size(); i++) { mWarathah.add(tmp.get(i)); }
 
         mMahjoobin = from.mMahjoobin;    // reference copy as hajb is the same for all cases
@@ -78,7 +92,7 @@ class WarathahOutput {
         mNbr3assabat = from.mNbr3assabat + 1;
         mTassawi = from.mTassawi;
 
-        // rest is unique to each case DO NOT COPY
+        // remaining fields rest is unique to each case DO NOT COPY
 //            mShirkaTa3seeb = from.mShirkaTa3seeb;
 //            mMu3addah = from.mMu3addah;
 //            mIstighraq = from.mIstighraq;
@@ -91,5 +105,43 @@ class WarathahOutput {
 //            mMissah = 0;
     }
 
-    public boolean isInkissar() { return mAwl != 0 ? mAwl != mMissah : mAsl != mMissah; }
+    public WarathahOutput copyWarathahExceptAhadZawjayn() {
+        // deep copy of initial part of Hal
+        WarathahOutput tmp = new WarathahOutput();
+        for (Mirath m : this.mWarathah) {
+            if (m.isAhadZawjain()) { continue; }
+            tmp.mWarathah.add(new Mirath(m));
+        }
+        tmp.mNbrFurudh = tmp.mWarathah.size();
+        return tmp;
+    }
+
+    public int getFardh(Warith w) {
+        for (Mirath m : mWarathah) {
+            if (w == m.getWarith()) { return m.getFardh(); }
+        }
+        return 0;
+    }
+
+    public boolean isInkissar() {
+        switch (mNaw3) {
+            case NAW3_AWL:
+                return mAwl != mMissah;
+            case NAW3_RAD_3ALA_WAHED:
+            case NAW3_RAD_3ALA_MUTAJANISEEN:
+            case NAW3_RAD_3ALA_MUKHTALIFEEN:
+            case NAW3_RAD_3ALA_WAHED_ZAWJIA:
+            case NAW3_RAD_3ALA_MUTAJANISEEN_ZAWJIA:
+            case NAW3_RAD_3ALA_MUKHTALIFEEN_ZAWJIA:
+                return mAslJami3a != mMissah;
+            default:
+                return mAsl != mMissah;
+        }
+    }
+
+    public void saveZawjiaIndex() {
+       mIndexZawjia = mWarathah.size();
+    }
+
+    public boolean isZawjia() { return  mIndexZawjia != -1; }
 }

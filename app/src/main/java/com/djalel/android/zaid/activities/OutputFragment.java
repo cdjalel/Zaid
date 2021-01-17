@@ -35,7 +35,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.djalel.android.zaid.R;
 import com.djalel.android.zaid.ZaidApplication;
-import com.djalel.libjfarayid.Massala;
+import com.djalel.libjfarayid.Mas2ala;
 import com.djalel.libjfarayid.Mirath;
 
 import java.util.ArrayList;
@@ -45,6 +45,8 @@ public class OutputFragment extends Fragment {
 
     private TableLayout mResultTableLayout;
     private TextView mResultTextView;
+
+    enum CELL {EMPTY, NORMAL, SHIRKA}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,87 +94,457 @@ public class OutputFragment extends Fragment {
     }
 
     private void createTable(ZaidApplication app) {
-        Massala massala = app.getMassala();
-        ArrayList<Mirath> mawarith = massala.getMawarith();
+        Mas2ala mas2ala = app.getMassala();
+        if (mas2ala.getMawarith().isEmpty()) { return; }
 
-        if (mawarith.isEmpty()) { return; }
+        // The table head and its number of columns depend on Naw3 Mas2ala
+        switch (mas2ala.getNaw3()) {
+            case NAW3_RAD_3ALA_WAHED:
+                createTableWithRad(app);
+                break;
+
+            case NAW3_RAD_3ALA_MUTAJANISEEN:
+                createTableWithRadWaTashih(app);
+                break;
+
+            case NAW3_RAD_3ALA_WAHED_ZAWJIA:
+            case NAW3_RAD_3ALA_MUKHTALIFEEN:
+            case NAW3_RAD_3ALA_MUTAJANISEEN_ZAWJIA:
+                createTableWithRadWaJami3a(app);
+                break;
+
+            case NAW3_RAD_3ALA_MUKHTALIFEEN_ZAWJIA: // TODO reduce enums
+                createTableWithRadWaJami3aWaZawjia(app);
+                break;
+
+            default:
+                createTableWithNoRad(app);
+                break;
+        }
+    }
+
+    private void createTableWithNoRad(ZaidApplication app) {
+        Mas2ala mas2ala = app.getMassala();
+        ArrayList<Mirath> mawarith = mas2ala.getMawarith();
+        double tarika = app.getWarathaInput().getTarika();
+        boolean hissabFardiColumn = mas2ala.isHissabFardi();
 
         // table head
-        double tarika = app.getWarathaInput().getTarika();
-        TableRow row = new TableRow(getActivity());
-        int col = 2;
-        TextView tvAsl;
-        if (massala.getAwl() != 0) {
+        int col = 2;        // skip columns 0 & 1
+        TextView cell;
+        TableRow head = new TableRow(getActivity());
+
+        if (mas2ala.getAwl() != 0) {
             //row of awl
-            row.addView(createHeadCell(String.valueOf(massala.getAwl()), false), new TableRow.LayoutParams(col));
-            mResultTableLayout.addView(row);
+            cell = createHeadCell(String.valueOf(mas2ala.getAwl()), !hissabFardiColumn && tarika == 0);
+            head.addView(cell, new TableRow.LayoutParams(col));
+            mResultTableLayout.addView(head);
 
             //row of asl
-            row = new TableRow(getActivity());
-            tvAsl = createHeadAwlCell(massala.getAsl());
+            head = new TableRow(getActivity());
+            cell = createHeadAwlCell(mas2ala.getAsl());
         } else {
-            tvAsl = createHeadCell(String.valueOf(massala.getAsl()), false);
+            cell = createHeadCell(String.valueOf(mas2ala.getAsl()), !hissabFardiColumn && tarika == 0);
         }
-        row.addView(tvAsl, new TableRow.LayoutParams(col++));
+        head.addView(cell, new TableRow.LayoutParams(col++));
 
-        boolean hissabFardiColumn = massala.isHissabFardi();
         if (hissabFardiColumn) {
-            row.addView(createHeadCell(String.valueOf(massala.getMissah()), false), new TableRow.LayoutParams(col++));
+            head.addView(createHeadCell(String.valueOf(mas2ala.getMissah()), tarika == 0), new TableRow.LayoutParams(col++));
         }
-        row.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
-        mResultTableLayout.addView(row);
+
+        if (tarika != 0) {
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
+        }
+        mResultTableLayout.addView(head);
 
         // table body
-        boolean jadahFirst = true;
-        boolean shirkatTa3seebFirst = true;
-        boolean waladAlomFirst = true;
+        boolean jadahFirstRow = true;
+        boolean shirkatTa3seebFirstRow = true;
+        boolean waladAlomFirstRow = true;
         boolean last_row = false;
+        boolean last_column = !hissabFardiColumn && tarika == 0;
         int i = 0;
         for (Mirath m : mawarith) {
-            row = new TableRow(getActivity());
+
+            TableRow row = new TableRow(getActivity());
             if (++i == mawarith.size()) { last_row = true; }
 
-            // columns 1 & 2
-            row.addView(createCell(m.getHokom(), false, last_row));
-            row.addView(createCell(m.getIsm(), false, last_row));
+            // columns 0 & 1
+            row.addView(createCell(m.getHokom(), last_column, last_row));
+            row.addView(createCell(m.getIsm(), last_column, last_row));
 
-            // column 3: nassib mojmal
+            // column 2: nassib mojmal
+            CELL cellType = CELL.EMPTY;
             if (m.isJadah() && m.isShirka()) {
-                if (jadahFirst) {
-                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
-                    jadahFirst = false;
-                } else {
-                    row.addView(createEmptyCell(last_row));
+                if (jadahFirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahFirstRow = false;
                 }
-            } else if (m.isWaladAlom() && massala.isJinsayAwladAlom()) {
-                if (waladAlomFirst) {
-                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
-                    waladAlomFirst = false;
-                } else {
-                    row.addView(createEmptyCell(last_row));
-                }
-            } else if (m.isTa3seeb() && massala.isShirkaTa3seeb()) {
-                if (shirkatTa3seebFirst) {
-                    row.addView(createCell(m.getNassibMojmal() + " ↓", false, last_row));
-                    shirkatTa3seebFirst = false;
-                } else {
-                    row.addView(createEmptyCell(last_row));
-                }
-            } else {
-                row.addView(createCell(m.getNassibMojmal(), false, last_row));
             }
+            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
+                if (waladAlomFirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomFirstRow = false;
+                }
+            }
+            else if (m.isTa3seeb() && mas2ala.isShirkaTa3seeb()) {
+                if (shirkatTa3seebFirstRow) {
+                    cellType = CELL.SHIRKA;
+                    shirkatTa3seebFirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getNassibMojmal();               // TODO merge diff
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, last_column, last_row);
+            }
+            row.addView(cell);
+
+            // column 3: nassib fardi
+            if (hissabFardiColumn) {
+                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+            }
+
+            if (tarika != 0) {
+                // column 4: nassib fardi mina tarika
+                StringBuilder nassibTarikaStr = new StringBuilder();
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                if (m.getNbr() > 1) {
+                    nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
+                }
+                row.addView(createCell(nassibTarikaStr, true, last_row));
+            }
+            mResultTableLayout.addView(row);
+        }
+    }
+
+    private void createTableWithRad(ZaidApplication app) {
+        Mas2ala mas2ala = app.getMassala();
+        double tarika = app.getWarathaInput().getTarika();
+
+        // table head
+        int col = 2;        // skip columns 0 & 1
+        TextView cell;
+        TableRow head = new TableRow(getActivity());
+        cell = createHeadCell(String.valueOf(mas2ala.getAsl()), tarika == 0);
+        head.addView(cell, new TableRow.LayoutParams(col++));
+
+        if (tarika != 0) {
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
+        }
+        mResultTableLayout.addView(head);
+
+        // table body
+        TableRow row = new TableRow(getActivity());
+        Mirath m = mas2ala.getMawarith().get(0);
+        // columns 0 & 1
+        row.addView(createCell(m.getHokom(), true, true));
+        row.addView(createCell(m.getIsm(), true, true));
+        // column 2: fardh + rad
+        String cellTxt = m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh() ;
+        cell = createCell(cellTxt, tarika == 0, true);
+        row.addView(cell);
+        if (tarika != 0) {
+            // column 3: nassib mina tarika
+            row.addView(createCell(String.format(Locale.ROOT, "%.2f", tarika), true, true));
+        }
+        mResultTableLayout.addView(row);
+    }
+
+    private void createTableWithRadWaTashih(ZaidApplication app) { // TODO refactor with others
+        Mas2ala mas2ala = app.getMassala();
+        ArrayList<Mirath> mawarith = mas2ala.getMawarith();
+        double tarika = app.getWarathaInput().getTarika();
+        boolean hissabFardiColumn = mas2ala.isHissabFardi();
+
+        // table head
+        int col = 2;        // skip columns 0 & 1
+        TextView cell;
+        TableRow head = new TableRow(getActivity());
+
+        cell = createHeadCell(String.valueOf(mas2ala.getAsl()), !hissabFardiColumn && tarika == 0);
+        head.addView(cell, new TableRow.LayoutParams(col++));
+
+        if (hissabFardiColumn) {
+            head.addView(createHeadCell(String.valueOf(mas2ala.getMissah()), tarika == 0), new TableRow.LayoutParams(col++));
+        }
+
+        if (tarika != 0) {
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
+        }
+        mResultTableLayout.addView(head);
+
+        // table body
+        boolean jadahFirstRow = true;
+        boolean waladAlomFirstRow = true;
+        boolean last_row = false;
+        boolean last_column = !hissabFardiColumn && tarika == 0;
+        int i = 0;
+        for (Mirath m : mawarith) {
+
+            TableRow row = new TableRow(getActivity());
+            if (++i == mawarith.size()) { last_row = true; }
+
+            // columns 0 & 1
+            row.addView(createCell(m.getHokom(), last_column, last_row));
+            row.addView(createCell(m.getIsm(), last_column, last_row));
+
+            // column 2: fardh + rad
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahFirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahFirstRow = false;
+                }
+            }
+            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
+                if (waladAlomFirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomFirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getFardh() == 0 ? "--" :
+                        m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh();
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, last_column, last_row); // TODO merge DELTA
+            }
+            row.addView(cell);
+
+            // column 3: tashih
+            if (hissabFardiColumn) {
+                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+            }
+
+            if (tarika != 0) {
+                // column 4: nassib fardi mina tarika
+                StringBuilder nassibTarikaStr = new StringBuilder();
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                if (m.getNbr() > 1) {
+                    nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
+                }
+                row.addView(createCell(nassibTarikaStr, true, last_row));
+            }
+            mResultTableLayout.addView(row);
+        }
+    }
+
+    private void createTableWithRadWaJami3a(ZaidApplication app) {
+        Mas2ala mas2ala = app.getMassala();
+        ArrayList<Mirath> mawarith = mas2ala.getMawarith();
+        double tarika = app.getWarathaInput().getTarika();
+        boolean hissabFardiColumn = mas2ala.isHissabFardi();
+
+        // table head
+        int col = 2;        // skip columns 0 & 1
+        TextView cell;
+        TableRow head = new TableRow(getActivity());
+        cell = createHeadCell(String.valueOf(mas2ala.getAsl()), false);
+        head.addView(cell, new TableRow.LayoutParams(col++));
+
+        cell = createHeadCell(String.valueOf(mas2ala.getAslJami3a()), !hissabFardiColumn && tarika == 0);
+        head.addView(cell, new TableRow.LayoutParams(col++));
+
+        if (hissabFardiColumn) {
+            head.addView(createHeadCell(String.valueOf(mas2ala.getMissah()), tarika == 0), new TableRow.LayoutParams(col++));
+        }
+
+        if (tarika != 0) {
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col));
+        }
+        mResultTableLayout.addView(head);
+
+        // table body
+        boolean jadahFirstRow = true;
+        boolean waladAlomFirstRow = true;
+        boolean last_row = false;
+        boolean last_column = !hissabFardiColumn && tarika == 0;
+        int i = 0;
+        for (Mirath m : mawarith) {
+
+            TableRow row = new TableRow(getActivity());
+            if (++i == mawarith.size()) { last_row = true; }
+
+            // columns 0 & 1
+            row.addView(createCell(m.getHokom(), last_column, last_row));
+            row.addView(createCell(m.getIsm(), last_column, last_row));
+
+            // column 2: fardh only // TODO DELTA
+            // column 3: jami3a
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahFirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahFirstRow = false;
+                }
+            }
+            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
+                if (waladAlomFirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomFirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            TextView cell2;
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell2 = cell;
+            }
+            else {
+                String cellTxt = m.getFardh() != 0 ? "" + m.getFardh() : "--";
+                String cellTxt2 = m.getNassibMojmal();
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; cellTxt2 += " ↓"; }
+                cell = createCell(cellTxt, last_column, last_row);
+                cell2 = createCell(cellTxt2, !hissabFardiColumn && tarika == 0, last_row);
+            }
+            row.addView(cell);
+            row.addView(cell2);
 
             // column 4: nassib fardi
             if (hissabFardiColumn) {
-                row.addView(createCell(m.getNassibFardi(), false, last_row));
+                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
             }
 
-            // column 5: nassib fardi mina tarika
-            StringBuilder nassibTarikaStr = new StringBuilder();
-            nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / massala.getMissah()));
-            if (m.getNbr() > 1) { nassibTarikaStr.append("(*").append(m.getNbr()).append(")");}
-            row.addView(createCell(nassibTarikaStr, true, last_row));
+            if (tarika != 0) {
+                // column 4: nassib fardi mina tarika
+                StringBuilder nassibTarikaStr = new StringBuilder();
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                if (m.getNbr() > 1) {
+                    nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
+                }
+                row.addView(createCell(nassibTarikaStr, true, last_row));
+            }
+            mResultTableLayout.addView(row);
+        }
+    }
 
+    private void createTableWithRadWaJami3aWaZawjia(ZaidApplication app) {
+        Mas2ala mas2ala = app.getMassala();
+        ArrayList<Mirath> mawarith = mas2ala.getMawarith();
+        double tarika = app.getWarathaInput().getTarika();
+        boolean hissabFardiColumn = mas2ala.isHissabFardi();
+
+        // table head
+        int col = 2;        // skip columns 0 & 1
+        TextView cell2, cell3, cell4, cell5;       // # is column order
+        TableRow head = new TableRow(getActivity());
+        cell2 = createHeadCell(String.valueOf(mas2ala.getAsl()), false);
+        head.addView(cell2, new TableRow.LayoutParams(col++));
+
+        cell3 = createHeadCell(String.valueOf(mas2ala.getAslZawjia()), false);
+        head.addView(cell3, new TableRow.LayoutParams(col++));
+
+        cell4 = createHeadCell(String.valueOf(mas2ala.getAslRad()), false);
+        head.addView(cell4, new TableRow.LayoutParams(col++));
+
+        cell5 = createHeadCell(String.valueOf(mas2ala.getAslJami3a()), !hissabFardiColumn && tarika == 0);
+        head.addView(cell5, new TableRow.LayoutParams(col++));
+
+        if (hissabFardiColumn) {
+            head.addView(createHeadCell(String.valueOf(mas2ala.getMissah()), tarika == 0), new TableRow.LayoutParams(col++));
+        }
+
+        if (tarika != 0) {
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col++));
+        }
+        mResultTableLayout.addView(head);
+
+        // table body
+        boolean jadahFirstRow = true;
+        boolean waladAlomFirstRow = true;
+        boolean last_row = false;
+        boolean last_column = !hissabFardiColumn && tarika == 0;
+        int i = 0;
+        for (Mirath m : mawarith) {
+
+            TableRow row = new TableRow(getActivity());
+            if (++i == mawarith.size()) { last_row = true; }
+
+            // columns 0 & 1
+            row.addView(createCell(m.getHokom(), last_column, last_row));
+            row.addView(createCell(m.getIsm(), last_column, last_row));
+
+            // column 2: fardh only // TODO DELTA
+            // column 3: zawjia
+            // column 4: rad
+            // column 5: jami3a
+            switch (i) {
+                case 1: // Zawj or zawjat are always first in table
+                    cell3 = createCell("1", false, last_row);
+                    break;
+                case 2:
+                    String cellTxt = mas2ala.getBaqiZawjia() + "";
+                    if (mawarith.size() > 2) { cellTxt += " ↓"; }
+                    cell3 = createCell(cellTxt, false, last_row);
+                    break;
+                default:
+                    cell3 = createEmptyCell(last_row);
+                    break;
+            }
+
+            CELL cellType = CELL.EMPTY;     // used for cell2, cell4 & cell5 only
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahFirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahFirstRow = false;
+                }
+            }
+            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
+                if (waladAlomFirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomFirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell2 = createEmptyCell(last_row);       // TODO: need last_column?
+                cell4 = createEmptyCell(last_row);
+                cell5 = createEmptyCell(last_row);
+            }
+            else {
+                String cellTxt2 = m.getFardh() != 0 ? "" + m.getFardh() : "--";
+                String cellTxt4 = i == 1 ? "--" : m.getRad() != 0 ? m.getRad() + "" : "--";
+                String cellTxt5 = m.getNassibMojmal();
+                if (cellType == CELL.SHIRKA) { cellTxt2 += " ↓"; cellTxt4 += " ↓"; cellTxt5 += " ↓"; }
+                cell2 = createCell(cellTxt2, last_column, last_row);
+                cell4 = createCell(cellTxt4, last_column, last_row);
+                cell5 = createCell(cellTxt5, !hissabFardiColumn && tarika == 0, last_row);
+            }
+            row.addView(cell2);
+            row.addView(cell3);
+            row.addView(cell4);
+            row.addView(cell5);
+
+            // column 6: nassib fardi
+            if (hissabFardiColumn) {
+                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+            }
+
+            if (tarika != 0) {
+                // column 7: nassib fardi mina tarika
+                StringBuilder nassibTarikaStr = new StringBuilder();
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                if (m.getNbr() > 1) {
+                    nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
+                }
+                row.addView(createCell(nassibTarikaStr, true, last_row));
+            }
             mResultTableLayout.addView(row);
         }
     }

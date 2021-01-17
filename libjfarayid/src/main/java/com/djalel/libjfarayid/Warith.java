@@ -127,24 +127,36 @@ public enum Warith {
                 break;
         }
 
+        maf3oul = getDhamir(n);
+        return fa3el + maf3oul;
+    }
+
+    public String getDhamir(int n) {
+        String dhamir;
         if (n == 2) {
-            maf3oul = "هما";
+            dhamir = "هما";
         }
         else {
             switch (this) {
+                case ALAB:
                 case ALJAD:
-                    maf3oul = "ه";
+                case AZAWJ:
+                    dhamir = "ه";
                     break;
+                case ALOM:
                 case ALJADAH_LI_AB:
                 case ALJADAH_LI_OM:
-                    maf3oul = "ها";
+                    dhamir = "ها";
                     break;
+                case AZAWJAT:
+                case ALBANAT:
                 case BANAT_ALABNA:
                 case ALAKHAWAT_LI_OM:
                 case ALAKHAWAT_ASHAKIKAT:
                 case ALAKHAWAT_LI_AB:
-                    maf3oul = n == 1 ? "ها" : "هن";
+                    dhamir = n == 1 ? "ها" : "هن";
                     break;
+                case ALABNA:
                 case ABNA_ALABNA:
                 case ALIKHWA_LI_OM:
                 case ALIKHWA_ALASHIKA:
@@ -155,22 +167,15 @@ public enum Warith {
                 case ALA3MAM_LI_AB:
                 case ABNA_ALA3MAM_ALASHIKA:
                 case ABNA_ALA3MAM_LI_AB:
-                    maf3oul = n == 1 ? "ه" : "هم";
+                    dhamir = n == 1 ? "ه" : "هم";
                     break;
 
-                case ALAB:
-                case ALOM:
-                case AZAWJ:
-                case AZAWJAT:
-                case ALABNA:
-                case ALBANAT:
                 default:
-                    maf3oul = "";
-                    System.out.println("BUG! ضمير حجب " + ordinal() + ", n=" + n + "hajib=" + hajib.ordinal());
+                    dhamir = "";
                     break;
             }
         }
-        return fa3el + maf3oul;
+        return dhamir;
     }
 
     public final String getSharhPrefix(int n, Warith ma3a, int n2, boolean tassawi) {
