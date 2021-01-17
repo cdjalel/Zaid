@@ -21,11 +21,11 @@ package com.djalel.android.zaid;
 import android.app.Application;
 
 import com.djalel.libjfarayid.WarathahInput;
-import com.djalel.libjfarayid.Massala;
+import com.djalel.libjfarayid.Mas2ala;
 
 public class ZaidApplication extends Application {
     private WarathahInput mInput = new WarathahInput();
-    private Massala mMassala;
+    private Mas2ala mMas2ala;
 
     // THIS IS A SINGLETON
     static private ZaidApplication mContext;
@@ -40,12 +40,12 @@ public class ZaidApplication extends Application {
 
     public WarathahInput getWarathaInput() { return mInput; }
 
-    public Massala getMassala() { return mMassala; }
+    public Mas2ala getMassala() { return mMas2ala; }
 
     public String hissabMawarith() {
-        mMassala = new Massala();
-        mMassala.hissabMawarith(mInput);
-        return mMassala.getSharh();
+        mMas2ala = new Mas2ala();
+        mMas2ala.hissabMawarith(mInput);
+        return mMas2ala.getSharh();
     }
 
 }
