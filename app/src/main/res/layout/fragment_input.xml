@@ -246,13 +246,13 @@
                         <CheckBox
                             android:id="@+id/aljadCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="18dp"
                             android:text="@string/aljad" />
 
                         <CheckBox
                             android:id="@+id/aljadahLiAbCheckBox"
                             style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="18dp"
                             android:text="@string/aljadah_li_ab" />
 
                         <CheckBox
@@ -303,6 +303,15 @@
                             style="@style/ZaidAppTheme.editTextStyle"
                             android:layout_marginEnd="16dp"
                             android:importantForAutofill="no" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout6"
+                        style="@style/ZaidAppTheme.linearLayoutStyle"
+                        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout5">
 
                         <TextView
                             android:id="@+id/sonsTextView"
@@ -329,13 +338,13 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearLayout6"
+                        android:id="@+id/linearLayout7"
                         style="@style/ZaidAppTheme.linearLayoutStyle"
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toTopOf="@+id/divider3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout5">
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout6">
 
                         <TextView
                             android:id="@+id/sonsOfSonsTextView"
@@ -368,7 +377,7 @@
                         app:layout_constraintBottom_toTopOf="@id/textViewLabel3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout6" />
+                        app:layout_constraintTop_toBottomOf="@id/linearLayout7" />
 
                     <TextView
                         android:id="@+id/textViewLabel3"
