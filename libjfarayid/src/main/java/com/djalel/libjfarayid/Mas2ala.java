@@ -1213,7 +1213,8 @@ public class Mas2ala {
                 if (hal.isZawjia()) {
                     if (hal.mNbrFurudh == 1) {
                         // TODO DHAOUI ARHAM?
-                        hal.mNaw3 = Naw3.NAW3_RAD_3ALA_WAHED;
+                        hal.mNaw3 = hal.mWarathah.get(0).getNbr() > 1 ?     // عدة زوجات
+                                Naw3.NAW3_RAD_3ALA_MUTAJANISEEN : Naw3.NAW3_RAD_3ALA_WAHED;
                         hal.mAslRad = hal.mAsl;
                         hal.mAslJami3a = 1;
                         hal.mWarathah.get(0).setRad(mHal.mBaqi);
