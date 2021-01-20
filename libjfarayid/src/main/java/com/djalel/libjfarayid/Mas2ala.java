@@ -1212,7 +1212,7 @@ public class Mas2ala {
                 // من صفحة 69 في كتاب الفرائض المُيسر
                 if (hal.isZawjia()) {
                     if (hal.mNbrFurudh == 1) {
-                        // TODO Ahad Zawjayn ALONE? DHAOUI ARHAM?
+                        // TODO DHAOUI ARHAM?
                         hal.mNaw3 = Naw3.NAW3_RAD_3ALA_WAHED;
                         hal.mAslRad = hal.mAsl;
                         hal.mAslJami3a = 1;

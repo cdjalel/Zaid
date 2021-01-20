@@ -226,6 +226,7 @@ public class OutputFragment extends Fragment {
 
     private void createTableWithRad(ZaidApplication app) {
         Mas2ala mas2ala = app.getMassala();
+        ArrayList<Mirath> mawarith = mas2ala.getMawarith();
         double tarika = app.getWarathaInput().getTarika();
 
         // table head
@@ -241,20 +242,31 @@ public class OutputFragment extends Fragment {
         mResultTableLayout.addView(head);
 
         // table body
-        TableRow row = new TableRow(getActivity());
-        Mirath m = mas2ala.getMawarith().get(0);
-        // columns 0 & 1
-        row.addView(createCell(m.getHokom(), true, true));
-        row.addView(createCell(m.getIsm(), true, true));
-        // column 2: fardh + rad
-        String cellTxt = m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh() ;
-        cell = createCell(cellTxt, tarika == 0, true);
-        row.addView(cell);
-        if (tarika != 0) {
-            // column 3: nassib mina tarika
-            row.addView(createCell(String.format(Locale.ROOT, "%.2f", tarika), true, true));
+        boolean last_row = false;
+        boolean last_column = tarika == 0;
+        int i = 0;
+        for (Mirath m : mawarith) {
+            TableRow row = new TableRow(getActivity());
+            if (++i == mawarith.size()) { last_row = true; }
+
+            // columns 0 & 1
+            row.addView(createCell(m.getHokom(), true, last_row));
+            row.addView(createCell(m.getIsm(), true, last_row));
+
+            // column 2: fardh + rad
+            String cellTxt = m.isMahjoob() ? "--" :
+                    m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh();
+            cell = createCell(cellTxt, tarika == 0, true);
+            row.addView(cell);
+
+            if (tarika != 0) {
+                // column 3: nassib mina tarika
+                StringBuilder nassibTarikaStr = new StringBuilder();
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                row.addView(createCell(nassibTarikaStr, true, last_row));
+            }
+            mResultTableLayout.addView(row);
         }
-        mResultTableLayout.addView(row);
     }
 
     private void createTableWithRadWaTashih(ZaidApplication app) { // TODO refactor with others
@@ -292,8 +304,8 @@ public class OutputFragment extends Fragment {
             if (++i == mawarith.size()) { last_row = true; }
 
             // columns 0 & 1
-            row.addView(createCell(m.getHokom(), last_column, last_row));
-            row.addView(createCell(m.getIsm(), last_column, last_row));
+            row.addView(createCell(m.getHokom(), false, last_row));
+            row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh + rad
             CELL cellType = CELL.EMPTY;
@@ -316,7 +328,7 @@ public class OutputFragment extends Fragment {
                 cell = createEmptyCell(last_row); // TODO: need last_column?
             }
             else {
-                String cellTxt = m.getFardh() == 0 ? "--" :
+                String cellTxt = m.isMahjoob() ? "--" :
                         m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, last_column, last_row); // TODO merge DELTA
@@ -378,8 +390,8 @@ public class OutputFragment extends Fragment {
             if (++i == mawarith.size()) { last_row = true; }
 
             // columns 0 & 1
-            row.addView(createCell(m.getHokom(), last_column, last_row));
-            row.addView(createCell(m.getIsm(), last_column, last_row));
+            row.addView(createCell(m.getHokom(), false, last_row));
+            row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh only // TODO DELTA
             // column 3: jami3a
@@ -405,11 +417,11 @@ public class OutputFragment extends Fragment {
                 cell2 = cell;
             }
             else {
-                String cellTxt = m.getFardh() != 0 ? "" + m.getFardh() : "--";
+                String cellTxt = m.isMahjoob() ? "--" : "" + m.getFardh();
                 String cellTxt2 = m.getNassibMojmal();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; cellTxt2 += " ↓"; }
                 cell = createCell(cellTxt, last_column, last_row);
-                cell2 = createCell(cellTxt2, !hissabFardiColumn && tarika == 0, last_row);
+                cell2 = createCell(cellTxt2, last_column, last_row);
             }
             row.addView(cell);
             row.addView(cell2);
@@ -475,8 +487,8 @@ public class OutputFragment extends Fragment {
             if (++i == mawarith.size()) { last_row = true; }
 
             // columns 0 & 1
-            row.addView(createCell(m.getHokom(), last_column, last_row));
-            row.addView(createCell(m.getIsm(), last_column, last_row));
+            row.addView(createCell(m.getHokom(), false, last_row));
+            row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh only // TODO DELTA
             // column 3: zawjia
@@ -518,13 +530,13 @@ public class OutputFragment extends Fragment {
                 cell5 = createEmptyCell(last_row);
             }
             else {
-                String cellTxt2 = m.getFardh() != 0 ? "" + m.getFardh() : "--";
+                String cellTxt2 = m.isMahjoob() ? "--" : "" + m.getFardh();
                 String cellTxt4 = i == 1 ? "--" : m.getRad() != 0 ? m.getRad() + "" : "--";
                 String cellTxt5 = m.getNassibMojmal();
                 if (cellType == CELL.SHIRKA) { cellTxt2 += " ↓"; cellTxt4 += " ↓"; cellTxt5 += " ↓"; }
                 cell2 = createCell(cellTxt2, last_column, last_row);
                 cell4 = createCell(cellTxt4, last_column, last_row);
-                cell5 = createCell(cellTxt5, !hissabFardiColumn && tarika == 0, last_row);
+                cell5 = createCell(cellTxt5, last_column, last_row);
             }
             row.addView(cell2);
             row.addView(cell3);
