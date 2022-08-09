@@ -118,6 +118,7 @@ public class Mirath {
     }
 
     // عدة ورثة  (أولاد الأم) يرثون بالفرض فقط
+    // أو حالة الأخ الشقيق يشترك في الثلث مع الإخوة لإم في المسألة المشتركة
     public Mirath(Warith warith, int nbr, String sharh, int bast, int maqam, int ro2os) {
         this(warith, nbr, sharh, bast, maqam, false, ro2os);
     }
@@ -142,7 +143,8 @@ public class Mirath {
         this(warith, 1, sharh, bast, maqam, ta3seeb, 1);
     }
 
-    // وارث واحد بالفرض والتعصيب مقاسمة وهو الجد مع الإخوة أو من يأخذ ثلث الباقي (الأم في الغرواين)
+    // حالة وارث واحد بالفرض والتعصيب مقاسمة وهو الجد مع الإخوة
+    // أو حالة من يأخذ ثلث الباقي وهي الأم في مسألة الغرواين
     public Mirath(Warith warith, String sharh, int bast, int maqam, boolean ta3seeb, int ro2os) {
         this(warith, 1, sharh, bast, maqam, ta3seeb, ro2os);
     }
@@ -243,6 +245,10 @@ public class Mirath {
     public boolean isJadah() { return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
 
     public boolean isWaladAlom() { return (this.warith == Warith.ALIKHWA_LI_OM) || (this.warith == Warith.ALAKHAWAT_LI_OM); }
+
+    public boolean isShakik() { return (this.warith == Warith.ALIKHWA_ALASHIKA) || (this.warith == Warith.ALAKHAWAT_ASHAKIKAT); }
+
+    public boolean isWaladOmAwShakik() { return  isWaladAlom() || isShakik(); }
 
     public boolean isAhadZawjain() { return (this.warith == Warith.AZAWJ) || (this.warith == Warith.AZAWJAT); }
 

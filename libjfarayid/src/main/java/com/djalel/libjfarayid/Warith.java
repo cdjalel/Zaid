@@ -33,7 +33,7 @@ public enum Warith {
     BANAT_ALABNA("بنت الابن", "بنتا الابن", "بنات الأبناء", "بنت ابن"),
     ALIKHWA_LI_OM("الأخ لأم", "الأخوان لأم", "الإخوة لأم", "خ م"),
     ALAKHAWAT_LI_OM("الأخت لأم", "الأختان لأم", "الأخوات لأم", "خت م"),
-    ALIKHWA_ALASHIKA("الأخ شقيق", "الأخوان الشقيقان", "الإخوة الأشقاء", "خ ش"),
+    ALIKHWA_ALASHIKA("الأخ الشقيق", "الأخوان الشقيقان", "الإخوة الأشقاء", "خ ش"),
     ALAKHAWAT_ASHAKIKAT("الأخت الشقيقة", "الأختان الشقيقتان", "الأخوات الشقيقات", "خت ش"),
     ALIKHWA_LI_AB("الأخ لأب", "الأخوان لأب", "الإخوة لأب", "خ ب"),
     ALAKHAWAT_LI_AB("الأخت لأب", "الأختان لأب", "الأخوات لأب", "خت ب"),
@@ -206,6 +206,28 @@ public enum Warith {
         if (n2 > 0) {  if (n1 > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_ASHAKIKAT.getName(n2)); }
         if (n3 > 0) {  if ((n1 + n2) > 0) { ma3a.append(" و"); } ma3a.append(ALIKHWA_LI_AB.getName(n3)); }
         if (n4 > 0) {  if ((n1 + n2 + n3) > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_LI_AB.getName(n4)); }
+
+        return ma3a.toString();
+    }
+
+    public final String getAlikhwaAshika(WarathahInput input) {
+        int n1 = input.get_alikhwa_alashika();
+        int n2 = input.get_alakhawat_ashakikat();
+
+        StringBuilder ma3a = new StringBuilder();
+        if (n1 > 0) {  ma3a.append(ALIKHWA_ALASHIKA.getName(n1)); }
+        if (n2 > 0) {  if (n1 > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_ASHAKIKAT.getName(n2)); }
+
+        return ma3a.toString();
+    }
+
+    public final String getAlikhwaLiOm(WarathahInput input) {
+        int n1 = input.get_alikhwa_li_om();
+        int n2 = input.get_alakhawat_li_om();
+
+        StringBuilder ma3a = new StringBuilder();
+        if (n1 > 0) {  ma3a.append(ALIKHWA_LI_OM.getName(n1)); }
+        if (n2 > 0) {  if (n1 > 0) { ma3a.append(" و"); } ma3a.append(ALAKHAWAT_LI_OM.getName(n2)); }
 
         return ma3a.toString();
     }
