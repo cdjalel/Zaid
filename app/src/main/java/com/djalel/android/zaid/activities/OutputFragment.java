@@ -37,6 +37,7 @@ import com.djalel.android.zaid.R;
 import com.djalel.android.zaid.ZaidApplication;
 import com.djalel.libjfarayid.Mas2ala;
 import com.djalel.libjfarayid.Mirath;
+import com.djalel.libjfarayid.Naw3;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -158,9 +159,11 @@ public class OutputFragment extends Fragment {
         mResultTableLayout.addView(head);
 
         // table body
-        boolean jadahFirstRow = true;
-        boolean shirkatTa3seebFirstRow = true;
-        boolean waladAlomFirstRow = true;
+        boolean jadahColumn0FirstRow = true;
+        boolean jadahColumn2FirstRow = true;
+        boolean waladAlomColumn0FirstRow = true;
+        boolean waladAlomColumn2FirstRow = true;
+        boolean shirkaTa3seebFirstRow = true;
         boolean last_row = false;
         boolean last_column = !hissabFardiColumn && tarika == 0;
         int i = 0;
@@ -169,28 +172,56 @@ public class OutputFragment extends Fragment {
             TableRow row = new TableRow(getActivity());
             if (++i == mawarith.size()) { last_row = true; }
 
-            // columns 0 & 1
-            row.addView(createCell(m.getHokom(), last_column, last_row));
+            // columns 0
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahColumn0FirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahColumn0FirstRow = false;
+                }
+            }
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn0FirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomColumn0FirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getHokom();               // TODO merge diff
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, last_column, last_row);
+            }
+            row.addView(cell);
+
+            // column 1
             row.addView(createCell(m.getIsm(), last_column, last_row));
 
             // column 2: nassib mojmal
-            CELL cellType = CELL.EMPTY;
+            cellType = CELL.EMPTY;
             if (m.isJadah() && m.isShirka()) {
-                if (jadahFirstRow) {
+                if (jadahColumn2FirstRow) {
                     cellType = CELL.SHIRKA;
-                    jadahFirstRow = false;
+                    jadahColumn2FirstRow = false;
                 }
             }
-            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
-                if (waladAlomFirstRow ) {
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn2FirstRow ) {
                     cellType = CELL.SHIRKA;
-                    waladAlomFirstRow = false;
+                    waladAlomColumn2FirstRow = false;
                 }
             }
             else if (m.isTa3seeb() && mas2ala.isShirkaTa3seeb()) {
-                if (shirkatTa3seebFirstRow) {
+                if (shirkaTa3seebFirstRow) {
                     cellType = CELL.SHIRKA;
-                    shirkatTa3seebFirstRow = false;
+                    shirkaTa3seebFirstRow = false;
                 }
             }
             else {
@@ -293,8 +324,10 @@ public class OutputFragment extends Fragment {
         mResultTableLayout.addView(head);
 
         // table body
-        boolean jadahFirstRow = true;
-        boolean waladAlomFirstRow = true;
+        boolean jadahColumn0FirstRow = true;
+        boolean jadahColumn2FirstRow = true;
+        boolean waladAlomColumn0FirstRow = true;
+        boolean waladAlomColumn2FirstRow = true;
         boolean last_row = false;
         boolean last_column = !hissabFardiColumn && tarika == 0;
         int i = 0;
@@ -303,22 +336,50 @@ public class OutputFragment extends Fragment {
             TableRow row = new TableRow(getActivity());
             if (++i == mawarith.size()) { last_row = true; }
 
-            // columns 0 & 1
-            row.addView(createCell(m.getHokom(), false, last_row));
+            // column 0
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahColumn0FirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahColumn0FirstRow = false;
+                }
+            }
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn0FirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomColumn0FirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getHokom();               // TODO merge diff
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, false, last_row);
+            }
+            row.addView(cell);
+
+            // column 1
             row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh + rad
-            CELL cellType = CELL.EMPTY;
+            cellType = CELL.EMPTY;
             if (m.isJadah() && m.isShirka()) {
-                if (jadahFirstRow) {
+                if (jadahColumn2FirstRow) {
                     cellType = CELL.SHIRKA;
-                    jadahFirstRow = false;
+                    jadahColumn2FirstRow = false;
                 }
             }
-            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
-                if (waladAlomFirstRow ) {
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn2FirstRow ) {
                     cellType = CELL.SHIRKA;
-                    waladAlomFirstRow = false;
+                    waladAlomColumn2FirstRow = false;
                 }
             }
             else {
@@ -379,8 +440,10 @@ public class OutputFragment extends Fragment {
         mResultTableLayout.addView(head);
 
         // table body
-        boolean jadahFirstRow = true;
-        boolean waladAlomFirstRow = true;
+        boolean jadahColumn0FirstRow = true;
+        boolean jadahColumn2FirstRow = true;
+        boolean waladAlomColumn0FirstRow = true;
+        boolean waladAlomColumn2FirstRow = true;
         boolean last_row = false;
         boolean last_column = !hissabFardiColumn && tarika == 0;
         int i = 0;
@@ -389,23 +452,51 @@ public class OutputFragment extends Fragment {
             TableRow row = new TableRow(getActivity());
             if (++i == mawarith.size()) { last_row = true; }
 
-            // columns 0 & 1
-            row.addView(createCell(m.getHokom(), false, last_row));
+            // column 0
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahColumn0FirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahColumn0FirstRow = false;
+                }
+            }
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn0FirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomColumn0FirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getHokom();               // TODO merge diff
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, false, last_row);
+            }
+            row.addView(cell);
+
+            // column 1
             row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh only // TODO DELTA
             // column 3: jami3a
-            CELL cellType = CELL.EMPTY;
+            cellType = CELL.EMPTY;
             if (m.isJadah() && m.isShirka()) {
-                if (jadahFirstRow) {
+                if (jadahColumn2FirstRow) {
                     cellType = CELL.SHIRKA;
-                    jadahFirstRow = false;
+                    jadahColumn2FirstRow = false;
                 }
             }
-            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
-                if (waladAlomFirstRow ) {
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn2FirstRow ) {
                     cellType = CELL.SHIRKA;
-                    waladAlomFirstRow = false;
+                    waladAlomColumn2FirstRow = false;
                 }
             }
             else {
@@ -452,7 +543,7 @@ public class OutputFragment extends Fragment {
 
         // table head
         int col = 2;        // skip columns 0 & 1
-        TextView cell2, cell3, cell4, cell5;       // # is column order
+        TextView cell, cell2, cell3, cell4, cell5;       // # is column order
         TableRow head = new TableRow(getActivity());
         cell2 = createHeadCell(String.valueOf(mas2ala.getAsl()), false);
         head.addView(cell2, new TableRow.LayoutParams(col++));
@@ -476,8 +567,10 @@ public class OutputFragment extends Fragment {
         mResultTableLayout.addView(head);
 
         // table body
-        boolean jadahFirstRow = true;
-        boolean waladAlomFirstRow = true;
+        boolean jadahColumn0FirstRow = true;
+        boolean jadahColumn2FirstRow = true;
+        boolean waladAlomColumn0FirstRow = true;
+        boolean waladAlomColumn2FirstRow = true;
         boolean last_row = false;
         boolean last_column = !hissabFardiColumn && tarika == 0;
         int i = 0;
@@ -486,8 +579,35 @@ public class OutputFragment extends Fragment {
             TableRow row = new TableRow(getActivity());
             if (++i == mawarith.size()) { last_row = true; }
 
-            // columns 0 & 1
-            row.addView(createCell(m.getHokom(), false, last_row));
+            // column 0
+            CELL cellType = CELL.EMPTY;
+            if (m.isJadah() && m.isShirka()) {
+                if (jadahColumn0FirstRow) {
+                    cellType = CELL.SHIRKA;
+                    jadahColumn0FirstRow = false;
+                }
+            }
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn0FirstRow ) {
+                    cellType = CELL.SHIRKA;
+                    waladAlomColumn0FirstRow = false;
+                }
+            }
+            else {
+                cellType = CELL.NORMAL;
+            }
+            if (cellType == CELL.EMPTY) {
+                cell = createEmptyCell(last_row); // TODO: need last_column?
+            }
+            else {
+                String cellTxt = m.getHokom();               // TODO merge diff
+                if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
+                cell = createCell(cellTxt, false, last_row);
+            }
+            row.addView(cell);
+
+            // column 1
             row.addView(createCell(m.getIsm(), false, last_row));
 
             // column 2: fardh only // TODO DELTA
@@ -508,17 +628,18 @@ public class OutputFragment extends Fragment {
                     break;
             }
 
-            CELL cellType = CELL.EMPTY;     // used for cell2, cell4 & cell5 only
+            cellType = CELL.EMPTY;     // used for cell2, cell4 & cell5 only
             if (m.isJadah() && m.isShirka()) {
-                if (jadahFirstRow) {
+                if (jadahColumn2FirstRow) {
                     cellType = CELL.SHIRKA;
-                    jadahFirstRow = false;
+                    jadahColumn2FirstRow = false;
                 }
             }
-            else if (m.isWaladAlom() && mas2ala.isJinsayAwladAlom()) {
-                if (waladAlomFirstRow ) {
+            else if ((m.isWaladAlom() && mas2ala.isJinsayAwladAlom())
+                    || (m.isWaladOmAwShakik() && mas2ala.isMushtarika())) {
+                if (waladAlomColumn2FirstRow ) {
                     cellType = CELL.SHIRKA;
-                    waladAlomFirstRow = false;
+                    waladAlomColumn2FirstRow = false;
                 }
             }
             else {
