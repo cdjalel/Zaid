@@ -48,571 +48,568 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ScrollView
-                android:id="@+id/scrollView1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:fadeScrollbars="false"
-                android:scrollbars="vertical"
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout0"
-                    android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/button_hal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layoutDirection="rtl"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/button_hal"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <TextView
+                    android:id="@+id/textViewLabel0"
+                    style="@style/ZaidAppTheme.textViewLabelStyle"
+                       android:layout_marginTop="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ma3lumat"
+                    app:layout_constraintBottom_toTopOf="@id/linearLayout0"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0">
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guideline1"
+                <LinearLayout
+                    android:id="@+id/linearLayout0"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel0">
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupGender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radioButtonMale"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="true"
+                            android:text="@string/dhakar" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonFemale"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="false"
+                            android:text="@string/ontha" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout0">
 
                     <TextView
-                        android:id="@+id/textViewLabel0"
-                        style="@style/ZaidAppTheme.textViewLabelStyle"
-                        android:layout_marginTop="0dp"
+                        android:id="@+id/madhabTextView"
+                        style="@style/ZaidAppTheme.textViewStyle"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:text="@string/madhab" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupMadhab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/ma3lumat"
-                        app:layout_constraintBottom_toTopOf="@id/linearLayout0"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_gravity="center_horizontal"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout0"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toTopOf="@+id/linearLayout1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel0">
+                        <RadioButton
+                            android:id="@+id/radioButtonMaliki"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="true"
+                            android:text="@string/maliki" />
 
-                        <RadioGroup
-                            android:id="@+id/radioGroupGender"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:orientation="horizontal">
+                        <RadioButton
+                            android:id="@+id/radioButtonChafi3i"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="false"
+                            android:text="@string/chafi3i" />
 
-                            <RadioButton
-                                android:id="@+id/radioButtonMale"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="true"
-                                android:text="@string/dhakar" />
+                        <RadioButton
+                            android:id="@+id/radioButtonHanafi"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="false"
+                            android:text="@string/hanafi" />
 
-                            <RadioButton
-                                android:id="@+id/radioButtonFemale"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="false"
-                                android:text="@string/ontha" />
-                        </RadioGroup>
-                    </LinearLayout>
+                        <RadioButton
+                            android:id="@+id/radioButtonHambali"
+                            style="@style/ZaidAppTheme.radioButtonStyle"
+                            android:checked="false"
+                            android:text="@string/hambali" />
+                    </RadioGroup>
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout1"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout0">
-
-                        <TextView
-                            android:id="@+id/madhabTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:layout_gravity="center_horizontal"
-                            android:gravity="center_horizontal"
-                            android:text="@string/madhab" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroupMadhab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layoutDirection="rtl"
-                            android:orientation="horizontal">
-
-                            <RadioButton
-                                android:id="@+id/radioButtonMaliki"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="true"
-                                android:text="@string/maliki" />
-
-                            <RadioButton
-                                android:id="@+id/radioButtonChafi3i"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="false"
-                                android:text="@string/chafi3i" />
-
-                            <RadioButton
-                                android:id="@+id/radioButtonHanafi"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="false"
-                                android:text="@string/hanafi" />
-
-                            <RadioButton
-                                android:id="@+id/radioButtonHambali"
-                                style="@style/ZaidAppTheme.radioButtonStyle"
-                                android:checked="false"
-                                android:text="@string/hambali" />
-                        </RadioGroup>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout2"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        app:layout_constraintBottom_toTopOf="@+id/divider1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
-
-                        <TextView
-                            android:id="@+id/tarikaTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:labelFor="@id/tarikaEditText"
-                            android:text="@string/tarika" />
-
-                        <EditText
-                            android:id="@+id/tarikaEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:layout_gravity="center_vertical"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/divider1"
-                        style="@style/ZaidAppTheme.Divider"
-                        app:layout_constraintBottom_toTopOf="@id/textViewLabel1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout2" />
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/divider1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout1">
 
                     <TextView
-                        android:id="@+id/textViewLabel1"
-                        style="@style/ZaidAppTheme.textViewLabelStyle"
-                        android:text="@string/ussol"
-                        app:layout_constraintBottom_toTopOf="@id/linearLayout3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider1" />
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout3"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel1">
-
-                        <CheckBox
-                            android:id="@+id/fatherCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/alab" />
-
-                        <CheckBox
-                            android:id="@+id/motherCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/alom" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout4"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/divider2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout3"
-                        tools:layout_conversion_absoluteHeight="32dp"
-                        tools:layout_conversion_absoluteWidth="332dp">
-
-                        <CheckBox
-                            android:id="@+id/aljadCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="18dp"
-                            android:text="@string/aljad" />
-
-                        <CheckBox
-                            android:id="@+id/aljadahLiAbCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="18dp"
-                            android:text="@string/aljadah_li_ab" />
-
-                        <CheckBox
-                            android:id="@+id/aljadahLiOmCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:text="@string/aljadah_li_om" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/divider2"
-                        style="@style/ZaidAppTheme.Divider"
-                        app:layout_constraintBottom_toTopOf="@id/textViewLabel2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
-
-                    <TextView
-                        android:id="@+id/textViewLabel2"
-                        style="@style/ZaidAppTheme.textViewLabelStyle"
-                        android:text="@string/azwaj_foro3"
-                        app:layout_constraintBottom_toTopOf="@id/linearLayout5"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout5"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel2">
-
-                        <CheckBox
-                            android:id="@+id/azawjCheckBox"
-                            style="@style/ZaidAppTheme.checkBoxStyle"
-                            android:layout_marginStart="16dp"
-                            android:text="@string/azawj" />
-
-                        <TextView
-                            android:id="@+id/zawjatTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:labelFor="@id/zawjatEditText"
-                            android:text="@string/azawjat" />
-
-                        <EditText
-                            android:id="@+id/zawjatEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:layout_marginEnd="16dp"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout6"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout5">
-
-                        <TextView
-                            android:id="@+id/sonsTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:labelFor="@id/sonsEditText"
-                            android:text="@string/alabna" />
-
-                        <EditText
-                            android:id="@+id/sonsEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:layout_marginEnd="16dp"
-                            android:importantForAutofill="no" />
-
-                        <TextView
-                            android:id="@+id/daughtersTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:labelFor="@id/daughtersEditText"
-                            android:text="@string/albanat" />
-
-                        <EditText
-                            android:id="@+id/daughtersEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/linearLayout7"
-                        style="@style/ZaidAppTheme.linearLayoutStyle"
-                        android:layout_marginBottom="8dp"
-                        app:layout_constraintBottom_toTopOf="@+id/divider3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout6">
-
-                        <TextView
-                            android:id="@+id/sonsOfSonsTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:labelFor="@id/sonsOfSonsEditText"
-                            android:text="@string/abna_alabna" />
-
-                        <EditText
-                            android:id="@+id/sonsOfSonsEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:importantForAutofill="no" />
-
-                        <TextView
-                            android:id="@+id/daughtersOfSonsTextView"
-                            style="@style/ZaidAppTheme.textViewStyle"
-                            android:layout_marginStart="30dp"
-                            android:labelFor="@id/daughtersOfSonsEditText"
-                            android:text="@string/banat_alabna" />
-
-                        <EditText
-                            android:id="@+id/daughtersOfSonsEditText"
-                            style="@style/ZaidAppTheme.editTextStyle"
-                            android:importantForAutofill="no" />
-                    </LinearLayout>
-
-
-                    <View
-                        android:id="@+id/divider3"
-                        style="@style/ZaidAppTheme.Divider"
-                        app:layout_constraintBottom_toTopOf="@id/textViewLabel3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linearLayout7" />
-
-                    <TextView
-                        android:id="@+id/textViewLabel3"
-                        style="@style/ZaidAppTheme.textViewLabelStyle"
-                        android:text="@string/hawashi"
-                        app:layout_constraintBottom_toTopOf="@id/maternalBrothersTextView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider3" />
-
-                    <TextView
-                        android:id="@+id/maternalBrothersTextView"
+                        android:id="@+id/tarikaTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/maternalBrothersEditText"
-                        android:text="@string/alikhwa_li_om"
-                        app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
+                        android:labelFor="@id/tarikaEditText"
+                        android:text="@string/tarika" />
 
                     <EditText
-                        android:id="@+id/maternalBrothersEditText"
+                        android:id="@+id/tarikaEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@+id/maternalBrothersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
+                        android:layout_gravity="center_vertical"
+                        android:importantForAutofill="no" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider1"
+                    style="@style/ZaidAppTheme.Divider"
+                    app:layout_constraintBottom_toTopOf="@id/textViewLabel1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout2" />
+
+                <TextView
+                    android:id="@+id/textViewLabel1"
+                    style="@style/ZaidAppTheme.textViewLabelStyle"
+                    android:text="@string/ussol"
+                    app:layout_constraintBottom_toTopOf="@id/linearLayout3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider1" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel1">
+
+                    <CheckBox
+                        android:id="@+id/fatherCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/alab" />
+
+                    <CheckBox
+                        android:id="@+id/motherCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:layout_marginEnd="10dp"
+                        android:text="@string/alom" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/divider2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout3"
+                    tools:layout_conversion_absoluteHeight="32dp"
+                    tools:layout_conversion_absoluteWidth="340dp">
+
+                    <CheckBox
+                        android:id="@+id/aljadCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:layout_marginStart="18dp"
+                        android:text="@string/aljad" />
+
+                    <CheckBox
+                        android:id="@+id/aljadahLiAbCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:layout_marginStart="18dp"
+                        android:text="@string/aljadah_li_ab" />
+
+                    <CheckBox
+                        android:id="@+id/aljadahLiOmCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:text="@string/aljadah_li_om" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    style="@style/ZaidAppTheme.Divider"
+                    app:layout_constraintBottom_toTopOf="@id/textViewLabel2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout4" />
+
+                <TextView
+                    android:id="@+id/textViewLabel2"
+                    style="@style/ZaidAppTheme.textViewLabelStyle"
+                    android:text="@string/azwaj_foro3"
+                    app:layout_constraintBottom_toTopOf="@id/linearLayout5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider2" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel2">
+
+                    <CheckBox
+                        android:id="@+id/azawjCheckBox"
+                        style="@style/ZaidAppTheme.checkBoxStyle"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/azawj" />
 
                     <TextView
-                        android:id="@+id/maternalSistersTextView"
+                        android:id="@+id/zawjatTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/maternalSistersEditText"
-                        android:text="@string/alakhawat_li_om"
-                        app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
-                        app:layout_constraintStart_toStartOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
+                        android:labelFor="@id/zawjatEditText"
+                        android:text="@string/azawjat" />
 
                     <EditText
-                        android:id="@+id/maternalSistersEditText"
+                        android:id="@+id/zawjatEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@id/maternalSistersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
+                        android:layout_marginEnd="16dp"
+                        android:importantForAutofill="no" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linearLayout6"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout5">
 
                     <TextView
-                        android:id="@+id/fullBrothersTextView"
+                        android:id="@+id/sonsTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/fullBrothersEditText"
-                        android:text="@string/alikhwa_alashika"
-                        app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+                        android:labelFor="@id/sonsEditText"
+                        android:text="@string/alabna" />
 
                     <EditText
-                        android:id="@+id/fullBrothersEditText"
+                        android:id="@+id/sonsEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@id/fullBrothersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+                        android:layout_marginEnd="16dp"
+                        android:importantForAutofill="no" />
 
                     <TextView
-                        android:id="@+id/fullSistersTextView"
+                        android:id="@+id/daughtersTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/fullSistersEditText"
-                        android:text="@string/alakhawat_ashakikat"
-                        app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
-                        app:layout_constraintStart_toStartOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+                        android:labelFor="@id/daughtersEditText"
+                        android:text="@string/albanat" />
 
                     <EditText
-                        android:id="@+id/fullSistersEditText"
+                        android:id="@+id/daughtersEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@id/fullSistersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+                        android:importantForAutofill="no" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linearLayout7"
+                    style="@style/ZaidAppTheme.linearLayoutStyle"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/divider3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout6">
 
                     <TextView
-                        android:id="@+id/paternalBrothersTextView"
+                        android:id="@+id/sonsOfSonsTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/paternalBrothersEditText"
-                        android:text="@string/alikhwa_li_ab"
-                        app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+                        android:labelFor="@id/sonsOfSonsEditText"
+                        android:text="@string/abna_alabna" />
 
                     <EditText
-                        android:id="@+id/paternalBrothersEditText"
+                        android:id="@+id/sonsOfSonsEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@id/paternalBrothersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+                        android:importantForAutofill="no" />
 
                     <TextView
-                        android:id="@+id/paternalSistersTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/paternalSistersEditText"
-                        android:text="@string/alakhawat_li_ab"
-                        app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_constraintStart_toStartOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
-
-                    <EditText
-                        android:id="@+id/paternalSistersEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_constraintStart_toEndOf="@id/paternalSistersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
-
-                    <TextView
-                        android:id="@+id/SonsOfFullBrothersTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/sonsOfFullBrothersEditText"
-                        android:text="@string/abna_alikhwa_ashika"
-                        app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
-
-                    <EditText
-                        android:id="@+id/sonsOfFullBrothersEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
-
-                    <TextView
-                        android:id="@+id/sonsOfPaternalBrothersTextView"
+                        android:id="@+id/daughtersOfSonsTextView"
                         style="@style/ZaidAppTheme.textViewStyle"
                         android:layout_marginStart="30dp"
-                        android:labelFor="@id/sonsOfPaternalBrothersEditText"
-                        android:text="@string/abna_alikhwa_li_ab"
-                        app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView"
-                        app:layout_goneMarginStart="16dp" />
+                        android:labelFor="@id/daughtersOfSonsEditText"
+                        android:text="@string/banat_alabna" />
 
                     <EditText
-                        android:id="@+id/sonsOfPaternalBrothersEditText"
+                        android:id="@+id/daughtersOfSonsEditText"
                         style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/sonsOfPaternalBrothersTextView"
-                        app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
-
-                    <TextView
-                        android:id="@+id/fullUnclesTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/fullUnclesEditText"
-                        android:text="@string/ala3mam_alashika"
-                        app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
-
-                    <EditText
-                        android:id="@+id/fullUnclesEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/fullUnclesTextView"
-                        app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
-
-                    <TextView
-                        android:id="@+id/paternalUnclesTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="30dp"
-                        android:labelFor="@id/paternalUnclesEditText"
-                        android:text="@string/ala3mam_li_ab"
-                        app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView"
-                        app:layout_goneMarginStart="16dp" />
-
-                    <EditText
-                        android:id="@+id/paternalUnclesEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
-                        app:layout_constraintStart_toEndOf="@id/paternalUnclesTextView"
-                        app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
+                        android:importantForAutofill="no" />
+                </LinearLayout>
 
 
-                    <TextView
-                        android:id="@+id/sonsOfFullUnclesTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="16dp"
-                        android:labelFor="@id/sonsOfFullUnclesEditText"
-                        android:text="@string/abna_ala3mam_alashika"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+                <View
+                    android:id="@+id/divider3"
+                    style="@style/ZaidAppTheme.Divider"
+                    app:layout_constraintBottom_toTopOf="@id/textViewLabel3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/linearLayout7" />
 
-                    <EditText
-                        android:id="@+id/sonsOfFullUnclesEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/sonsOfFullUnclesTextView"
-                        app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+                <TextView
+                    android:id="@+id/textViewLabel3"
+                    style="@style/ZaidAppTheme.textViewLabelStyle"
+                    android:text="@string/hawashi"
+                    app:layout_constraintBottom_toTopOf="@id/maternalBrothersTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider3" />
 
-                    <TextView
-                        android:id="@+id/sonsOfPaternalUnclesTextView"
-                        style="@style/ZaidAppTheme.textViewStyle"
-                        android:layout_marginStart="30dp"
-                        android:labelFor="@id/sonsOfPaternalUnclesEditText"
-                        android:text="@string/abna_ala3mam_li_ab"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/guideline1"
-                        app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView"
-                        app:layout_goneMarginStart="16dp" />
+                <TextView
+                    android:id="@+id/maternalBrothersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/maternalBrothersEditText"
+                    android:text="@string/alikhwa_li_om"
+                    app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
 
-                    <EditText
-                        android:id="@+id/sonsOfPaternalUnclesEditText"
-                        style="@style/ZaidAppTheme.editTextStyle"
-                        android:importantForAutofill="no"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/sonsOfPaternalUnclesTextView"
-                        app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+                <EditText
+                    android:id="@+id/maternalBrothersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@+id/maternalBrothersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/maternalSistersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/maternalSistersEditText"
+                    android:text="@string/alakhawat_li_om"
+                    app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
+                    app:layout_constraintStart_toStartOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
 
-            </ScrollView>
+                <EditText
+                    android:id="@+id/maternalSistersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/fullBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@id/maternalSistersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/textViewLabel3" />
+
+
+                <TextView
+                    android:id="@+id/fullBrothersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/fullBrothersEditText"
+                    android:text="@string/alikhwa_alashika"
+                    app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/fullBrothersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@id/fullBrothersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/fullSistersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/fullSistersEditText"
+                    android:text="@string/alakhawat_ashakikat"
+                    app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
+                    app:layout_constraintStart_toStartOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/fullSistersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/paternalBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@id/fullSistersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/maternalBrothersTextView" />
+
+
+                <TextView
+                    android:id="@+id/paternalBrothersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/paternalBrothersEditText"
+                    android:text="@string/alikhwa_li_ab"
+                    app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/paternalBrothersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@id/paternalBrothersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/paternalSistersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/paternalSistersEditText"
+                    android:text="@string/alakhawat_li_ab"
+                    app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
+                    app:layout_constraintStart_toStartOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/paternalSistersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/SonsOfFullBrothersTextView"
+                    app:layout_constraintStart_toEndOf="@id/paternalSistersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/fullBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/SonsOfFullBrothersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/sonsOfFullBrothersEditText"
+                    android:text="@string/abna_alikhwa_ashika"
+                    app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/sonsOfFullBrothersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/SonsOfFullBrothersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/sonsOfPaternalBrothersTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/sonsOfPaternalBrothersEditText"
+                    android:text="@string/abna_alikhwa_li_ab"
+                    app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/sonsOfPaternalBrothersEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/fullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/sonsOfPaternalBrothersTextView"
+                    app:layout_constraintTop_toBottomOf="@id/paternalBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/fullUnclesTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/fullUnclesEditText"
+                    android:text="@string/ala3mam_alashika"
+                    app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/fullUnclesEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/fullUnclesTextView"
+                    app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
+
+                <TextView
+                    android:id="@+id/paternalUnclesTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/paternalUnclesEditText"
+                    android:text="@string/ala3mam_li_ab"
+                    app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
+
+                <EditText
+                    android:id="@+id/paternalUnclesEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toTopOf="@id/sonsOfFullUnclesTextView"
+                    app:layout_constraintStart_toEndOf="@id/paternalUnclesTextView"
+                    app:layout_constraintTop_toBottomOf="@id/SonsOfFullBrothersTextView" />
+
+
+                <TextView
+                    android:id="@+id/sonsOfFullUnclesTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="8dp"
+                    android:labelFor="@id/sonsOfFullUnclesEditText"
+                    android:text="@string/abna_ala3mam_alashika"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+
+                <EditText
+                    android:id="@+id/sonsOfFullUnclesEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sonsOfFullUnclesTextView"
+                    app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+
+                <TextView
+                    android:id="@+id/sonsOfPaternalUnclesTextView"
+                    style="@style/ZaidAppTheme.textViewStyle"
+                    android:layout_marginStart="4dp"
+                    android:labelFor="@id/sonsOfPaternalUnclesEditText"
+                    android:text="@string/abna_ala3mam_li_ab"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline1"
+                    app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+
+                <EditText
+                    android:id="@+id/sonsOfPaternalUnclesEditText"
+                    style="@style/ZaidAppTheme.editTextStyle"
+                    android:importantForAutofill="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/sonsOfPaternalUnclesTextView"
+                    app:layout_constraintTop_toBottomOf="@id/fullUnclesTextView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
