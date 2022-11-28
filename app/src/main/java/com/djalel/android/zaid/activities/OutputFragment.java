@@ -37,7 +37,6 @@ import com.djalel.android.zaid.R;
 import com.djalel.android.zaid.ZaidApplication;
 import com.djalel.libjfarayid.Mas2ala;
 import com.djalel.libjfarayid.Mirath;
-import com.djalel.libjfarayid.Naw3;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -62,24 +61,16 @@ public class OutputFragment extends Fragment {
         mResultTextView = view.findViewById(R.id.resultTextView);
         mResultTableLayout = view.findViewById(R.id.resultTableLayout);
 
-        view.findViewById(R.id.button_restart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ZaidApplication app = ZaidApplication.getApplication();
-                app.getWarathaInput().resetWarathahInput();
+        view.findViewById(R.id.button_restart).setOnClickListener(view1 -> {
+            ZaidApplication app = ZaidApplication.getApplication();
+            app.getWarathaInput().resetWarathahInput();
 
-                NavHostFragment.findNavController(OutputFragment.this)
-                        .navigate(R.id.action_OutputFragment_to_InputFragment);
-            }
+            NavHostFragment.findNavController(OutputFragment.this)
+                    .navigate(R.id.action_OutputFragment_to_InputFragment);
         });
 
-        view.findViewById(R.id.button_change).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(OutputFragment.this)
-                        .navigate(R.id.action_OutputFragment_to_InputFragment);
-            }
-        });
+        view.findViewById(R.id.button_change).setOnClickListener(view12 -> NavHostFragment.findNavController(OutputFragment.this)
+                .navigate(R.id.action_OutputFragment_to_InputFragment));
     }
 
     @Override
@@ -274,7 +265,6 @@ public class OutputFragment extends Fragment {
 
         // table body
         boolean last_row = false;
-        boolean last_column = tarika == 0;
         int i = 0;
         for (Mirath m : mawarith) {
             TableRow row = new TableRow(getActivity());
@@ -505,7 +495,7 @@ public class OutputFragment extends Fragment {
             TextView cell2;
             if (cellType == CELL.EMPTY) {
                 cell = createEmptyCell(last_row); // TODO: need last_column?
-                cell2 = cell;
+                cell2 = createEmptyCell(last_row);
             }
             else {
                 String cellTxt = m.isMahjoob() ? "--" : "" + m.getFardh();
@@ -562,7 +552,7 @@ public class OutputFragment extends Fragment {
         }
 
         if (tarika != 0) {
-            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col++));
+            head.addView(createHeadCell(String.format(Locale.ROOT, "%.2f", tarika), true), new TableRow.LayoutParams(col+1));
         }
         mResultTableLayout.addView(head);
 

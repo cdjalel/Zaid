@@ -19,15 +19,15 @@
 package com.djalel.libjfarayid;
 
 public class Mirath {
-    private Warith warith;
+    private final Warith warith;
     private String sharh;
-    private int nbr;            // عدد الورثة المتشابهين في كل شيء
+    private final int nbr;            // عدد الورثة المتشابهين في كل شيء
 
-    private int bast;           // البسط في نصيب صاحب الفرض
-    private int maqam;          // المقام في نصيب صاحب الفرض
+    private final int bast;           // البسط في نصيب صاحب الفرض
+    private final int maqam;          // المقام في نصيب صاحب الفرض
 
-    private boolean ta3seeb;    // هل يرث بالتعصيب (مع الفرض أو لا)
-    private int ro2os;          // عدد الرؤوس المشتركين في الباقي
+    private final boolean ta3seeb;    // هل يرث بالتعصيب (مع الفرض أو لا)
+    private final int ro2os;          // عدد الرؤوس المشتركين في الباقي
 
     // calculated later
     private int fardh;          // أسهم صاحب الفرض من أصل المسألة
@@ -36,7 +36,7 @@ public class Mirath {
     private int nassib;         // النصيب الفردي لكل وارث
 
     // short textual form of the solution to display in a table
-    private String hokom;
+    private final String hokom;
     private String ism;
     private String nassibMojmal;   // إجمالي نصيب الوارث (أو الورثة المتشابهين) من أصل المسألة
     private String nassibFardi;    // النصيب الفردي لكل وارث
@@ -123,11 +123,6 @@ public class Mirath {
         this(warith, nbr, sharh, bast, maqam, false, ro2os);
     }
 
-    // وارث واحد بالتعصيب فقط
-    public Mirath(Warith warith, String sharh, boolean ta3seeb) {
-        this(warith, 1, sharh, 0, 1, ta3seeb, 1);
-    }
-
     // عدة ورثة متشابهين يرثون بالتصعيب بالتساوي
     public Mirath(Warith warith, int nbr, String sharh) {
         this(warith, nbr, sharh, 0, 1, true, nbr);
@@ -155,15 +150,14 @@ public class Mirath {
     }
 
     // no default constructor
-    private Mirath() {
+    /* private Mirath() {
         this(null, 0, null, 0, 0, false, 0);
-    }
+    } */
 
     // copy constructor
     public Mirath(Mirath src) {
         this.warith = src.warith;
         this.nbr = src.nbr;
-        this.sharh = src.sharh;
         this.bast = src.bast;
         this.maqam = src.maqam;
         this.ta3seeb = src.ta3seeb;
@@ -175,6 +169,7 @@ public class Mirath {
         this.sahmJami3a = src.sahmJami3a;
 
         this.sharh = src.sharh;
+        this.hokom = src.hokom;
         this.ism = src.ism;
         this.nassibFardi = src.nassibFardi;
         this.nassibMojmal = src.nassibMojmal;
@@ -188,7 +183,7 @@ public class Mirath {
 
     public String getSharh() { return sharh; }
 
-    public void setSharh(String sharh) { this.sharh = sharh; }
+    //public void setSharh(String sharh) { this.sharh = sharh; }
 
     public int getNbr() { return  nbr; }
 
@@ -258,7 +253,7 @@ public class Mirath {
 
     public int getJami3Alfardh() { return sahmJami3a != 0 ? sahmJami3a : fardh; }
 
-    public int getSahmJami3a() { return sahmJami3a; }
+    // public int getSahmJami3a() { return sahmJami3a; }
 
     public void setJami3AlfardhWaRad(int sahmJami3a) { this.sahmJami3a = sahmJami3a; }
 
