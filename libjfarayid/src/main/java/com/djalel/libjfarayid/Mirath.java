@@ -18,6 +18,9 @@
 
 package com.djalel.libjfarayid;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Mirath {
     private final Warith warith;
     private String sharh;
@@ -29,17 +32,22 @@ public class Mirath {
     private final boolean ta3seeb;    // هل يرث بالتعصيب (مع الفرض أو لا)
     private final int ro2os;          // عدد الرؤوس المشتركين في الباقي
 
+    private final boolean thuluth_albaqi;
+    private final boolean ashakikat_tarithna_albaqi_ila_alfardh;
+
     // calculated later
     private int fardh;          // أسهم صاحب الفرض من أصل المسألة
     private int rad;            // أسهم الوارث في مسألة الرد دون أحد الزوجين
     private int sahmJami3a;     // أسهم الوارث في مسألة الرد الجامعة وفيها الفرض زائد الرد لغير الزوجين
-    private int nassib;         // النصيب الفردي لكل وارث
+    private double nassib;      // النصيب الفردي لكل وارث
 
     // short textual form of the solution to display in a table
     private final String hokom;
     private String ism;
     private String nassibMojmal;   // إجمالي نصيب الوارث (أو الورثة المتشابهين) من أصل المسألة
-    private String nassibFardi;    // النصيب الفردي لكل وارث
+    private String nassibFardi;    // تفصيل النصيب الفردي لكل وارث
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public Mirath(Warith warith, int nbr, String sharh, int bast, int maqam, boolean ta3seeb, int ro2os) {
         // TODO assert maqam != 0 & sharh != null
@@ -51,15 +59,30 @@ public class Mirath {
         this.ta3seeb = ta3seeb;
         this.ro2os = ro2os;
 
+        boolean ashakikat_tarithna_albaqi_ila_alfardh1 = false;
+        boolean thuluth_albaqi1 = false;
+
         switch (bast) {
             case 1:
                 switch (maqam) {
                     case 2:
-                        hokom = "1\\2"; //"½";
+                        if (ta3seeb && (warith == Warith.ALAKHAWAT_ASHAKIKAT || warith == Warith.ALAKHAWAT_LI_AB)) {
+                            hokom = "الباقي إلى 1\\2" ;
+                            ashakikat_tarithna_albaqi_ila_alfardh1 = true;
+                        }
+                        else {
+                            hokom = "1\\2"; //"½";
+                        }
                         break;
                     case 3:
-                        hokom = ta3seeb? "1\\3 الباقي": "1\\3"; //"⅓" ;
                         // من يأخذ ثلث الباقي: الأم في الغراوين أو بعض حالات الجد مع الإخوة
+                        if (ta3seeb && (warith == Warith.ALOM || warith == Warith.ALJAD)) {
+                            hokom = "1\\3 الباقي";
+                            thuluth_albaqi1 = true;
+                        }
+                        else {
+                            hokom = "1\\3"; //"⅓" ;
+                        }
                         break;
                     case 4:
                         hokom = "1\\4"; // "¼";
@@ -77,13 +100,22 @@ public class Mirath {
                 }
                 break;
             case 2:         // assert maqam == 3
-                hokom = "2\\3"; //"⅔";
+                if (ta3seeb && (warith == Warith.ALAKHAWAT_ASHAKIKAT || warith == Warith.ALAKHAWAT_LI_AB)) {
+                    hokom = "الباقي إلى 2\\3" ;
+                    ashakikat_tarithna_albaqi_ila_alfardh1 = true;
+                }
+                else {
+                    hokom = "2\\3"; //"⅔";
+                }
                 break;
             case 0:
             default:
                 hokom = ta3seeb ? "تعصيب" : "حجب";
                 break;
         }
+
+        ashakikat_tarithna_albaqi_ila_alfardh = ashakikat_tarithna_albaqi_ila_alfardh1;
+        thuluth_albaqi = thuluth_albaqi1;
 
         if (warith != null) {
             StringBuilder tmp = new StringBuilder();
@@ -101,6 +133,8 @@ public class Mirath {
         nassib = 0;
         nassibFardi = null;
         nassibMojmal = null;
+
+        df.setRoundingMode(RoundingMode.FLOOR);
     }
 
     // وارث واحد يرث بالفرض فقط
@@ -173,6 +207,9 @@ public class Mirath {
         this.ism = src.ism;
         this.nassibFardi = src.nassibFardi;
         this.nassibMojmal = src.nassibMojmal;
+
+        this.thuluth_albaqi = src.thuluth_albaqi;
+        this.ashakikat_tarithna_albaqi_ila_alfardh = src.ashakikat_tarithna_albaqi_ila_alfardh;
     }
 
     public void addHajib(String hajb) {
@@ -203,15 +240,22 @@ public class Mirath {
 
     public boolean isMahjoob() { return (bast == 0) && !ta3seeb; }
 
-    public boolean isFardh() { return (bast != 0) && (maqam != 1) && !isTholuthAlbaqi(); }
+    public boolean isFardh() { return (bast != 0) && (maqam != 1) && !thuluth_albaqi && !ashakikat_tarithna_albaqi_ila_alfardh; }
 
-    public boolean isTholuthAlbaqi() { return bast == 1 && maqam == 3 && ta3seeb; }
+    public boolean isTholuthAlbaqi() { return thuluth_albaqi; }
+    
+    public boolean isShakikatTarithnaAlbaqiIlaFardh() { return ashakikat_tarithna_albaqi_ila_alfardh; }
 
     public void setFardh(int fardh) { this.fardh = fardh; }
 
-    public void setNassib(int nassib) { this.nassib = nassib; }
+    public void setNassib(double nassib) { this.nassib = nassib; }
 
-    public int getNassib() { return this.nassib; }
+    public double getNassib() { return this.nassib; }
+
+    public static String getNassibStr(double nassib) {
+        boolean is_decimal = (nassib - (int)nassib) != 0;
+        return is_decimal? df.format(nassib) : "" + (int)nassib;
+    }
 
     public String getHokom() { return hokom; }
 
@@ -222,18 +266,18 @@ public class Mirath {
     public void setNassibMojmal(String nassibMojmal) { this.nassibMojmal = nassibMojmal; }
 
     public String getNassibFardi(boolean verbose) {
-        if (!verbose) {
+        if (verbose) {
             return this.nassibFardi;
         }
         StringBuilder tmp = new StringBuilder();
-        tmp.append(nassib);
+        tmp.append(getNassibStr(nassib));
         if (nbr > 1) {
             tmp.append("(*").append(nbr).append(")");
         }
         return tmp.toString();
     }
 
-    public String getNassibFardi() { return getNassibFardi(true); }
+    public String getNassibFardi() { return getNassibFardi(false); }
 
     public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
 

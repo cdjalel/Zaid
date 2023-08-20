@@ -28,12 +28,14 @@ class WarathahOutput {  // TODO public vs private fields
     boolean mIstighraq;
     boolean mShirkaTa3seeb;     // اشتراك عدة ورثة مختلفين في الباقي (جد وإخوة أو أبناء وبنات)
     boolean mMu3addah;
+    boolean mAkdaria;
 
     int mNbrFurudh;
     int mNbr3assabat;
     int mAsl;
     int mAshom;
     int mBaqi;
+    double mBaqiAlbaqi;
     int mRo2osAlbaqi;
     int mRo2osBaqiAlbaqi;
     int mAwl;
@@ -55,11 +57,13 @@ class WarathahOutput {  // TODO public vs private fields
         mIstighraq = false;
         mShirkaTa3seeb = false;
         mMu3addah = false;
+        mAkdaria = false;
 
         mNbrFurudh = 0;
         mNbr3assabat = 0;
         mAsl = 1;
         mBaqi = 0;
+        mBaqiAlbaqi = 0;
         mRo2osAlbaqi = 1;
         mRo2osBaqiAlbaqi = 1;
         mAwl = 0;
@@ -77,28 +81,30 @@ class WarathahOutput {  // TODO public vs private fields
     public void copyWarathahExceptAljadWaAlikhwa(WarathahOutput from) {
         // This is kind of late copy constructor used for Aljad ma3a Alikhwa
         // 'from' is Hal al-Mas2ala till Aljad who is the last Sahib Fard in the list with 1/6
-        // 'mWarathah' contains only aljad + ikhwa for the other two cases where aljad part != 1/6
+        // 'mWarathah' contains only Aljad + Ikhwa for the other two cases where aljad part != 1/6
         ArrayList<Mirath> tmp = mWarathah;
         mWarathah = new ArrayList<>();
         int i;
-        // Shallow copy of warathah as they are the same in all 3 cases (except Aljad and Ikhwa)
-        for (i = 0; i < (from.mNbrFurudh - 1); i++) { mWarathah.add(from.mWarathah.get(i)); }
-        // Preserve already calculated aljad and alikhwa in this hal
+        // Deep copy of Warathah (except Aljad and Ikhwa) as their Mirath Hissab might change between the 3 cases
+        for (i = 0; i < (from.mNbrFurudh - 1); i++) { mWarathah.add(new Mirath(from.mWarathah.get(i))); }
+        // Preserve already calculated aljad and alikhwa in this Hal
         for (i = 0; i < tmp.size(); i++) { mWarathah.add(tmp.get(i)); }
 
         mMahjoobin = from.mMahjoobin;    // reference copy as hajb is the same for all cases
 
-        mNbrFurudh = from.mNbrFurudh - 1;
+        mNbrFurudh += from.mNbrFurudh - 1;
         mNbr3assabat = from.mNbr3assabat + 1;
         mTassawi = from.mTassawi;
 
-        // remaining fields rest is unique to each case DO NOT COPY
+        // remaining fields are unique to each case DO NOT COPY
 //            mShirkaTa3seeb = from.mShirkaTa3seeb;
 //            mMu3addah = from.mMu3addah;
 //            mIstighraq = from.mIstighraq;
+//            mAkdaria = form.mAkdaria;
 
 //            mAsl = 1;
 //            mBaqi = 0;
+//            mBaqiAlbaqi = 0;
 //            mRo2osAlbaqi = 1;
 //            mRo2osBaqiAlbaqi = 1;
 //            mAwl = 0;
