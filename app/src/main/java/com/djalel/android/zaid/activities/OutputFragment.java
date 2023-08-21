@@ -182,10 +182,10 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
-                String cellTxt = m.getHokom();               // TODO merge diff
+                String cellTxt = m.getHokom();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, last_column, last_row);
             }
@@ -219,10 +219,10 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
-                String cellTxt = mas2ala.isBaqiIla() ? m.nassibFardiToString() : m.getNassibMojmal();               // TODO merge diff
+                String cellTxt =  m.getNassibMojmal();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, last_column, last_row);
             }
@@ -345,10 +345,10 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
-                String cellTxt = m.getHokom();               // TODO merge diff
+                String cellTxt = m.getHokom();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, false, last_row);
             }
@@ -376,13 +376,13 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
                 String cellTxt = m.isMahjoob() ? "--" :
                         m.getRad() != 0 ? m.getRad() + "+" + m.getFardh() : "" + m.getFardh();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
-                cell = createCell(cellTxt, last_column, last_row); // TODO merge DELTA
+                cell = createCell(cellTxt, last_column, last_row);
             }
             row.addView(cell);
 
@@ -461,10 +461,10 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
-                String cellTxt = m.getHokom();               // TODO merge diff
+                String cellTxt = m.getHokom();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, false, last_row);
             }
@@ -494,7 +494,7 @@ public class OutputFragment extends Fragment {
             }
             TextView cell2;
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
                 cell2 = createEmptyCell(last_row);
             }
             else {
@@ -588,10 +588,10 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell = createEmptyCell(last_row); // TODO: need last_column?
+                cell = createEmptyCell(last_row);
             }
             else {
-                String cellTxt = m.getHokom();               // TODO merge diff
+                String cellTxt = m.getHokom();
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, false, last_row);
             }
@@ -636,7 +636,7 @@ public class OutputFragment extends Fragment {
                 cellType = CELL.NORMAL;
             }
             if (cellType == CELL.EMPTY) {
-                cell2 = createEmptyCell(last_row);       // TODO: need last_column?
+                cell2 = createEmptyCell(last_row);
                 cell4 = createEmptyCell(last_row);
                 cell5 = createEmptyCell(last_row);
             }

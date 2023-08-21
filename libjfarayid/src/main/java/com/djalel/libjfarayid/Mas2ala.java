@@ -1647,11 +1647,6 @@ public class Mas2ala {
                 if (m.isFardh() && m.isTa3seeb()) {
                     nassib = (m.getFardh() + oldNassib) * missahFactor;
                 }
-                else if (m.isTa3seeb() && m.getWarith() != Warith.ALJAD &&
-                        (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.THULUTH_ALBAQI || mAljadMa3aAlikhwa == AljadMa3aAlikhwa.MUQASSAMA) &&
-                        !m_alakhawat_tarithna_albaki_ila_alfardh) {
-                        nassib = (oldNassib * missahFactor) / (mHal.mRo2osBaqiAlbaqi);
-                }
                 else {
                     nassib = oldNassib * missahFactor;
                 }
@@ -1739,6 +1734,7 @@ public class Mas2ala {
                         break;
                 }
                 sharh.append("، وعدد رؤوسه ").append(mHal.mRo2osAlbaqi).append(".\n");
+                // Note: can be more verbose by showing BaqiAlbaqi and its Ro2osBaqiAlbaqi
 
                 if (mHal.mMu3addah) {
                     sharh.append("- هذه المسألة من مسائل المُعادّة، أي يُعدُّ (بمعنى يُحسب) على الجد جميع الإخوة الأشقاء ولأب عند تقدير الأحظ له، ");
@@ -1821,8 +1817,6 @@ public class Mas2ala {
 
         return all;
     }
-
-    public boolean isBaqiIla() { return m_alakhawat_tarithna_albaki_ila_alfardh; }
 
     // move to Utilities class?
     private int lcm(int a, int b) {
