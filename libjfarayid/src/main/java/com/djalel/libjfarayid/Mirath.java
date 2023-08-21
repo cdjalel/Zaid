@@ -253,7 +253,7 @@ public class Mirath {
     public boolean isFardh() { return (bast != 0) && (maqam != 1) && !thuluth_albaqi && !ashakikat_tarithna_albaqi_ila_alfardh; }
 
     public boolean isTholuthAlbaqi() { return thuluth_albaqi; }
-    
+
     public boolean isShakikatTarithnaAlbaqiIlaFardh() { return ashakikat_tarithna_albaqi_ila_alfardh; }
 
     public String getNassibMojmal() { return this.nassibMojmal; }
@@ -270,7 +270,6 @@ public class Mirath {
 
     public static String nassibToString(double nassib) {
         //nassib = nassib < 0 ? - nassib : nassib;
-        nassib = Math.abs(nassib);
         boolean is_decimal = (nassib - (int)nassib) != 0;
         return is_decimal? df.format(nassib) : "" + (int)nassib;
     }

@@ -1603,7 +1603,12 @@ public class Mas2ala {
                 continue;
             }
 
-            m.setNassibMojmal(nassibMojmal.toString());
+            if (m_alakhawat_tarithna_albaki_ila_alfardh && m.getWarith() == Warith.ALJAD) {
+                m.setNassibMojmal(Mirath.nassibToString(nassib));
+            }
+            else {
+                m.setNassibMojmal( nassibMojmal.toString());
+            }
             m.setNassibFardiText(nassibFardi.toString());
             m.setNassibFardi(nassib);
         }
