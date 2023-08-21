@@ -1449,7 +1449,7 @@ public class Mas2ala {
                         }
                         else { // إنكسار
                             missahFactor = lcm(missahFactor, m.getRo2os() / gcd(bast, m.getRo2os()));
-                            nassib = -bast;                 // bast only for now
+                            nassib = bast * 1.0 / m.getRo2os();
                         }
                     } else {
                         nassib += mHal.mBaqi;
@@ -1466,7 +1466,7 @@ public class Mas2ala {
                         }
                         else {  // إنكسار
                             missahFactor = lcm(missahFactor, m.getRo2os() / gcd(fardh, m.getRo2os()));
-                            nassib = -fardh;         // bast only for now
+                            nassib = fardh * 1.0 / m.getRo2os();
                         }
                     }
                 }
@@ -1519,13 +1519,18 @@ public class Mas2ala {
                     if (m.isShakikatTarithnaAlbaqiIlaFardh()) {
                         double baqi = mHal.mBaqi;
                         double limit = (double)mHal.mAsl * m.getBast() / m.getMaqam();
+                        double nassib_aljad = 0;
                         if (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.THULUTH_ALBAQI) {
-                            baqi -= ro2os_aljad;
+                            nassib_aljad = ro2os_aljad;
                         }
+                        else if (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.MUQASSAMA) {
+                            nassib_aljad = all.get(mHal.mNbrFurudh).getNassibFardi();  // nassib aljad
+                        }
+                        baqi -= nassib_aljad;
                         if (baqi > limit) {
                             factor = limit;
                             is_decimal = (factor - (int)factor) != 0;
-                            mHal.mBaqiAlbaqi = (double)baqi - limit - ro2os_aljad; // FIXME: can it be negative?
+                            mHal.mBaqiAlbaqi = (double)baqi - limit;
                         }
                         else {
                             factor = baqi;
@@ -1585,7 +1590,7 @@ public class Mas2ala {
                     } else {
                         missahFactor = lcm(missahFactor, ro2os / gcd((int)factor, ro2os));
                     }
-                    nassib = -factor;                         // factor only for now
+                    nassib = factor/ro2os;
                 }
             }
             else if (m.isMahjoob()) {
@@ -1639,23 +1644,13 @@ public class Mas2ala {
             for (Mirath m:all) {
                 if (m.isMahjoob()) continue;
                 double oldNassib = m.getNassibFardi();
-                if (oldNassib < 0) {
-                    if (m.isFardh() && m.isTa3seeb()) {
-                        nassib = m.getFardh() * missahFactor;
-                        nassib += -oldNassib * missahFactor / m.getRo2os();
-                    }
-                    else if (m.isTa3seeb() && m.getWarith() != Warith.ALJAD &&
-                            (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.THULUTH_ALBAQI
-                            || mAljadMa3aAlikhwa == AljadMa3aAlikhwa.MUQASSAMA)) {
-                        if (m_alakhawat_tarithna_albaki_ila_alfardh) {
-                            nassib = -oldNassib * missahFactor / m.getRo2os();
-                        } else {
-                            nassib = (-oldNassib * missahFactor) / (mHal.mRo2osAlbaqi * mHal.mRo2osBaqiAlbaqi);
-                        }
-                    }
-                    else {
-                        nassib = -oldNassib * missahFactor / m.getRo2os();
-                    }
+                if (m.isFardh() && m.isTa3seeb()) {
+                    nassib = (m.getFardh() + oldNassib) * missahFactor;
+                }
+                else if (m.isTa3seeb() && m.getWarith() != Warith.ALJAD &&
+                        (mAljadMa3aAlikhwa == AljadMa3aAlikhwa.THULUTH_ALBAQI || mAljadMa3aAlikhwa == AljadMa3aAlikhwa.MUQASSAMA) &&
+                        !m_alakhawat_tarithna_albaki_ila_alfardh) {
+                        nassib = (oldNassib * missahFactor) / (mHal.mRo2osBaqiAlbaqi);
                 }
                 else {
                     nassib = oldNassib * missahFactor;
