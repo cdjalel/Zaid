@@ -222,7 +222,7 @@ public class OutputFragment extends Fragment {
                 cell = createEmptyCell(last_row); // TODO: need last_column?
             }
             else {
-                String cellTxt = m.getNassibMojmal();               // TODO merge diff
+                String cellTxt = mas2ala.isBaqiIla() ? m.nassibFardiToString() : m.getNassibMojmal();               // TODO merge diff
                 if (cellType == CELL.SHIRKA) { cellTxt += " ↓"; }
                 cell = createCell(cellTxt, last_column, last_row);
             }
@@ -230,13 +230,13 @@ public class OutputFragment extends Fragment {
 
             // column 3: nassib fardi
             if (hissabFardiColumn) {
-                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+                row.addView(createCell(m.nassibFardiSahihToString(), tarika == 0, last_row));
             }
 
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -283,7 +283,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 3: nassib mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
                 row.addView(createCell(nassibTarikaStr, true, last_row));
             }
             mResultTableLayout.addView(row);
@@ -388,13 +388,13 @@ public class OutputFragment extends Fragment {
 
             // column 3: tashih
             if (hissabFardiColumn) {
-                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+                row.addView(createCell(m.nassibFardiSahihToString(), tarika == 0, last_row));
             }
 
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -509,13 +509,13 @@ public class OutputFragment extends Fragment {
 
             // column 4: nassib fardi
             if (hissabFardiColumn) {
-                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+                row.addView(createCell(m.nassibFardiSahihToString(), tarika == 0, last_row));
             }
 
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -656,13 +656,13 @@ public class OutputFragment extends Fragment {
 
             // column 6: nassib fardi
             if (hissabFardiColumn) {
-                row.addView(createCell(m.getNassibFardi(), tarika == 0, last_row));
+                row.addView(createCell(m.nassibFardiSahihToString(), tarika == 0, last_row));
             }
 
             if (tarika != 0) {
                 // column 7: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassib() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }

@@ -39,13 +39,15 @@ public class Mirath {
     private int fardh;          // أسهم صاحب الفرض من أصل المسألة
     private int rad;            // أسهم الوارث في مسألة الرد دون أحد الزوجين
     private int sahmJami3a;     // أسهم الوارث في مسألة الرد الجامعة وفيها الفرض زائد الرد لغير الزوجين
-    private double nassib;      // النصيب الفردي لكل وارث
+    private double nassib;      // النصيب الفردي لكل وارث قبل تصحيح الانكسار
+    private double nassibSahih; // النصيب الفردي لكل وارث بعد التصحيح
 
     // short textual form of the solution to display in a table
     private final String hokom;
     private String ism;
     private String nassibMojmal;   // إجمالي نصيب الوارث (أو الورثة المتشابهين) من أصل المسألة
-    private String nassibFardi;    // تفصيل النصيب الفردي لكل وارث
+    private String nassibFardiText;    // تفصيل النصيب الفردي لكل وارث
+    private String nassibFardiSahihText; // النصيب الفردي لكل وارث بعد التصحيح
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
@@ -131,7 +133,9 @@ public class Mirath {
         rad = 0;
         sahmJami3a = 0;
         nassib = 0;
-        nassibFardi = null;
+        nassibSahih = 0;
+        nassibFardiText = null;
+        nassibFardiSahihText = null;
         nassibMojmal = null;
 
         df.setRoundingMode(RoundingMode.FLOOR);
@@ -199,13 +203,15 @@ public class Mirath {
 
         this.fardh = src.fardh;
         this.nassib = src.nassib;
+        this.nassibSahih = src.nassibSahih;
         this.rad = src.rad;
         this.sahmJami3a = src.sahmJami3a;
 
         this.sharh = src.sharh;
         this.hokom = src.hokom;
         this.ism = src.ism;
-        this.nassibFardi = src.nassibFardi;
+        this.nassibFardiText = src.nassibFardiText;
+        this.nassibFardiSahihText = src.nassibFardiSahihText;
         this.nassibMojmal = src.nassibMojmal;
 
         this.thuluth_albaqi = src.thuluth_albaqi;
@@ -218,9 +224,11 @@ public class Mirath {
         sharh += " و " + hajb;
     }
 
-    public String getSharh() { return sharh; }
+    public String getHokom() { return hokom; }
 
-    //public void setSharh(String sharh) { this.sharh = sharh; }
+    public String getIsm() { return ism; }
+
+    public String getSharh() { return sharh; }
 
     public int getNbr() { return  nbr; }
 
@@ -234,11 +242,13 @@ public class Mirath {
 
     public boolean isShirka() { return (ro2os > 1); }
 
-    public int getFardh() { return fardh; }
+    public boolean isMahjoob() { return (bast == 0) && !ta3seeb; }
 
     public Warith getWarith() { return warith; }
 
-    public boolean isMahjoob() { return (bast == 0) && !ta3seeb; }
+    public int getFardh() { return fardh; }
+
+    public void setFardh(int fardh) { this.fardh = fardh; }
 
     public boolean isFardh() { return (bast != 0) && (maqam != 1) && !thuluth_albaqi && !ashakikat_tarithna_albaqi_ila_alfardh; }
 
@@ -246,40 +256,49 @@ public class Mirath {
     
     public boolean isShakikatTarithnaAlbaqiIlaFardh() { return ashakikat_tarithna_albaqi_ila_alfardh; }
 
-    public void setFardh(int fardh) { this.fardh = fardh; }
-
-    public void setNassib(double nassib) { this.nassib = nassib; }
-
-    public double getNassib() { return this.nassib; }
-
-    public static String getNassibStr(double nassib) {
-        boolean is_decimal = (nassib - (int)nassib) != 0;
-        return is_decimal? df.format(nassib) : "" + (int)nassib;
-    }
-
-    public String getHokom() { return hokom; }
-
-    public String getIsm() { return ism; }
-
     public String getNassibMojmal() { return this.nassibMojmal; }
 
     public void setNassibMojmal(String nassibMojmal) { this.nassibMojmal = nassibMojmal; }
 
-    public String getNassibFardi(boolean verbose) {
-        if (verbose) {
-            return this.nassibFardi;
-        }
+    public String getNassibFardiText() { return nassibFardiText; }
+
+    public void setNassibFardiText(String nassibFardi) { this.nassibFardiText = this.nassibFardiSahihText = nassibFardi; }
+
+    public double getNassibFardi() { return this.nassib; }
+
+    public void setNassibFardi(double nassib) { this.nassib = this.nassibSahih = nassib; }
+
+    public static String nassibToString(double nassib) {
+        //nassib = nassib < 0 ? - nassib : nassib;
+        nassib = Math.abs(nassib);
+        boolean is_decimal = (nassib - (int)nassib) != 0;
+        return is_decimal? df.format(nassib) : "" + (int)nassib;
+    }
+
+    public String nassibFardiToString() {
         StringBuilder tmp = new StringBuilder();
-        tmp.append(getNassibStr(nassib));
+        tmp.append(nassibToString(nassib));
         if (nbr > 1) {
             tmp.append("(*").append(nbr).append(")");
         }
         return tmp.toString();
     }
 
-    public String getNassibFardi() { return getNassibFardi(false); }
+    public String getNassibFardiSahihText() { return nassibFardiSahihText; }
 
-    public void setNassibFardi(String nassibFardi) { this.nassibFardi = nassibFardi; }
+    public void setNassibFardiSahihText(String nassibFardiSahih) { this.nassibFardiSahihText = nassibFardiSahih; }
+
+    public double getNassibFardiSahih() { return this.nassibSahih; }
+    public void setNassibFardiSahih(double nassibSahih) { this.nassibSahih = nassibSahih; }
+
+    public String nassibFardiSahihToString() {
+        StringBuilder tmp = new StringBuilder();
+        tmp.append(nassibToString(nassibSahih));
+        if (nbr > 1) {
+            tmp.append("(*").append(nbr).append(")");
+        }
+        return tmp.toString();
+    }
 
     public boolean isJadah() { return (this.warith == Warith.ALJADAH_LI_OM || this.warith == Warith.ALJADAH_LI_AB); }
 
