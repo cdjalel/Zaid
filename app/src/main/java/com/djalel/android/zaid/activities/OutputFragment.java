@@ -236,7 +236,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardiSahih() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -283,7 +283,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 3: nassib mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardiSahih() * tarika / mas2ala.getMissah()));
                 row.addView(createCell(nassibTarikaStr, true, last_row));
             }
             mResultTableLayout.addView(row);
@@ -394,7 +394,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardiSahih() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -515,7 +515,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 4: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardiSahih() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
@@ -662,7 +662,7 @@ public class OutputFragment extends Fragment {
             if (tarika != 0) {
                 // column 7: nassib fardi mina tarika
                 StringBuilder nassibTarikaStr = new StringBuilder();
-                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardi() * tarika / mas2ala.getMissah()));
+                nassibTarikaStr.append(String.format(Locale.ROOT, "%.2f", m.getNassibFardiSahih() * tarika / mas2ala.getMissah()));
                 if (m.getNbr() > 1) {
                     nassibTarikaStr.append("(*").append(m.getNbr()).append(")");
                 }
