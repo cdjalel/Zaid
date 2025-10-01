@@ -926,6 +926,7 @@ public class Mas2ala {
         // assert(halIdx < 0 || halIdx >= mHal.size());
 
         String sharh;
+        String name;
         int nbr_a = mInput.get_alikhwa_li_ab();
         int nbr_b = mInput.get_alakhawat_li_ab();
 
@@ -1005,11 +1006,12 @@ public class Mas2ala {
                 }
             }
             else if (ta3seebBiljad) {
-                // الأخت بلا أخ ولا فرع وارث أنثى مع الجد تصبح عصبة به وترث الباقي إلى النصف (أو الباقي إلى الثلثين للأختين)
-                m_alakhawat_tarithna_albaki_ila_alfardh = true;
+                // الأخت لـأب بلا أخ ولا فرع وارث أنثى مع الجد تصبح عصبة به وترث الباقي إلى النصف (أو الباقي إلى الثلثين للأختين)
+                // هذا إذا بقي شيء بعد الأخوات الشقيقات و إلا سقطت
                 mHalList.get(halIdx).mShirkaTa3seeb = false;
                 mHalList.get(halIdx).mTassawi = false;
                 sharh = Warith.ALAKHAWAT_LI_AB.getSharhPrefix(nbr_b, false);
+                name = Warith.ALAKHAWAT_LI_AB.getName(nbr_b);
                 sharh += "الباقي إلى ";
                 int bast, maqam;
                 if (nbr_b == 1 ) {
@@ -1020,7 +1022,16 @@ public class Mas2ala {
                     bast = 2; maqam = 3;
                 }
                 sharh += " بعد نصيب الجد";
-                addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh, bast, maqam, true, nbr_b));
+                if (!m_alakhawat_tarithna_albaki_ila_alfardh) {
+                    m_alakhawat_tarithna_albaki_ila_alfardh = true;
+                    addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh, bast, maqam, true, nbr_b));
+                } else {
+                    String shakikat_name = Warith.ALAKHAWAT_ASHAKIKAT.getName(mInput.get_alakhawat_ashakikat());
+                    sharh += " و" + shakikat_name;
+                    sharh += ". لكن لم يبق شيء، فتسقط ";
+                    sharh += name;
+                    addMirath(halIdx, new Mirath(Warith.ALAKHAWAT_LI_AB, nbr_b, sharh, 0, 1, true, nbr_b));
+                }
             }
             // else يرثن بالفرض وقد تم أعلاه
         }
