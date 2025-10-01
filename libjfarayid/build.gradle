@@ -23,5 +23,5 @@ dependencies {
 
 }
 
-sourceCompatibility = "8"
-targetCompatibility = "8"
+sourceCompatibility = "21"
+targetCompatibility = "21"
