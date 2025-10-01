@@ -163,19 +163,14 @@ public class InputFragment extends Fragment {
         ((RadioGroup)view.findViewById(R.id.radioGroupMadhab)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioButtonMaliki:
-                        mInput.set_madhab(Madhab.MALIKI);
-                        break;
-                    case R.id.radioButtonChafi3i:
-                        mInput.set_madhab(Madhab.CHAFI3I);
-                        break;
-                    case R.id.radioButtonHanafi:
-                        mInput.set_madhab(Madhab.HANAFI);
-                        break;
-                    case R.id.radioButtonHambali:
-                        mInput.set_madhab(Madhab.HAMBALI);
-                        break;
+                if (checkedId == R.id.radioButtonMaliki) {
+                    mInput.set_madhab(Madhab.MALIKI);
+                } else if (checkedId == R.id.radioButtonChafi3i) {
+                    mInput.set_madhab(Madhab.CHAFI3I);
+                } else if (checkedId == R.id.radioButtonHanafi) {
+                    mInput.set_madhab(Madhab.HANAFI);
+                } else if (checkedId == R.id.radioButtonHambali) {
+                    mInput.set_madhab(Madhab.HAMBALI);
                 }
             }
         });
@@ -183,13 +178,10 @@ public class InputFragment extends Fragment {
         ((RadioGroup)view.findViewById(R.id.radioGroupGender)).setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radioButtonMale:
-                        mInput.set_male(true);
-                        break;
-                    case R.id.radioButtonFemale:
-                        mInput.set_male(false);
-                        break;
+                if (checkedId == R.id.radioButtonMale) {
+                    mInput.set_male(true);
+                } else if (checkedId == R.id.radioButtonFemale) {
+                    mInput.set_male(false);
                 }
                 updateAzwaj();
             }
@@ -204,24 +196,24 @@ public class InputFragment extends Fragment {
                 mInput.set_aljadah_li_ab(aljadahLiAbCB.isChecked());
                 mInput.set_aljadah_li_om(aljadahLiOmCB.isChecked());
                 mInput.set_zawj(azawjCB.isChecked());
-                mInput.setTarika(Double.parseDouble(tarikaET.getText().toString()));
-                mInput.set_azawjat(Integer.parseInt(azawjatET.getText().toString()));
-                mInput.set_alabna(Integer.parseInt(sonsET.getText().toString()));
-                mInput.set_albanat(Integer.parseInt(daughtersET.getText().toString()));
-                mInput.set_abna_alabna(Integer.parseInt(sonsOfSonsET.getText().toString()));
-                mInput.set_banat_alabna(Integer.parseInt(daughtersOfSonsET.getText().toString()));
-                mInput.set_alikhwa_li_om(Integer.parseInt(maternalBrothersET.getText().toString()));
-                mInput.set_alakhawat_li_om(Integer.parseInt(maternalSistersET.getText().toString()));
-                mInput.set_alikhwa_alashika(Integer.parseInt(fullBrothersET.getText().toString()));
-                mInput.set_alakhawat_ashakikat(Integer.parseInt(fullSistersET.getText().toString()));
-                mInput.set_alikhwa_li_ab(Integer.parseInt(paternalBrothersET.getText().toString()));
-                mInput.set_alakhawat_li_ab(Integer.parseInt(paternalSistersET.getText().toString()));
-                mInput.set_abna_alikhwa_alashika(Integer.parseInt(sonsOfFullBrothersET.getText().toString()));
-                mInput.set_abna_alikhwa_li_ab(Integer.parseInt(sonsOfPaternalBrothersET.getText().toString()));
-                mInput.set_ala3mam_alashika(Integer.parseInt(fullUnclesET.getText().toString()));
-                mInput.set_ala3mam_li_ab(Integer.parseInt(paternalUnclesET.getText().toString()));
-                mInput.set_abna_ala3mam_alashika(Integer.parseInt(sonsOfFullUnclesET.getText().toString()));
-                mInput.set_abna_ala3mam_li_ab(Integer.parseInt(sonsOfPaternalUnclesET.getText().toString()));
+                mInput.setTarika(parseDouble(tarikaET.getText().toString()));
+                mInput.set_azawjat(parseInt(azawjatET.getText().toString()));
+                mInput.set_alabna(parseInt(sonsET.getText().toString()));
+                mInput.set_albanat(parseInt(daughtersET.getText().toString()));
+                mInput.set_abna_alabna(parseInt(sonsOfSonsET.getText().toString()));
+                mInput.set_banat_alabna(parseInt(daughtersOfSonsET.getText().toString()));
+                mInput.set_alikhwa_li_om(parseInt(maternalBrothersET.getText().toString()));
+                mInput.set_alakhawat_li_om(parseInt(maternalSistersET.getText().toString()));
+                mInput.set_alikhwa_alashika(parseInt(fullBrothersET.getText().toString()));
+                mInput.set_alakhawat_ashakikat(parseInt(fullSistersET.getText().toString()));
+                mInput.set_alikhwa_li_ab(parseInt(paternalBrothersET.getText().toString()));
+                mInput.set_alakhawat_li_ab(parseInt(paternalSistersET.getText().toString()));
+                mInput.set_abna_alikhwa_alashika(parseInt(sonsOfFullBrothersET.getText().toString()));
+                mInput.set_abna_alikhwa_li_ab(parseInt(sonsOfPaternalBrothersET.getText().toString()));
+                mInput.set_ala3mam_alashika(parseInt(fullUnclesET.getText().toString()));
+                mInput.set_ala3mam_li_ab(parseInt(paternalUnclesET.getText().toString()));
+                mInput.set_abna_ala3mam_alashika(parseInt(sonsOfFullUnclesET.getText().toString()));
+                mInput.set_abna_ala3mam_li_ab(parseInt(sonsOfPaternalUnclesET.getText().toString()));
 
                 NavHostFragment.findNavController(InputFragment.this)
                         .navigate(R.id.action_InputFragment_to_OutputFragment);
@@ -247,6 +239,28 @@ public class InputFragment extends Fragment {
 
             azawjCB.setEnabled(true);
             azawjCB.setChecked(mInput.zawj());
+        }
+    }
+
+    private int parseInt(String value) {
+        if (value == null || value.isEmpty()) {
+            return 0;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    private double parseDouble(String value) {
+        if (value == null || value.isEmpty()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            return 0.0;
         }
     }
 }
